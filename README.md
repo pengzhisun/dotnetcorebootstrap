@@ -8,12 +8,12 @@
 
 ## Demos:
 
-* [Configuration Demo](demos/config_demo)
+* [Configuration](demos/config_demo)
 
-    * JSON format configuration file demo.
+    * [JSON format configuration file demo](demos/config_demo/JsonFileConfigDemo.cs)
         * [How to use a JSON format configuration file in .Net Core](docs/config/how_to_use_json_config_file.md)
 
-    * XML format configuration file demo.
+    * [XML format configuration file demo](demos/config_demo/XmlFileConfigDemo.cs)
         * [How to use a XML format configuration file in .Net Core](docs/config/how_to_use_xml_config_file.md)
         
 ## Cheat Sheets:
