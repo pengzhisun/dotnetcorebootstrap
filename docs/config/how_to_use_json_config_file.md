@@ -12,7 +12,7 @@
 
 2. Create JSON configuration file
 
-   > e.g. [appsettings.json](demos/config_demo/appsettings.json)
+   > e.g. [appsettings.json](../../demos/config_demo/appsettings.json)
 
     ```json
     {
@@ -34,7 +34,7 @@
 
 3. Add JSON file to .csproj file.
 
-    > e.g. [config_demo.csproj](demos/config_demo/config_demo.csproj)
+    > e.g. [config_demo.csproj](../../demos/config_demo/config_demo.csproj)
     ```xml
     <Project Sdk="Microsoft.NET.Sdk">
         ...
@@ -48,14 +48,14 @@
 
 4. Add **Microsoft.Extensions.Configuration** namespace.
 
-    > e.g. [Program.cs](demos/config_demo/Program.cs)
+    > e.g. [Program.cs](../../demos/config_demo/Program.cs)
     ```csharp
     using Microsoft.Extensions.Configuration;
     ```
 
 5. Get [IConfiguration](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.iconfiguration) instance via [ConfigurationBuilder](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.configurationbuilder).
 
-    > e.g. [Program.cs](demos/config_demo/Program.cs)
+    > e.g. [Program.cs](../../demos/config_demo/Program.cs)
     ```csharp
     IConfigurationBuilder configBuilder = new ConfigurationBuilder()
         .SetBasePath(System.AppContext.BaseDirectory)
@@ -68,7 +68,7 @@
 
 6. Get setting value via [IConfiguration](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.iconfiguration) instance.
 
-    > e.g. [Program.cs](demos/config_demo/Program.cs)
+    > e.g. [Program.cs](../../demos/config_demo/Program.cs)
     * Get string value:
     ```csharp
     string value = config["str_setting_1"];
