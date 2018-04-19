@@ -1,7 +1,6 @@
 /******************************************************************************
  * Copyright @ Pengzhi Sun 2018, all rights reserved.
- * Licensed under the MIT License.
- * See LICENSE file in the project root for full license information.  
+ * Licensed under the MIT License. See LICENSE file in the project root for full license information.  
  *
  * File Name:   JsonFileConfigDemo.cs
  * Author:      Pengzhi Sun
