@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+  <section1>
+    <nested_setting_1>nested_value_1</nested_setting_1>
+  </section1>
+  <str_setting_1>str_value_1</str_setting_1>
+  <int_setting_1>1</int_setting_1>
+  <array_items>
+    <array_item name="item_1">
+      <item_setting>item_value_1</item_setting>
+    </array_item>
+    <array_item name="item_2">
+      <item_setting>item_value_2</item_setting>
+    </array_item>
+  </array_items>
+</config>

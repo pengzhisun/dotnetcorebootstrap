@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build config_demo",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/demos/config_demo/config_demo.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
