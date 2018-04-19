@@ -14,7 +14,8 @@
         * [How to use a JSON format configuration file in .Net Core](docs/config/how_to_use_json_config_file.md)
 
     * XML format configuration file demo.
-
+        * [How to use a XML format configuration file in .Net Core](docs/config/how_to_use_xml_config_file.md)
+        
 ## Cheat Sheets:
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)
