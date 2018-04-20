@@ -1,11 +1,11 @@
 /******************************************************************************
  * Copyright @ Pengzhi Sun 2018, all rights reserved.
- * Licensed under the MIT License. See LICENSE file in the project root for full license information.  
+ * Licensed under the MIT License. See LICENSE file in the project root for full license information.
  *
  * File Name:   XmlFileConfigDemo.cs
  * Author:      Pengzhi Sun
  * Description: .Net Core XML format configuration file demos.
- * Reference:   https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/ 
+ * Reference:   https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/
  *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration
  *              https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Xml
  *              https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder
@@ -32,10 +32,10 @@ namespace DotNetCoreBootstrap.ConfigDemo
         {
             IConfigurationBuilder configBuilder = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
-                .AddXmlFile("appsettings.xml", 
-                optional: true, 
+                .AddXmlFile("appsettings.xml",
+                optional: true,
                 reloadOnChange: true);
-                
+
             IConfiguration config = configBuilder.Build();
 
             Action<string, Func<object>> getValueAction =
@@ -73,7 +73,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
                     return value;
                 });
 
-            // get array item value demo, using ':' delimiter and name attribute 
+            // get array item value demo, using ':' delimiter and name attribute
             getValueAction(
                 "array_items:array_item:item_1:item_setting",
                 () =>

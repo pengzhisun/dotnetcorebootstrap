@@ -1,6 +1,6 @@
 ﻿/******************************************************************************
  * Copyright @ Pengzhi Sun 2018, all rights reserved.
- * Licensed under the MIT License. See LICENSE file in the project root for full license information.  
+ * Licensed under the MIT License. See LICENSE file in the project root for full license information.
  *
  * File Name:   Program.cs
  * Author:      Pengzhi Sun
@@ -22,17 +22,12 @@ namespace DotNetCoreBootstrap.ConfigDemo
         /// <param name="args">The application command line arguments.</param>
         public static void Main(string[] args)
         {
-            Console.WriteLine(new string('#', 80));
-            Console.WriteLine($"# Begin .Net Core Configuartion Demos at {DateTime.Now}");
-            Console.WriteLine(new string('#', 80));
-            Console.WriteLine();
+            PrintMessageBlock("Begin .Net Core Configuartion Demos", '#');
 
             RunDemo("JsonFileConfigDemo", JsonFileConfigDemo.Run);
             RunDemo("XmlFileConfigDemo", XmlFileConfigDemo.Run);
 
-            Console.WriteLine(new string('#', 80));
-            Console.WriteLine($"# End .Net Core Configuartion Demos at {DateTime.Now}");
-            Console.WriteLine(new string('#', 80));
+            PrintMessageBlock("Begin .Net Core Configuartion Demos", '#');
         }
 
         /// <summary>
@@ -42,14 +37,32 @@ namespace DotNetCoreBootstrap.ConfigDemo
         /// <param name="demoAction">The demo action.</param>
         private static void RunDemo(string demoName, Action demoAction)
         {
-            Console.WriteLine(new string('*', 80));
-            Console.WriteLine($"* Run demo '{demoName}' at {DateTime.Now}");
-            Console.WriteLine(new string('*', 80));
-            Console.WriteLine();
+            PrintMessageBlock($"Run '{demoName}'", '*');
 
             demoAction();
 
             Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Print message to console.
+        /// </summary>
+        /// <param name="message">The message to be print.</param>
+        /// <param name="blockChar">The message block char.</param>
+        /// <param name="newLine">Print new line after message block.</param>
+        private static void PrintMessageBlock(
+            string message,
+            char blockChar,
+            bool newLine = true)
+        {
+            Console.WriteLine(new string(blockChar, 80));
+            Console.WriteLine($"{blockChar} [{DateTime.Now}] '{message}'");
+            Console.WriteLine(new string(blockChar, 80));
+
+            if (newLine)
+            {
+                Console.WriteLine();
+            }
         }
     }
 }
