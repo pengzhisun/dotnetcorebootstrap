@@ -28,6 +28,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
             RunDemo("XmlFileConfigDemo", XmlFileConfigDemo.Run);
             RunDemo("IniFileConfigDemo", IniFileConfigDemo.Run);
             RunDemo("InMemoryConfigDemo", InMemoryConfigDemo.Run);
+            RunDemo("EnvironmentVariablesConfigDemo", EnvironmentVariablesConfigDemo.Run);
 
             PrintMessageBlock("End .Net Core Configuartion Demos", '#');
         }
