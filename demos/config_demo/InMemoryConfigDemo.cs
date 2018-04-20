@@ -31,8 +31,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
         /// </summary>
         public static void Run()
         {
-            Dictionary<string, string> configDic =
-                new Dictionary<string, string>()
+            Dictionary<string, string> configDic = new Dictionary<string, string>()
                 {
                     { "str_setting_1", "str_value_1" },
                     { "int_setting_1", "1" },

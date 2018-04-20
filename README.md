@@ -88,6 +88,9 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [Environment variables configuration demo](demos/config_demo/EnvironmentVariablesConfigDemo.cs)
     * [How to use environment variables configuration in .Net Core](docs/config/how_to_use_env_vars_config.md)
 
+  * [Command line configuration demo](demos/config_demo/CommandLineConfigDemo.cs)
+    * [How to use command line configuration in .Net Core](docs/config/how_to_use_cmd_line_config.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)
