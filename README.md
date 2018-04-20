@@ -6,6 +6,8 @@ This bootstrap project provides the sample code and simple how-to guide for regu
 
 ## Prerequisites
 
+* [.NET Core 2.x SDK](https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.3.md)
+
 * [Visual Studio Code](https://code.visualstudio.com/download)
 
   Recommended Extensions:
@@ -64,8 +66,6 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [XML Tools (by Josh Johnson)](https://marketplace.visualstudio.com/items?itemName=DotJoshJohnson.xml)
 
     XML Formatting, XQuery, and XPath Tools for Visual Studio Code
-
-* [.NET Core 2.x SDK](https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.3.md)
 
 ## Demos
 
