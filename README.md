@@ -91,6 +91,10 @@ This bootstrap project provides the sample code and simple how-to guide for regu
 
   The *dotnet cli* cheatsheets.
 
+* [git cli](cheatsheets/git_cli.sh)
+
+  The *git cli* cheatsheets.
+
 ## References
 
 * [.NET Core Guide (docs.microsoft.com)](https://docs.microsoft.com/en-us/dotnet/core/index)
