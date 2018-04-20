@@ -32,11 +32,11 @@ namespace DotNetCoreBootstrap.ConfigDemo
         /// </summary>
         /// <param name="args">The command line arguments.</param>
         /// <examples>
-        /// dotnet run str_setting_1=cmd_str_value_1 /int_setting_1=2 /section1:nested_setting_1=cmd_nested_value_1 -nested_setting_2 cmd_nested_value_2
+        /// dotnet run str_setting_1=cmd_str_value_1 -int_setting_1=2 /section1:nested_setting_1=cmd_nested_value_1 -nested_setting_2 cmd_nested_value_2
         /// </examples>
         public static void Run(string[] args)
         {
-            // default command line arguments:
+            // receive input args or set default command line arguments:
             string[] cmdArgs = args.Any() ? args : new string[]
                 {
                     "str_setting_1=def_str_value_1",
@@ -46,16 +46,13 @@ namespace DotNetCoreBootstrap.ConfigDemo
                     "def_nested_value_2"
                 };
 
-            // raw in-memory configurations
+            // manual initialize switch mapping, reference: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-2.1&tabs=basicconfiguration#switch-mappings
             Dictionary<string, string> switchMapping = new Dictionary<string, string>()
                 {
-                    { "-str_setting_1", "str_setting_1" },
-                    { "-int_setting_1", "int_setting_1" },
-                    { "-nested_setting_1", "section1:nested_setting_1" },
+                    { "--nested_setting_1", "section1:nested_setting_1" },
                     { "-nested_setting_2", "section1:nested_setting_2" },
                 };
 
-            // override in-memory configurations with command line configurations
             IConfigurationBuilder configBuilder = new ConfigurationBuilder()
                 .AddCommandLine(cmdArgs, switchMapping);
 
