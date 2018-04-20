@@ -27,6 +27,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
             RunDemo("JsonFileConfigDemo", JsonFileConfigDemo.Run);
             RunDemo("XmlFileConfigDemo", XmlFileConfigDemo.Run);
             RunDemo("IniFileConfigDemo", IniFileConfigDemo.Run);
+            RunDemo("InMemoryConfigDemo", InMemoryConfigDemo.Run);
 
             PrintMessageBlock("End .Net Core Configuartion Demos", '#');
         }
