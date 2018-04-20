@@ -59,8 +59,8 @@
     ```csharp
     IConfigurationBuilder configBuilder = new ConfigurationBuilder()
         .SetBasePath(System.AppContext.BaseDirectory)
-        .AddJsonFile("appsettings.json", 
-        optional: true, 
+        .AddJsonFile("appsettings.json",
+        optional: true,
         reloadOnChange: true);
 
     IConfiguration config = configBuilder.Build();

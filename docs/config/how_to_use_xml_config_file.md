@@ -60,8 +60,8 @@
     ```csharp
     IConfigurationBuilder configBuilder = new ConfigurationBuilder()
         .SetBasePath(System.AppContext.BaseDirectory)
-        .AddXmlFile("appsettings.xml", 
-        optional: true, 
+        .AddXmlFile("appsettings.xml",
+        optional: true,
         reloadOnChange: true);
 
     IConfiguration config = configBuilder.Build();
