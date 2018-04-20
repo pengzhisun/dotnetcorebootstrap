@@ -26,8 +26,9 @@ namespace DotNetCoreBootstrap.ConfigDemo
 
             RunDemo("JsonFileConfigDemo", JsonFileConfigDemo.Run);
             RunDemo("XmlFileConfigDemo", XmlFileConfigDemo.Run);
+            RunDemo("IniFileConfigDemo", IniFileConfigDemo.Run);
 
-            PrintMessageBlock("Begin .Net Core Configuartion Demos", '#');
+            PrintMessageBlock("End .Net Core Configuartion Demos", '#');
         }
 
         /// <summary>
@@ -39,7 +40,14 @@ namespace DotNetCoreBootstrap.ConfigDemo
         {
             PrintMessageBlock($"Run '{demoName}'", '*');
 
-            demoAction();
+            try
+            {
+                demoAction();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.GetType().FullName}: {ex.Message}\r\nStack Trace:\r\n{ex.StackTrace}");
+            }
 
             Console.WriteLine();
         }
@@ -56,7 +64,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
             bool newLine = true)
         {
             Console.WriteLine(new string(blockChar, 80));
-            Console.WriteLine($"{blockChar} [{DateTime.Now}] '{message}'");
+            Console.WriteLine($"{blockChar} [{DateTime.Now:o}] {message}");
             Console.WriteLine(new string(blockChar, 80));
 
             if (newLine)

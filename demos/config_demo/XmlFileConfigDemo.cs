@@ -31,7 +31,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
         public static void Run()
         {
             IConfigurationBuilder configBuilder = new ConfigurationBuilder()
-                .SetBasePath(AppContext.BaseDirectory)
+                .SetBasePath(System.AppContext.BaseDirectory)
                 .AddXmlFile("appsettings.xml",
                 optional: true,
                 reloadOnChange: true);
