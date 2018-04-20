@@ -82,6 +82,9 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [INI format configuration file demo](demos/config_demo/IniFileConfigDemo.cs)
     * [How to use an INI format configuration file in .Net Core](docs/config/how_to_use_ini_config_file.md)
 
+  * [In-memory configuration demo](demos/config_demo/InMemoryConfigDemo.cs)
+    * [How to use In-memory configuration in .Net Core](docs/config/how_to_use_in_memory_config.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)
