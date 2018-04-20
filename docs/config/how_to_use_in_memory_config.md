@@ -2,9 +2,9 @@
 
 ## Steps
 
-1. Add Nuget package **Microsoft.Extensions.Configuration** reference via **dotnet add {project} package {package}** command.
+1. Add Nuget package `Microsoft.Extensions.Configuration` reference via `dotnet add {project} package {package}` command.
 
-    > {project} sample: demos/config_demo/config_demo.csproj
+    > `{project}` sample: demos/config_demo/config_demo.csproj
 
     ```bash
     dotnet add {project} package Microsoft.Extensions.Configuration
@@ -26,7 +26,7 @@
         };
     ```
 
-3. Add **Microsoft.Extensions.Configuration** namespace.
+3. Add `Microsoft.Extensions.Configuration` namespace.
 
     > e.g. [InMemoryConfigDemo.cs](../../demos/config_demo/InMemoryConfigDemo.cs)
     ```csharp
@@ -52,7 +52,7 @@
     ```
 
     * Get integer value:
-        * Add Nuget package **Microsoft.Extensions.Configuration.Binder** reference first.
+        * Add Nuget package `Microsoft.Extensions.Configuration.Binder` reference first.
         ```bash
         dotnet add {project} package Microsoft.Extensions.Configuration.Binder
         ```
@@ -62,7 +62,7 @@
         ```
 
     * Get [POCO](https://en.wikipedia.org/wiki/Plain_old_CLR_object) value:
-        * Add Nuget package **Microsoft.Extensions.Configuration.Binder** reference first.
+        * Add Nuget package `Microsoft.Extensions.Configuration.Binder` reference first.
         ```bash
         dotnet add {project} package Microsoft.Extensions.Configuration.Binder
         ```
@@ -81,7 +81,7 @@
         ```
 
     * Get array item value:
-        * Add Nuget package **Microsoft.Extensions.Configuration.Binder** reference first.
+        * Add Nuget package `Microsoft.Extensions.Configuration.Binder` reference first.
         ```bash
         dotnet add {project} package Microsoft.Extensions.Configuration.Binder
         ```
@@ -100,7 +100,7 @@
         ```
 
     * Get graph object value:
-        * Add Nuget package **Microsoft.Extensions.Configuration.Binder** reference first.
+        * Add Nuget package `Microsoft.Extensions.Configuration.Binder` reference first.
         ```bash
         dotnet add {project} package Microsoft.Extensions.Configuration.Binder
         ```

@@ -2,9 +2,9 @@
 
 ## Steps
 
-1. Add Nuget package **Microsoft.Extensions.Configuration.Xml** reference via **dotnet add {project} package {package}** command.
+1. Add Nuget package `Microsoft.Extensions.Configuration.Xml` reference via `dotnet add {project} package {package}` command.
 
-    > {project} sample: demos/config_demo/config_demo.csproj
+    > `{project}` sample: demos/config_demo/config_demo.csproj
 
     ```bash
     dotnet add {project} package Microsoft.Extensions.Configuration.Xml
@@ -47,7 +47,7 @@
     </Project>
     ```
 
-4. Add **Microsoft.Extensions.Configuration** namespace.
+4. Add `Microsoft.Extensions.Configuration` namespace.
 
     > e.g. [XmlFileConfigDemo.cs](../../demos/config_demo/XmlFileConfigDemo.cs)
     ```csharp
@@ -81,7 +81,7 @@
     ```
 
     * Get integer value:
-        * Add Nuget package **Microsoft.Extensions.Configuration.Binder** reference first.
+        * Add Nuget package `Microsoft.Extensions.Configuration.Binder` reference first.
         ```bash
         dotnet add {project} package Microsoft.Extensions.Configuration.Binder
         ```

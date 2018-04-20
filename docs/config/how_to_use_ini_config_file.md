@@ -2,9 +2,9 @@
 
 ## Steps
 
-1. Add Nuget package **Microsoft.Extensions.Configuration.Ini** reference via **dotnet add {project} package {package}** command.
+1. Add Nuget package `Microsoft.Extensions.Configuration.Ini` reference via `dotnet add {project} package {package}` command.
 
-    > {project} sample: demos/config_demo/config_demo.csproj
+    > `{project}` sample: demos/config_demo/config_demo.csproj
 
     ```bash
     dotnet add {project} package Microsoft.Extensions.Configuration.Ini
@@ -36,7 +36,7 @@
     </Project>
     ```
 
-4. Add **Microsoft.Extensions.Configuration** namespace.
+4. Add `Microsoft.Extensions.Configuration` namespace.
 
     > e.g. [IniFileConfigDemo.cs](../../demos/config_demo/IniFileConfigDemo.cs)
     ```csharp
@@ -70,7 +70,7 @@
     ```
 
     * Get integer value:
-        * Add Nuget package **Microsoft.Extensions.Configuration.Binder** reference first.
+        * Add Nuget package `Microsoft.Extensions.Configuration.Binder` reference first.
         ```bash
         dotnet add {project} package Microsoft.Extensions.Configuration.Binder
         ```

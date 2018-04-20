@@ -2,9 +2,9 @@
 
 ## Steps
 
-1. Add Nuget package **Microsoft.Extensions.Configuration.Json** reference via **dotnet add {project} package {package}** command.
+1. Add Nuget package `Microsoft.Extensions.Configuration.EnvironmentVariables` reference via `dotnet add {project} package {package}` command.
 
-    > {project} sample: demos/config_demo/config_demo.csproj
+    > `{project}` sample: demos/config_demo/config_demo.csproj
 
     ```bash
     dotnet add {project} package Microsoft.Extensions.Configuration.EnvironmentVariables
@@ -22,7 +22,7 @@
     Environment.SetEnvironmentVariable("array_section:1:item_setting", "item_value_2");
     ```
 
-3. Add **Microsoft.Extensions.Configuration** namespace.
+3. Add `Microsoft.Extensions.Configuration` namespace.
 
     > e.g. [EnvironmentVariablesConfigDemo.cs](../../demos/config_demo/EnvironmentVariablesConfigDemo.cs)
     ```csharp
@@ -53,7 +53,7 @@
     ```
 
     * Get integer value:
-        * Add Nuget package **Microsoft.Extensions.Configuration.Binder** reference first.
+        * Add Nuget package `Microsoft.Extensions.Configuration.Binder` reference first.
         ```bash
         dotnet add {project} package Microsoft.Extensions.Configuration.Binder
         ```
