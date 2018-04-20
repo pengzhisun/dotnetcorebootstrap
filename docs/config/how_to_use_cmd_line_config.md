@@ -86,7 +86,7 @@
     > Command line arguments description:
     * str_setting_1=cmd_str_value_1 (`key=value` pattern)
     * -int_setting_1=2 (`-key=value` pattern, also support `--key=value`)
-    * /section1:nested_setting_1=cmd_nested_value_1 (`/key=value` pattern, key also support ';' delimiter)
+    * /section1:nested_setting_1=cmd_nested_value_1 (`/key=value` pattern, key also support ':' delimiter)
     * -nested_setting_2 cmd_nested_value_2 (`-switch value` pattern, also support `--switch value`)
 
 ## References
