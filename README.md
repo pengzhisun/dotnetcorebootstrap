@@ -6,7 +6,7 @@ This bootstrap project provides the sample code and simple how-to guide for regu
 
 ## Prerequisites
 
-* [.NET Core 2.x SDK](https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.3.md)
+* [.NET Core 2.x SDK](https://github.com/dotnet/core/tree/master/release-notes)
 
 * [Visual Studio Code](https://code.visualstudio.com/download)
 
