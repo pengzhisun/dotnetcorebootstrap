@@ -1,10 +1,14 @@
+<!-- refer from: https://github.com/Azure/acs-engine/blob/master/.github/ISSUE_TEMPLATE.md -->
+
 <!-- Thanks for filing an issue!
-Before hitting the button, please answer these questions. 
-It's helpful to search the existing GitHub issues first. 
-It's likely that another user has already reported the issue you're facing, 
+Before hitting the button, please answer these questions.
+It's helpful to search the existing GitHub issues first.
+It's likely that another user has already reported the issue you're facing,
 or it's a known issue that we're already aware of-->
 
+<!-- markdownlint-disable MD041 -->
 **Is this a request for help?**:
+<!-- markdownlint-enable MD041 -->
 
 ---
 
@@ -28,12 +32,8 @@ explain why.
 
 **What happened**:
 
-
 **What you expected to happen**:
-
 
 **How to reproduce it** (as minimally and precisely as possible):
 
-
 **Anything else we need to know**:
-
