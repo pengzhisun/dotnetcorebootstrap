@@ -55,7 +55,7 @@
     > could use double dash '--' as section delimiter, refer [here](https://docs.microsoft.com/en-us/aspnet/core/security/key-vault-configuration?view=aspnetcore-2.1&tabs=aspnetcore2x#creating-key-vault-secrets-and-loading-configuration-values-basic-sample) for more detail.
 
 4. Set `vaultName`, `clientId`, `clientSecret` in User Secrets.
-    > For security consideration, **NEVER save these info in code or config file**, refer this guide: [How to use user secrets configuration in .Net Core](docs/config/how_to_use_user_secrets_config.md)
+    > For security consideration, **NEVER save these info in code or config file**, refer this guide: [How to use user secrets configuration in .Net Core](how_to_use_user_secrets_config.md)
 
     ```bash
     dotnet user-secrets set AzureKeyVaultConfigDemo:vaultName {key_vault_name}
@@ -72,7 +72,7 @@
 
 6. Get `vaultName`, `clientId`, `clientSecret` from User Secrets.
 
-    > refer this guide: [How to use user secrets configuration in .Net Core](docs/config/how_to_use_user_secrets_config.md)
+    > refer this guide: [How to use user secrets configuration in .Net Core](how_to_use_user_secrets_config.md)
     > e.g. [AzureKeyVaultConfigDemo.cs](../../demos/config_demo/AzureKeyVaultConfigDemo.cs)
 
     ```csharp
