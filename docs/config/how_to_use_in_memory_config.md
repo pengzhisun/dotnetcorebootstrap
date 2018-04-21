@@ -132,3 +132,4 @@
 * [Microsoft.Extensions.Configuration Namespace (docs.microsoft.com)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration)
 * [Microsoft.Extensions.Configuration (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Configuration)
 * [Microsoft.Extensions.Configuration.Binder (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder)
+* [Config (github.com)](https://github.com/aspnet/Configuration/tree/dev/src/Config)

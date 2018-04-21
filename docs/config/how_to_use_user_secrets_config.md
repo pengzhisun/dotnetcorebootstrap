@@ -79,3 +79,4 @@
 * [Microsoft.Extensions.Configuration Namespace (docs.microsoft.com)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration)
 * [Microsoft.Extensions.Configuration.UserSecrets (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets)
 * [Microsoft.Extensions.Configuration.Binder (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder)
+* [Config.UserSecrets (github.com)](https://github.com/aspnet/Configuration/tree/dev/src/Config.UserSecrets)

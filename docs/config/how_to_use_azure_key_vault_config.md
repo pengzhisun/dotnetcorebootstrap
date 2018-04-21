@@ -132,3 +132,4 @@
 * [Microsoft.Extensions.Configuration.UserSecrets (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets)
 * [Microsoft.Extensions.Configuration.AzureKeyVault (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.AzureKeyVault)
 * [Microsoft.Extensions.Configuration.Binder (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder)
+* [Config.AzureKeyVault (github.com)](https://github.com/aspnet/Configuration/tree/dev/src/Config.AzureKeyVault)
