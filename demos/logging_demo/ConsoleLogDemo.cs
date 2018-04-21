@@ -6,10 +6,10 @@
  * Author:      Pengzhi Sun
  * Description: .Net Core console logging demos.
  * Reference:   https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/
- *              https://github.com/aspnet/Logging/wiki/Guidelines
- *              https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging
- *              https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging.console
+ *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging
+ *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.console
  *              https://github.com/aspnet/Logging
+ *              https://github.com/aspnet/Logging/wiki/Guidelines
  *              https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging.Abstractions/LogLevel.cs
  *              https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging.Console/ConsoleLoggerFactoryExtensions.cs
  *              https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging.Console/ConfigurationConsoleLoggerSettings.cs
@@ -65,8 +65,7 @@ namespace DotNetCoreBootstrap.LoggingDemo
 
                         return false;
                     },
-                    includeScopes: false
-                );
+                    includeScopes: false);
 
             ILoggerFactory configLoggerFactory = new LoggerFactory();
             configLoggerFactory.AddConsole(consoleConfig);
@@ -102,7 +101,7 @@ namespace DotNetCoreBootstrap.LoggingDemo
                         logger.LogCritical(eventId, "LogCritical from {LOGGER}", loggerName);
                     }
 
-                    // wait console flush
+                    // flush the backgroud console thread
                     Thread.Sleep(TimeSpan.FromMilliseconds(10));
 
                     Console.WriteLine();

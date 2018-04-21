@@ -101,6 +101,9 @@ This bootstrap project provides the sample code and simple how-to guide for regu
 
   This project contains following demo scenarios:
 
+  * [Console logging demo](demos/logging_demo/ConsoleLogDemo.cs)
+    * [How to use console log in .Net Core](docs/logging/how_to_use_console_log.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)
