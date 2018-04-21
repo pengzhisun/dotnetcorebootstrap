@@ -1,0 +1,14 @@
+{
+    "Logging": {
+        "Console": {
+            "IncludeScopes": "true",
+            "LogLevel": {
+                "Default": "Critical",
+                "DotNetCoreBootstrap": "Trace",
+                "Microsoft.Extensions": "Error",
+                "Logging": "Warninig",
+                "Microsoft.Extensions.Config": "Information"
+            }
+        }
+    }
+}
