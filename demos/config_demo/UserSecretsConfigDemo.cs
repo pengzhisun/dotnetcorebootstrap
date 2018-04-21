@@ -118,8 +118,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
                     return value;
                 });
 
-            // print user secrets file info:
-
+            // print user secrets file
             Console.WriteLine();
             Assembly assembly = Assembly.GetExecutingAssembly();
             UserSecretsIdAttribute attribute =

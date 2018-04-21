@@ -8,6 +8,7 @@
 
     ```bash
     dotnet add {project} package Microsoft.Extensions.Configuration.CommandLine
+    dotnet restore
     ```
 
 2. Defines a arguments array to receive input arguments or set default value.
@@ -80,12 +81,12 @@
 
     > `{project}` sample: demos/config_demo/config_demo.csproj
     ```bash
-    dotnet run -p {project} str_setting_1=cmd_str_value_1 -int_setting_1=2 /section1:nested_setting_1=cmd_nested_value_1 -nested_setting_2 cmd_nested_value_2
+    dotnet run -p {project} str_setting_1=cmd_str_value_1 /int_setting_1=2 /section1:nested_setting_1=cmd_nested_value_1 -nested_setting_2 cmd_nested_value_2
     ```
 
     > Command line arguments description:
     * str_setting_1=cmd_str_value_1 (`key=value` pattern)
-    * -int_setting_1=2 (`-key=value` pattern, also support `--key=value`)
+    * /int_setting_1=2 (`/key=value` pattern)
     * /section1:nested_setting_1=cmd_nested_value_1 (`/key=value` pattern, key also support ':' delimiter)
     * -nested_setting_2 cmd_nested_value_2 (`-switch value` pattern, also support `--switch value`)
 

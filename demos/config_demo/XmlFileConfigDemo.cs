@@ -84,7 +84,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
                     return value;
                 });
 
-            // print appsettings.xml
+            // print appsettings.xml file content
             Console.WriteLine();
             string appSettingsFilePath =
                 Path.Combine(AppContext.BaseDirectory, "appsettings.xml");

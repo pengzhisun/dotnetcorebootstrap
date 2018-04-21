@@ -14,6 +14,8 @@
 namespace DotNetCoreBootstrap.ConfigDemo
 {
     using System;
+    using System.Collections;
+    using System.Linq;
     using Microsoft.Extensions.Configuration;
 
     /// <summary>
@@ -84,6 +86,16 @@ namespace DotNetCoreBootstrap.ConfigDemo
                     string value = config["array_section:0:item_setting"];
                     return value;
                 });
+
+            // print environment variables
+            Console.WriteLine();
+            Console.WriteLine("[Trace] environment variables:");
+            IDictionary dic = Environment.GetEnvironmentVariables();
+            string variablesContent =
+                string.Join(
+                    Environment.NewLine,
+                    dic.Keys.Cast<string>().Select(k=>$"{k} = {dic[k]}"));
+            Console.WriteLine(variablesContent);
         }
     }
 }

@@ -14,6 +14,8 @@
 namespace DotNetCoreBootstrap.ConfigDemo
 {
     using System;
+    using System.IO;
+    using System.Text;
     using Microsoft.Extensions.Configuration;
 
     /// <summary>
@@ -72,6 +74,15 @@ namespace DotNetCoreBootstrap.ConfigDemo
                         config.GetValue<int>("int_setting_1", defaultValue: 0);
                     return value;
                 });
+
+            // print appsettings.ini file content
+            Console.WriteLine();
+            string appSettingsFilePath =
+                Path.Combine(AppContext.BaseDirectory, "appsettings.ini");
+            Console.WriteLine($"[Trace] config file path: {appSettingsFilePath}");
+            string appSettingsFileContent =
+                File.ReadAllText(appSettingsFilePath, Encoding.UTF8);
+            Console.WriteLine(appSettingsFileContent);
         }
     }
 }

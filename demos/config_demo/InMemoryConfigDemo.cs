@@ -15,6 +15,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Extensions.Configuration;
 
     /// <summary>
@@ -106,6 +107,15 @@ namespace DotNetCoreBootstrap.ConfigDemo
                     string value = graphSection.graph_sub_section.graph_setting_1;
                     return value;
                 });
+
+            // print config dictionary in memory
+            Console.WriteLine();
+            Console.WriteLine("[Trace] config dictionary in memory:");
+            string configDicContent =
+                string.Join(
+                    Environment.NewLine,
+                    configDic.Select(kvp => $"{kvp.Key} = {kvp.Value}"));
+            Console.WriteLine(configDicContent);
         }
 
         /// <summary>
