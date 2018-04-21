@@ -67,7 +67,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
                 {
                     { "str-secret-1", "secret_value_1" },
                     { "int-secret-1", "2" },
-                    { "section-1--nested-secret-3", "nested_value3" },
+                    { "section-1--nested-secret-3", "nested_value_3" },
                 };
 
             // set secrets to azure key vault

@@ -94,6 +94,9 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [User secrets configuration demo](demos/config_demo/UserSecretsConfigDemo.cs)
     * [How to use user secrets configuration in .Net Core](docs/config/how_to_use_user_secrets_config.md)
 
+  * [Azure Key Vault configuration demo](demos/config_demo/AzureKeyVaultConfigDemo.cs)
+    * [How to use Azure Key Vault configuration in .Net Core](docs/config/how_to_use_azure_key_vault_config.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)
