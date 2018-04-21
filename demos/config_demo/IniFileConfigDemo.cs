@@ -22,8 +22,9 @@ namespace DotNetCoreBootstrap.ConfigDemo
     /// Defines the INI format configuration file demo class.
     /// </summary>
     /// <remarks>
-    /// Depends on Nuget packages: Microsoft.Extensions.Configuration.Ini
-    /// and Microsoft.Extensions.Configuration.Binder .
+    /// Depends on Nuget packages:
+    /// Microsoft.Extensions.Configuration.Ini
+    /// Microsoft.Extensions.Configuration.Binder
     /// </remarks>
     internal static class IniFileConfigDemo
     {

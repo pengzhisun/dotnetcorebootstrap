@@ -22,8 +22,9 @@ namespace DotNetCoreBootstrap.ConfigDemo
     /// Defines the In-memory configuration demo class.
     /// </summary>
     /// <remarks>
-    /// Depends on Nuget packages: Microsoft.Extensions.Configuration
-    /// and Microsoft.Extensions.Configuration.Binder .
+    /// Depends on Nuget packages:
+    /// Microsoft.Extensions.Configuration
+    /// Microsoft.Extensions.Configuration.Binder
     /// </remarks>
     internal static class InMemoryConfigDemo
     {

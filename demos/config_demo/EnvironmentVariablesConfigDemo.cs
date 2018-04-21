@@ -22,8 +22,9 @@ namespace DotNetCoreBootstrap.ConfigDemo
     /// Defines the environment variables configuration demo class.
     /// </summary>
     /// <remarks>
-    /// Depends on Nuget packages: Microsoft.Extensions.Configuration.EnvironmentVariables
-    /// and Microsoft.Extensions.Configuration.Binder .
+    /// Depends on Nuget packages:
+    /// Microsoft.Extensions.Configuration.EnvironmentVariables
+    /// Microsoft.Extensions.Configuration.Binder
     /// </remarks>
     internal static class EnvironmentVariablesConfigDemo
     {

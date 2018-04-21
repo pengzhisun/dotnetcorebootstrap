@@ -22,8 +22,9 @@ namespace DotNetCoreBootstrap.ConfigDemo
     /// Defines the command line configuration demo class.
     /// </summary>
     /// <remarks>
-    /// Depends on Nuget packages: Microsoft.Extensions.Configuration.CommandLine
-    /// and Microsoft.Extensions.Configuration.Binder .
+    /// Depends on Nuget packages:
+    /// Microsoft.Extensions.Configuration.CommandLine
+    /// Microsoft.Extensions.Configuration.Binder
     /// </remarks>
     internal static class CommandLineConfigDemo
     {

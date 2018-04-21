@@ -6,6 +6,7 @@
  * Author:      Pengzhi Sun
  * Description: .Net Core user secrets configuration demos.
  * Reference:   https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/
+ *              https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets
  *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration
  *              https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets
  *              https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder
@@ -25,8 +26,10 @@ namespace DotNetCoreBootstrap.ConfigDemo
     /// Defines the user secrets configuration demo class.
     /// </summary>
     /// <remarks>
-    /// Depends on Nuget packages: Microsoft.Extensions.Configuration.UserSecrets
-    /// and Microsoft.Extensions.Configuration.Binder .
+    /// Depends on Nuget packages:
+    /// Microsoft.Extensions.SecretManager.Tools
+    /// Microsoft.Extensions.Configuration.UserSecrets
+    /// Microsoft.Extensions.Configuration.Binder
     /// </remarks>
     internal sealed class UserSecretsConfigDemo
     {
