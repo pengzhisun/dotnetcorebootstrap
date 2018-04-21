@@ -8,6 +8,7 @@
 
     ```bash
     dotnet add {project} package Microsoft.Extensions.Configuration.EnvironmentVariables
+    dotnet restore
     ```
 
 2. Set environment variables.

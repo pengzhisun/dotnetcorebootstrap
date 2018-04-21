@@ -8,6 +8,7 @@
 
     ```bash
     dotnet add {project} package Microsoft.Extensions.Configuration
+    dotnet restore
     ```
 
 2. Create a configuration dictonary.

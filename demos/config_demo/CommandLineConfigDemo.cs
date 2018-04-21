@@ -32,7 +32,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
         /// </summary>
         /// <param name="args">The command line arguments.</param>
         /// <examples>
-        /// dotnet run str_setting_1=cmd_str_value_1 -int_setting_1=2 /section1:nested_setting_1=cmd_nested_value_1 -nested_setting_2 cmd_nested_value_2
+        /// dotnet run str_setting_1=cmd_str_value_1 /int_setting_1=2 /section1:nested_setting_1=cmd_nested_value_1 -nested_setting_2 cmd_nested_value_2
         /// </examples>
         public static void Run(string[] args)
         {
@@ -100,6 +100,12 @@ namespace DotNetCoreBootstrap.ConfigDemo
                         config.GetValue<int>("int_setting_1", defaultValue: 0);
                     return value;
                 });
+
+            // print command line arguments
+            Console.WriteLine();
+            Console.WriteLine("[Trace] command line arguments:");
+            string cmdArgsContent = string.Join(Environment.NewLine, cmdArgs);
+            Console.WriteLine(cmdArgsContent);
         }
     }
 }

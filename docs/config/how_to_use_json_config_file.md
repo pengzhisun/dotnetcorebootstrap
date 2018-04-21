@@ -8,6 +8,7 @@
 
     ```bash
     dotnet add {project} package Microsoft.Extensions.Configuration.Json
+    dotnet restore
     ```
 
 2. Create JSON configuration file

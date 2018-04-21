@@ -1,65 +1,57 @@
-# How to use an INI format configuration file in .Net Core
+# How to use user secrets configuration in .Net Core
 
 ## Steps
 
-1. Add Nuget package `Microsoft.Extensions.Configuration.Ini` reference via `dotnet add {project} package {package}` command.
+1. Add Nuget package `Microsoft.Extensions.Configuration.UserSecrets` reference via `dotnet add {project} package {package}` command.
 
     > `{project}` sample: demos/config_demo/config_demo.csproj
 
     ```bash
-    dotnet add {project} package Microsoft.Extensions.Configuration.Ini
+    dotnet add {project} package Microsoft.Extensions.Configuration.UserSecrets
     dotnet restore
     ```
 
-2. Create INI configuration file
+2. Add `UserSecretsId` in csproj file, typically use a GUID value.
 
-   > e.g. [appsettings.ini](../../demos/config_demo/appsettings.ini)
+   > e.g. [config_demo.csproj](../../demos/config_demo/config_demo.csproj)
 
-    ```ini
-    str_setting_1=str_value_1
-    int_setting_1=1
-
-    [section1]
-    nested_setting_1=nested_value_1
+    ```xml
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp2.0</TargetFramework>
+        <UserSecretsId>{unique_id}</UserSecretsId>
+    </PropertyGroup>
     ```
 
-3. Add INI file to .csproj file.
+3. Set user secrets via `dotnet user-secrets set {key} {value}` command.
 
-    > e.g. [config_demo.csproj](../../demos/config_demo/config_demo.csproj)
-    ```xml
-    <Project Sdk="Microsoft.NET.Sdk">
-        ...
-        <ItemGroup>
-            <Content Include="appsettings.ini">
-                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            </Content>
-        </ItemGroup>
-    </Project>
+    > e.g. [UserSecretsConfigDemo.cs](../../demos/config_demo/UserSecretsConfigDemo.cs)
+    ```bash
+    dotnet user-secrets set str_setting_1 str_value_1
+    dotnet user-secrets set int_setting_1 1
+    dotnet user-secrets set section1:nested_setting_1 nested_value_1
     ```
 
 4. Add `Microsoft.Extensions.Configuration` namespace.
 
-    > e.g. [IniFileConfigDemo.cs](../../demos/config_demo/IniFileConfigDemo.cs)
+    > e.g. [UserSecretsConfigDemo.cs](../../demos/config_demo/UserSecretsConfigDemo.cs)
     ```csharp
     using Microsoft.Extensions.Configuration;
     ```
 
 5. Get [IConfiguration](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.iconfiguration) instance via [ConfigurationBuilder](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.configurationbuilder).
 
-    > e.g. [IniFileConfigDemo.cs](../../demos/config_demo/IniFileConfigDemo.cs)
+    > e.g. [UserSecretsConfigDemo.cs](../../demos/config_demo/UserSecretsConfigDemo.cs)
     ```csharp
     IConfigurationBuilder configBuilder = new ConfigurationBuilder()
-        .SetBasePath(System.AppContext.BaseDirectory)
-        .AddIniFile("appsettings.ini",
-        optional: true,
-        reloadOnChange: true);
+        .AddUserSecrets<UserSecretsConfigDemo>();
 
     IConfiguration config = configBuilder.Build();
     ```
 
 6. Get setting value via [IConfiguration](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.iconfiguration) instance.
 
-    > e.g. [IniFileConfigDemo.cs](../../demos/config_demo/IniFileConfigDemo.cs)
+    > e.g. [UserSecretsConfigDemo.cs](../../demos/config_demo/UserSecretsConfigDemo.cs)
     * Get string value:
     ```csharp
     string value = config["str_setting_1"];
@@ -83,6 +75,7 @@
 ## References
 
 * [Configuration in ASP.NET Core (docs.microsoft.com)](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/)
+* [Safe storage of app secrets in development in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets)
 * [Microsoft.Extensions.Configuration Namespace (docs.microsoft.com)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration)
-* [Microsoft.Extensions.Configuration.Ini (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Ini)
+* [Microsoft.Extensions.Configuration.UserSecrets (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets)
 * [Microsoft.Extensions.Configuration.Binder (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder)

@@ -8,6 +8,7 @@
 
     ```bash
     dotnet add {project} package Microsoft.Extensions.Configuration.Xml
+    dotnet restore
     ```
 
 2. Create XML configuration file

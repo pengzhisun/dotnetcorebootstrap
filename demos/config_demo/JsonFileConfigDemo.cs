@@ -14,6 +14,8 @@
 namespace DotNetCoreBootstrap.ConfigDemo
 {
     using System;
+    using System.IO;
+    using System.Text;
     using Microsoft.Extensions.Configuration;
 
     /// <summary>
@@ -81,6 +83,15 @@ namespace DotNetCoreBootstrap.ConfigDemo
                     string value = config["array_section:0:item_setting"];
                     return value;
                 });
+
+            // print appsettings.json file content
+            Console.WriteLine();
+            string appSettingsFilePath =
+                Path.Combine(AppContext.BaseDirectory, "appsettings.json");
+            Console.WriteLine($"[Trace] config file path: {appSettingsFilePath}");
+            string appSettingsFileContent =
+                File.ReadAllText(appSettingsFilePath, Encoding.UTF8);
+            Console.WriteLine(appSettingsFileContent);
         }
     }
 }

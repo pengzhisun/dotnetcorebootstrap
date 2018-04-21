@@ -91,6 +91,9 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [Command line configuration demo](demos/config_demo/CommandLineConfigDemo.cs)
     * [How to use command line configuration in .Net Core](docs/config/how_to_use_cmd_line_config.md)
 
+  * [User secrets configuration demo](demos/config_demo/UserSecretsConfigDemo.cs)
+    * [How to use user secrets configuration in .Net Core](docs/config/how_to_use_user_secrets_config.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)
