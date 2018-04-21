@@ -31,6 +31,7 @@ namespace DotNetCoreBootstrap.ConfigDemo
             RunDemo("EnvironmentVariablesConfigDemo", EnvironmentVariablesConfigDemo.Run);
             RunDemo("CommandLineConfigDemo", () => CommandLineConfigDemo.Run(args));
             RunDemo("UserSecretsConfigDemo", UserSecretsConfigDemo.Run);
+            RunDemo("AzureKeyVaultConfigDemo", AzureKeyVaultConfigDemo.Run);
 
             PrintMessageBlock("End .Net Core Configuartion Demos", '#');
         }
