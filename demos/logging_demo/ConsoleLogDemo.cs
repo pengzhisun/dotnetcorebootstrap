@@ -30,8 +30,20 @@ namespace DotNetCoreBootstrap.LoggingDemo
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
+    /// <summary>
+    /// Defines the console log demo class.
+    /// </summary>
+    /// <remarks>
+    /// Depends on Nuget packages:
+    /// Microsoft.Extensions.Configuration.Binder
+    /// Microsoft.Extensions.Configuration.Json
+    /// Microsoft.Extensions.Logging.Console
+    /// </remarks>
     internal static class ConsoleLogDemo
     {
+        /// <summary>
+        /// Run the demo.
+        /// </summary>
         public static void Run()
         {
             IConfigurationBuilder configBuilder = new ConfigurationBuilder()
