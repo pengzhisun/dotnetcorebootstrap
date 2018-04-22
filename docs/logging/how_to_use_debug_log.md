@@ -50,8 +50,7 @@
                     }
 
                     return false;
-                },
-                includeScopes: false);
+                });
         ```
 
     > debug log not support config
