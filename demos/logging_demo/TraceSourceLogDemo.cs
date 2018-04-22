@@ -40,6 +40,10 @@ namespace DotNetCoreBootstrap.LoggingDemo
         /// </summary>
         public static void Run()
         {
+            // in debugging mode, the default trace listner write logs to debug console.
+            Console.WriteLine($"Is debugging: {Debugger.IsAttached}");
+            Console.WriteLine();
+
             // create file based logger factory
             string logFilePath =
                 Path.Combine(AppContext.BaseDirectory, "TraceSourceLogDemo.log");
