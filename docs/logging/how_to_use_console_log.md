@@ -49,14 +49,14 @@
 
     > e.g. [ConsoleLogDemo.cs](../../demos/logging_demo/ConsoleLogDemo.cs)
 
-    * Create default logger factory, using [AddConsole()](https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging.consoleloggerextensions.addconsole?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ConsoleLoggerExtensions_AddConsole_Microsoft_Extensions_Logging_ILoggerFactory_) method.
+    * Create default logger factory, using [AddConsole()](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.consoleloggerextensions.addconsole?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ConsoleLoggerExtensions_AddConsole_Microsoft_Extensions_Logging_ILoggerFactory_) method.
         > the default log level is Information, and the includeScopes value is false.
         ```csharp
         ILoggerFactory defaultLoggerFactory = new LoggerFactory();
         defaultLoggerFactory.AddConsole();
         ```
 
-    * Create runtime logger factory, using [AddConsole(Func<String,LogLevel,Boolean>)](https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging.consoleloggerextensions.addconsole?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ConsoleLoggerExtensions_AddConsole_Microsoft_Extensions_Logging_ILoggerFactory_System_Func_System_String_Microsoft_Extensions_Logging_LogLevel_System_Boolean__System_Boolean_) method.
+    * Create runtime logger factory, using [AddConsole(Func<String,LogLevel,Boolean>)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.consoleloggerextensions.addconsole?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ConsoleLoggerExtensions_AddConsole_Microsoft_Extensions_Logging_ILoggerFactory_System_Func_System_String_Microsoft_Extensions_Logging_LogLevel_System_Boolean__System_Boolean_) method.
         > coud define custom logic in filter function
         ```csharp
         ILoggerFactory runtimeLoggerFactory = new LoggerFactory();
@@ -79,7 +79,7 @@
                 includeScopes: false);
         ```
 
-    * Create logger factory based on config file, using [AddConsole(IConsoleLoggerSettings)](https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging.consoleloggerextensions.addconsole?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ConsoleLoggerExtensions_AddConsole_Microsoft_Extensions_Logging_ILoggerFactory_Microsoft_Extensions_Logging_Console_IConsoleLoggerSettings_) method.
+    * Create logger factory based on config file, using [AddConsole(IConsoleLoggerSettings)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.consoleloggerextensions.addconsole?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ConsoleLoggerExtensions_AddConsole_Microsoft_Extensions_Logging_ILoggerFactory_Microsoft_Extensions_Logging_Console_IConsoleLoggerSettings_) method.
         > refer this guide: [How to use a JSON format configuration file in .Net Core](../config/how_to_use_json_config_file.md)
         ```csharp
         IConfigurationBuilder configBuilder = new ConfigurationBuilder()
@@ -96,14 +96,14 @@
             configLoggerFactory.AddConsole(consoleConfig);
         ```
 
-5. Create logger instance via [CreateLogger(loggerName)](https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging.iloggerfactory.createlogger?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ILoggerFactory_CreateLogger_System_String_) or [CreateLogger&lt;T&gt;()](https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging.loggerfactoryextensions.createlogger?view=aspnetcore-2.0#Microsoft_Extensions_Logging_LoggerFactoryExtensions_CreateLogger__1_Microsoft_Extensions_Logging_ILoggerFactory_) method.
+5. Create logger instance via [CreateLogger(loggerName)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.iloggerfactory.createlogger?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ILoggerFactory_CreateLogger_System_String_) or [CreateLogger&lt;T&gt;()](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loggerfactoryextensions.createlogger?view=aspnetcore-2.0#Microsoft_Extensions_Logging_LoggerFactoryExtensions_CreateLogger__1_Microsoft_Extensions_Logging_ILoggerFactory_) method.
     > e.g. [ConsoleLogDemo.cs](../../demos/logging_demo/ConsoleLogDemo.cs)
     ```csharp
     ILogger defaultLogger = factory.CreateLogger("DefaultLogger");
     ILogger demoLogger = factory.CreateLogger<ConsoleLogDemo>();
     ```
 
-6. Write log message via [LoggerExtensions](https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging.loggerextensions?view=aspnetcore-2.0).
+6. Write log message via [LoggerExtensions](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loggerextensions?view=aspnetcore-2.0).
 
     > e.g. [ConsoleLogDemo.cs](../../demos/logging_demo/ConsoleLogDemo.cs)
 
@@ -118,7 +118,7 @@
     logger.LogCritical(eventId, "LogCritical from {LOGGER}", loggerName);
     ```
 
-    > could use [BeginScope](https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging.loggerextensions.beginscope?view=aspnetcore-2.0#Microsoft_Extensions_Logging_LoggerExtensions_BeginScope_Microsoft_Extensions_Logging_ILogger_System_String_System_Object___) block to group a set of log messages.
+    > could use [BeginScope](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loggerextensions.beginscope?view=aspnetcore-2.0#Microsoft_Extensions_Logging_LoggerExtensions_BeginScope_Microsoft_Extensions_Logging_ILogger_System_String_System_Object___) block to group a set of log messages.
     ```csharp
     string loggerName = "{logger_name}";
     EventId eventId = new EventId(1001, "ConsoleLogDemoEvent");
@@ -142,8 +142,8 @@
 
 * [Logging in ASP.NET Core (docs.microsoft.com)](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/)
 * [Logging Guidelines (github.com)](https://github.com/aspnet/Logging/wiki/Guidelines)
-* [Microsoft.Extensions.Logging Namespace (docs.microsoft.com)](https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging)
-* [Microsoft.Extensions.Logging.Console Namespace (docs.microsoft.com)](https://docs.microsoft.com/zh-cn/dotnet/api/microsoft.extensions.logging.console)
+* [Microsoft.Extensions.Logging Namespace (docs.microsoft.com)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging)
+* [Microsoft.Extensions.Logging.Console Namespace (docs.microsoft.com)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.console)
 * [Microsoft.Extensions.Logging (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Logging)
 * [Microsoft.Extensions.Logging.Console (nuget.org)](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console)
 * [Microsoft.Extensions.Logging (github.com)](https://github.com/aspnet/Logging/tree/dev/src/Microsoft.Extensions.Logging)
