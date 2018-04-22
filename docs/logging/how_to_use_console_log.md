@@ -10,54 +10,31 @@
     dotnet add {project} package Microsoft.Extensions.Logging.Console
     dotnet restore
     ```
-
-2. Add logging configuration file.
-
-   > e.g. [ConsoleLogDemoConfig.json](../../demos/logging_demo/ConsoleLogDemoConfig.json), refer this guide: [How to use a JSON format configuration file in .Net Core](../config/how_to_use_json_config_file.md)
-    ```json
-    {
-        "Logging": {
-            "Console": {
-                "IncludeScopes": "true",
-                "LogLevel": {
-                    "Default": "Critical",
-                    "DotNetCoreBootstrap": "Trace",
-                    "Microsoft.Extensions": "Error",
-                    "Logging": "Warninig",
-                    "Microsoft.Extensions.Config": "Information"
-                }
-            }
-        }
-    }
-    ```
-    > the logger will filter the log level by following path:
-    * "System.Threading.Tasks.Task"
-    * "System.Threading.Tasks"
-    * "System.Threading"
-    * "System"
-    * "Default", the default switch, e.g. "Default": "Critical"
-    * LogLevel.None, if no swtich found
-
-3. Add `Microsoft.Extensions.Logging` namespace.
+    
+2. Add `Microsoft.Extensions.Logging` namespace.
 
     > e.g. [ConsoleLogDemo.cs](../../demos/logging_demo/ConsoleLogDemo.cs)
     ```csharp
     using Microsoft.Extensions.Logging;
     ```
 
-4. Create logger factory.
+3. Create logger factory.
 
     > e.g. [ConsoleLogDemo.cs](../../demos/logging_demo/ConsoleLogDemo.cs)
 
     * Create default logger factory, using [AddConsole()](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.consoleloggerextensions.addconsole?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ConsoleLoggerExtensions_AddConsole_Microsoft_Extensions_Logging_ILoggerFactory_) method.
+    
         > the default log level is Information, and the includeScopes value is false.
+        
         ```csharp
         ILoggerFactory defaultLoggerFactory = new LoggerFactory();
         defaultLoggerFactory.AddConsole();
         ```
 
     * Create runtime logger factory, using [AddConsole(Func<String,LogLevel,Boolean>)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.consoleloggerextensions.addconsole?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ConsoleLoggerExtensions_AddConsole_Microsoft_Extensions_Logging_ILoggerFactory_System_Func_System_String_Microsoft_Extensions_Logging_LogLevel_System_Boolean__System_Boolean_) method.
+    
         > coud define custom logic in filter function
+        
         ```csharp
         ILoggerFactory runtimeLoggerFactory = new LoggerFactory();
         runtimeLoggerFactory
@@ -80,7 +57,37 @@
         ```
 
     * Create logger factory based on config file, using [AddConsole(IConsoleLoggerSettings)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.consoleloggerextensions.addconsole?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ConsoleLoggerExtensions_AddConsole_Microsoft_Extensions_Logging_ILoggerFactory_Microsoft_Extensions_Logging_Console_IConsoleLoggerSettings_) method.
-        > refer this guide: [How to use a JSON format configuration file in .Net Core](../config/how_to_use_json_config_file.md)
+    
+        > Add a config file, e.g. [ConsoleLogDemoConfig.json](../../demos/logging_demo/ConsoleLogDemoConfig.json), refer this guide: [How to use a JSON format configuration file in .Net Core](../config/how_to_use_json_config_file.md)
+     
+        ```json
+        {
+            "Logging": {
+                "Console": {
+                    "IncludeScopes": "true",
+                    "LogLevel": {
+                        "Default": "Critical",
+                        "DotNetCoreBootstrap": "Trace",
+                        "Microsoft.Extensions": "Error",
+                        "Logging": "Warninig",
+                        "Microsoft.Extensions.Config": "Information"
+                    }
+                }
+            }
+        }
+        ```
+        
+        > the logger will filter the log level by following path:
+        
+        * "System.Threading.Tasks.Task"
+        * "System.Threading.Tasks"
+        * "System.Threading"
+        * "System"
+        * "Default", the default switch, e.g. "Default": "Critical"
+        * LogLevel.None, if no swtich found
+
+        > Create logger factory based on console config section.
+        
         ```csharp
         IConfigurationBuilder configBuilder = new ConfigurationBuilder()
                 .SetBasePath(System.AppContext.BaseDirectory)
@@ -96,14 +103,16 @@
             configLoggerFactory.AddConsole(consoleConfig);
         ```
 
-5. Create logger instance via [CreateLogger(loggerName)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.iloggerfactory.createlogger?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ILoggerFactory_CreateLogger_System_String_) or [CreateLogger&lt;T&gt;()](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loggerfactoryextensions.createlogger?view=aspnetcore-2.0#Microsoft_Extensions_Logging_LoggerFactoryExtensions_CreateLogger__1_Microsoft_Extensions_Logging_ILoggerFactory_) method.
+4. Create logger instance via [CreateLogger(loggerName)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.iloggerfactory.createlogger?view=aspnetcore-2.0#Microsoft_Extensions_Logging_ILoggerFactory_CreateLogger_System_String_) or [CreateLogger&lt;T&gt;()](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loggerfactoryextensions.createlogger?view=aspnetcore-2.0#Microsoft_Extensions_Logging_LoggerFactoryExtensions_CreateLogger__1_Microsoft_Extensions_Logging_ILoggerFactory_) method.
+
     > e.g. [ConsoleLogDemo.cs](../../demos/logging_demo/ConsoleLogDemo.cs)
+    
     ```csharp
     ILogger defaultLogger = factory.CreateLogger("DefaultLogger");
     ILogger demoLogger = factory.CreateLogger<ConsoleLogDemo>();
     ```
 
-6. Write log message via [LoggerExtensions](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loggerextensions?view=aspnetcore-2.0).
+5. Write log message via [LoggerExtensions](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loggerextensions?view=aspnetcore-2.0).
 
     > e.g. [ConsoleLogDemo.cs](../../demos/logging_demo/ConsoleLogDemo.cs)
 
@@ -119,6 +128,7 @@
     ```
 
     > could use [BeginScope](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loggerextensions.beginscope?view=aspnetcore-2.0#Microsoft_Extensions_Logging_LoggerExtensions_BeginScope_Microsoft_Extensions_Logging_ILogger_System_String_System_Object___) block to group a set of log messages.
+    
     ```csharp
     string loggerName = "{logger_name}";
     EventId eventId = new EventId(1001, "ConsoleLogDemoEvent");
@@ -134,11 +144,12 @@
     ```
 
     > the console log will be processed in backgroud thread, for demo purpose we need to sleep main thread a little.
+    
     ```csharp
     Thread.Sleep(TimeSpan.FromMilliseconds(10));
     ```
 
-7. Optionally, you could check log level is enabled or not before writing log messages.
+6. Optionally, you could check log level is enabled or not before writing log messages.
 
     > e.g. [ConsoleLogDemo.cs](../../demos/logging_demo/ConsoleLogDemo.cs)
     
