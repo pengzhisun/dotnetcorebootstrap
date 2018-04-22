@@ -31,7 +31,7 @@
         defaultLoggerFactory.AddDebug();
         ```
 
-    * Create runtime logger factory, using [AddConsole(Func<String,LogLevel,Boolean>)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.debugloggerfactoryextensions.adddebug?view=aspnetcore-2.0#Microsoft_Extensions_Logging_DebugLoggerFactoryExtensions_AddDebug_Microsoft_Extensions_Logging_ILoggerFactory_System_Func_System_String_Microsoft_Extensions_Logging_LogLevel_System_Boolean__) method.
+    * Create runtime logger factory, using [AddDebug(Func<String,LogLevel,Boolean>)](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.debugloggerfactoryextensions.adddebug?view=aspnetcore-2.0#Microsoft_Extensions_Logging_DebugLoggerFactoryExtensions_AddDebug_Microsoft_Extensions_Logging_ILoggerFactory_System_Func_System_String_Microsoft_Extensions_Logging_LogLevel_System_Boolean__) method.
         > coud define custom logic in filter function
         ```csharp
         ILoggerFactory runtimeLoggerFactory = new LoggerFactory();
