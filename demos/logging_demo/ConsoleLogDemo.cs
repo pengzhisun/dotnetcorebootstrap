@@ -103,7 +103,7 @@ namespace DotNetCoreBootstrap.LoggingDemo
                         Console.WriteLine($"\t[{(int)logLevel}]{logLevel} is enabled: ".PadRight(30, ' ') + isEnabled);
                     }
 
-                    using (logger.BeginScope("[{LOGGER}]ConsoleLogDemoScope", loggerName))
+                    using (logger.BeginScope("[{LOGGER}]LogDemoScope", loggerName))
                     {
                         logger.LogTrace(eventId, "LogTrace from {LOGGER}", loggerName);
                         logger.LogDebug(eventId, "LogDebug from {LOGGER}", loggerName);

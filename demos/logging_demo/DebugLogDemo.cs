@@ -84,12 +84,15 @@ namespace DotNetCoreBootstrap.LoggingDemo
                     }
 
                     // debug log not support scopes
-                    logger.LogTrace(eventId, "LogTrace from {LOGGER}", loggerName);
-                    logger.LogDebug(eventId, "LogDebug from {LOGGER}", loggerName);
-                    logger.LogInformation(eventId, "LogInformation from {LOGGER}", loggerName);
-                    logger.LogWarning(eventId, "LogWarning from {LOGGER}", loggerName);
-                    logger.LogError(eventId, "LogError from {LOGGER}", loggerName);
-                    logger.LogCritical(eventId, "LogCritical from {LOGGER}", loggerName);
+                    using (logger.BeginScope("[{LOGGER}]LogDemoScope", loggerName))
+                    {
+                        logger.LogTrace(eventId, "LogTrace from {LOGGER}", loggerName);
+                        logger.LogDebug(eventId, "LogDebug from {LOGGER}", loggerName);
+                        logger.LogInformation(eventId, "LogInformation from {LOGGER}", loggerName);
+                        logger.LogWarning(eventId, "LogWarning from {LOGGER}", loggerName);
+                        logger.LogError(eventId, "LogError from {LOGGER}", loggerName);
+                        logger.LogCritical(eventId, "LogCritical from {LOGGER}", loggerName);
+                    }
 
                     Console.WriteLine();
                 };
