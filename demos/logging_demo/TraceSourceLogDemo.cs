@@ -33,7 +33,7 @@ namespace DotNetCoreBootstrap.LoggingDemo
     /// Depends on Nuget packages:
     /// Microsoft.Extensions.Logging.TraceSource
     /// </remarks>
-    internal static class TraceSourceLogDemo
+    internal sealed class TraceSourceLogDemo
     {
         /// <summary>
         /// Run the demo.

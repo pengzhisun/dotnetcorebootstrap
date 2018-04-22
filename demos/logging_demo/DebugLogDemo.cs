@@ -29,7 +29,7 @@ namespace DotNetCoreBootstrap.LoggingDemo
     /// Depends on Nuget packages:
     /// Microsoft.Extensions.Logging.Debug
     /// </remarks>
-    internal static class DebugLogDemo
+    internal sealed class DebugLogDemo
     {
         /// <summary>
         /// Run the demo.

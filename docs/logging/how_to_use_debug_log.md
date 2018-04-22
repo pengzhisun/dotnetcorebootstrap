@@ -78,7 +78,7 @@
     logger.LogCritical(eventId, "LogCritical from {LOGGER}", loggerName);
     ```
 
-    > debug log not suppor scopes
+    > debug log not support scopes
 
 ## References
 
