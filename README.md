@@ -107,6 +107,9 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [Debug logging demo](demos/logging_demo/DebugLogDemo.cs)
     * [How to use debug log in .Net Core](docs/logging/how_to_use_debug_log.md)
 
+  * [Trace Source logging demo](demos/logging_demo/TraceSourceLogDemo.cs)
+    * [How to use trace source log in .Net Core](docs/logging/how_to_use_trace_source_log.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)
