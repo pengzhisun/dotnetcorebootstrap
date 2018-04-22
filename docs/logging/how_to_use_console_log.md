@@ -138,6 +138,19 @@
     Thread.Sleep(TimeSpan.FromMilliseconds(10));
     ```
 
+7. Optionally, you could check log level is enabled or not before writing log messages.
+
+    > e.g. [ConsoleLogDemo.cs](../../demos/logging_demo/ConsoleLogDemo.cs)
+    
+    ```csharp
+    IEnumerable<LogLevel> logLevels = Enum.GetValues(typeof(LogLevel)).Cast<LogLevel>().Except(new[] { LogLevel.None });
+    foreach (var logLevel in logLevels)
+    {
+        bool isEnabled = logger.IsEnabled(logLevel);
+        Console.WriteLine($"\t[{(int)logLevel}]{logLevel} is enabled: ".PadRight(30, ' ') + isEnabled);
+    }
+    ```
+
 ## References
 
 * [Logging in ASP.NET Core (docs.microsoft.com)](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/)
