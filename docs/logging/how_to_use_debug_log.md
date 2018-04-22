@@ -78,11 +78,11 @@
     ```
 
     > debug log not support scopes
-    
+
 6. Optionally, you could check log level is enabled or not before writing log messages.
 
     > e.g. [DebugLogDemo.cs](../../demos/logging_demo/DebugLogDemo.cs)
-    
+
     ```csharp
     IEnumerable<LogLevel> logLevels = Enum.GetValues(typeof(LogLevel)).Cast<LogLevel>().Except(new[] { LogLevel.None });
     foreach (var logLevel in logLevels)

@@ -2,15 +2,17 @@
  * Copyright @ Pengzhi Sun 2018, all rights reserved.
  * Licensed under the MIT License. See LICENSE file in the project root for full license information.
  *
- * File Name:   DebugLogDemo.cs
+ * File Name:   TraceSourceLogDemo.cs
  * Author:      Pengzhi Sun
- * Description: .Net Core debug logging demos.
+ * Description: .Net Core trace source logging demos.
  * Reference:   https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/
  *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging
- *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.debug
+ *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.tracesource
  *              https://github.com/aspnet/Logging
  *              https://github.com/aspnet/Logging/wiki/Guidelines
- *              https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging.Debug/DebugLogger.cs
+ *              https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging.TraceSource/TraceSourceLoggerProvider.cs
+ *              https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging.TraceSource/TraceSourceLogger.cs
+ *              https://msdn.microsoft.com/en-us/library/system.diagnostics.textwritertracelistener(v=vs.110).aspx
  *****************************************************************************/
 
 namespace DotNetCoreBootstrap.LoggingDemo
@@ -18,51 +20,50 @@ namespace DotNetCoreBootstrap.LoggingDemo
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.IO;
     using System.Linq;
+    using System.Text;
 
     using Microsoft.Extensions.Logging;
 
     /// <summary>
-    /// Defines the debug log demo class.
+    /// Defines the trace source log demo class.
     /// </summary>
     /// <remarks>
     /// Depends on Nuget packages:
-    /// Microsoft.Extensions.Logging.Debug
+    /// Microsoft.Extensions.Logging.TraceSource
     /// </remarks>
-    internal sealed class DebugLogDemo
+    internal sealed class TraceSourceLogDemo
     {
         /// <summary>
         /// Run the demo.
         /// </summary>
         public static void Run()
         {
-            // this demo only works in debugging mode
+            // in debugging mode, the default trace listner write logs to debug console.
             Console.WriteLine($"Is debugging: {Debugger.IsAttached}");
             Console.WriteLine();
 
-            ILoggerFactory defaultLoggerFactory = new LoggerFactory();
-            defaultLoggerFactory.AddDebug();
+            // create file based logger factory
+            string logFilePath =
+                Path.Combine(AppContext.BaseDirectory, "TraceSourceLogDemo.log");
+            Stream logStream = File.Create(logFilePath);
+            TextWriterTraceListener fileListener =
+                new TextWriterTraceListener(logStream);
 
-            // debug log only support runtime factory, not support config
-            ILoggerFactory runtimeLoggerFactory = new LoggerFactory();
-            runtimeLoggerFactory
-                .AddDebug(
-                    (name, logLevel) =>
-                    {
-                        if (name == "RuntimeLogger")
-                        {
-                            switch (logLevel)
-                            {
-                                case LogLevel.Information:
-                                case LogLevel.Error:
-                                    return true;
-                            }
-                        }
+            // Information, Warning, Error, Critical, Verbose (Trace/Debug)
+            SourceSwitch fileSwitch = new SourceSwitch("FileSwtich", "Verbose");
+            ILoggerFactory fileLoggerFactory = new LoggerFactory();
+            fileLoggerFactory.AddTraceSource(fileSwitch, fileListener);
 
-                        return false;
-                    });
+            // create console based logger factory
+            TextWriterTraceListener consoleListener =
+                new TextWriterTraceListener(Console.Out);
+            SourceSwitch consoleSwitch = new SourceSwitch("ConsoleSwitch", "Warning");
+            ILoggerFactory consoleLoggerFactory = new LoggerFactory();
+            consoleLoggerFactory.AddTraceSource(consoleSwitch, consoleListener);
 
-            EventId eventId = new EventId(1002, "DebugLogDemoEvent");
+            EventId eventId = new EventId(1003, "TraceSourceLogDemoEvent");
 
             IEnumerable<LogLevel> logLevels =
                 Enum.GetValues(typeof(LogLevel))
@@ -83,8 +84,8 @@ namespace DotNetCoreBootstrap.LoggingDemo
                         Console.WriteLine($"\t[{(int)logLevel}]{logLevel} is enabled: ".PadRight(30, ' ') + isEnabled);
                     }
 
-                    // debug log not support scopes
-                    using (logger.BeginScope("[{LOGGER}]LogDemoScope", loggerName))
+                    // file and console linster not support scopes
+                    using (logger.BeginScope("[{LOGGER}]TraceSourceLogDemoScope", loggerName))
                     {
                         logger.LogTrace(eventId, "LogTrace from {LOGGER}", loggerName);
                         logger.LogDebug(eventId, "LogDebug from {LOGGER}", loggerName);
@@ -97,11 +98,18 @@ namespace DotNetCoreBootstrap.LoggingDemo
                     Console.WriteLine();
                 };
 
-            // default log level: >= Information
-            loggerDemoAction(defaultLoggerFactory, "DefaultLogger");
+            // console log level: >= Warning,
+            loggerDemoAction(consoleLoggerFactory, "ConsoleLogger");
 
-            // runtime log level: Information and Error
-            loggerDemoAction(runtimeLoggerFactory, "RuntimeLogger");
+            // file log level: >= Verbose,
+            loggerDemoAction(fileLoggerFactory, "FileLogger");
+
+            // dispose file logger factory to release the log file handler.
+            fileLoggerFactory.Dispose();
+
+            // print log file.
+            Console.WriteLine($"[Trace] log file path: {logFilePath}");
+            Console.WriteLine(File.ReadAllText(logFilePath, Encoding.UTF8));
         }
     }
 }
