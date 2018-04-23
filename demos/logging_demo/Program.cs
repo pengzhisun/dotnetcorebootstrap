@@ -24,9 +24,10 @@ namespace DotNetCoreBootstrap.LoggingDemo
         {
             PrintMessageBlock("Begin .Net Core Logging Demos", '#');
 
-            RunDemo("ConsoleLogDemo", ConsoleLogDemo.Run);
-            RunDemo("DebugLogDemo", DebugLogDemo.Run);
-            RunDemo("TraceSourceLogDemo", TraceSourceLogDemo.Run);
+            // RunDemo("ConsoleLogDemo", ConsoleLogDemo.Run);
+            // RunDemo("DebugLogDemo", DebugLogDemo.Run);
+            // RunDemo("TraceSourceLogDemo", TraceSourceLogDemo.Run);
+            RunDemo("LoggerMessageDemo", LoggerMessageDemo.Run);
 
             PrintMessageBlock("End .Net Core Logging Demos", '#');
         }
