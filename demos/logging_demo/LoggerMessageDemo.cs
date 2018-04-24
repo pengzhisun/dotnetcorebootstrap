@@ -28,6 +28,7 @@ namespace DotNetCoreBootstrap.LoggingDemo
     /// </summary>
     /// <remarks>
     /// Depends on Nuget packages:
+    /// Microsoft.Extensions.Logging
     /// Microsoft.Extensions.Logging.Console
     /// </remarks>
     internal sealed class LoggerMessageDemo
