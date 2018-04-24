@@ -66,7 +66,7 @@ namespace DotNetCoreBootstrap.LoggingDemo
             }
 
             // flush the backgroud console thread
-            Thread.Sleep(TimeSpan.FromMilliseconds(100));
+            Thread.Sleep(TimeSpan.FromMilliseconds(10));
         }
     }
 }
