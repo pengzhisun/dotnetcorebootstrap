@@ -1,3 +1,18 @@
+/******************************************************************************
+ * Copyright @ Pengzhi Sun 2018, all rights reserved.
+ * Licensed under the MIT License. See LICENSE file in the project root for full license information.
+ *
+ * File Name:   EntityFrameworkSqliteDemo.cs
+ * Author:      Pengzhi Sun
+ * Description: .Net Core Entity Framework for SQLite demos.
+ * Reference:   https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite
+ *              https://docs.microsoft.com/en-us/ef/core/providers/sqlite/
+ *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore
+ *              https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite
+ *              https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design
+ *              https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools.DotNet
+ *****************************************************************************/
+
 namespace DotNetCoreBootstrap.DatabaseDemo
 {
     using System;
@@ -11,15 +26,36 @@ namespace DotNetCoreBootstrap.DatabaseDemo
 
     using Microsoft.EntityFrameworkCore;
 
+    /// <summary>
+    /// Defines the Entity Framework for SQLite demo class.
+    /// </summary>
+    /// <remarks>
+    /// Depends on Nuget packages:
+    /// Microsoft.EntityFrameworkCore.Sqlite
+    /// Microsoft.EntityFrameworkCore.Design
+    /// Microsoft.EntityFrameworkCore.Tools.DotNet
+    /// </remarks>
     public static class EntityFrameworkSqliteDemo
     {
+        /// <summary>
+        /// Temp directory for SQLite database file generation.
+        /// </summary>
         const string TempDir = @"../EntityFrameworkSqliteDemo_temp";
+
+        /// <summary>
+        /// SQLite demo databae file name.
+        /// </summary>
         const string DatabaseFileName = @"EntityFrameworkSqliteDemo.db";
 
+        /// <summary>
+        /// Run the demo.
+        /// </summary>
         public static void Run()
         {
+            // create demo database file.
             CreateDemoDatabaseFile();
 
+            // create entities to be inserted.
             DemoNestedEntity nestedEntity =
                 new DemoNestedEntity { Name = "nested_entity_1" };
             List<DemoEntity> subEntities = new List<DemoEntity>
@@ -30,48 +66,82 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             };
             nestedEntity.SubEntities = subEntities;
 
-            using (var db = new DemoContext())
+            try
             {
-                db.NestedEntities.Add(nestedEntity);
-                var count = db.SaveChanges();
-                Console.WriteLine("{0} records saved to database", count);
+                using (var db = new DemoContext())
+                {
+                    // insert entities and save changes to database.
+                    db.NestedEntities.Add(nestedEntity);
+                    var count = db.SaveChanges();
+                    Console.WriteLine($"{count} records saved to database");
 
-                Console.WriteLine();
-                Console.WriteLine("All nested entities in database:");
-                foreach (var entity in db.NestedEntities)
-                {
-                    Console.WriteLine($" - id: '{entity.Id}', name '{entity.Name}'");
-                }
-                Console.WriteLine();
-                Console.WriteLine("All sub entities in database:");
-                foreach (var entity in db.Entities)
-                {
-                    Console.WriteLine($" - id: '{entity.SubId}', name '{entity.SubName}'");
+                    // query all nested entities data.
+                    Console.WriteLine();
+                    Console.WriteLine("All nested entities in database:");
+                    foreach (var entity in db.NestedEntities)
+                    {
+                        Console.WriteLine($" - id: '{entity.Id}', name '{entity.Name}'");
+                    }
+
+                    // query all sub entities data.
+                    Console.WriteLine();
+                    Console.WriteLine("All sub entities in database:");
+                    foreach (var entity in db.Entities)
+                    {
+                        Console.WriteLine($" - id: '{entity.SubId}', name '{entity.SubName}'");
+                    }
                 }
             }
+            finally
+            {
+                // TODO: print all SQLite tables after SQLite for .Net core release
+                // reference: https://system.data.sqlite.org/index.html/info/5c89cecd1b
 
-            File.Delete(DatabaseFileName);
+                // remove SQLite demo database file.
+                File.Delete(DatabaseFileName);
+            }
         }
 
+        #region Helper Methods
+
+        /// <summary>
+        /// Create SQLite demo database file.
+        /// </summary>
         private static void CreateDemoDatabaseFile()
         {
             string dataContext = typeof(DemoContext).FullName;
             List<string> commands = new List<string>
             {
+                // cleanup old temp files
                 $"rm -r -f ./Migrations",
                 $"rm -f ./{DatabaseFileName}",
                 $"rm -r -f {TempDir}",
+
+                // create temp dir and copy files
                 $"mkdir {TempDir}",
                 $"cp EntityFrameworkSqliteDemo.cs {TempDir}/",
-                $"cp EntityFrameworkSqliteDemo.csprojtmp {TempDir}/EntityFrameworkSqliteDemo.csproj",
+                $"cp EntityFrameworkSqliteDemo.csproj.xml {TempDir}/EntityFrameworkSqliteDemo.csproj",
+
+                // switch working folder to temp dir
                 $"pushd .",
                 $"cd {TempDir}",
+
+                // restore nuget packages
                 $"dotnet restore",
+
+                // add new migration
                 $"dotnet ef migrations add InitialCreate -c {dataContext}",
-                "dotnet ef migrations list",
+
+                // apply migration to databae
                 $"dotnet ef database update -c {dataContext}",
+
+                // switch working folder back
                 $"popd",
+
+                // copy generated database file
                 $"cp {TempDir}/{DatabaseFileName} ./",
+
+                // remove temp dir
                 $"rm -r -f {TempDir}",
             };
 
@@ -79,24 +149,29 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Run commands in a background bash process.
+        /// </summary>
+        /// <param name="commands">The commands to be executed.</param>
         private static void RunCommands(IEnumerable<string> commands)
         {
-            var startInfo = new ProcessStartInfo("bash", "")
-            {
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-
+            // start a background bash process
+            ProcessStartInfo startInfo =
+                new ProcessStartInfo("bash", string.Empty)
+                {
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardInput = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
             Process process = new Process
             {
                 StartInfo = startInfo
             };
-
             process.Start();
 
+            // prepare task factory to start backgroud stream reader tasks.
             CancellationTokenSource cancellationTokenSource =
                 new CancellationTokenSource();
             CancellationToken cancellationToken =
@@ -104,6 +179,10 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             TaskFactory taskFactory =
                 new TaskFactory(cancellationToken);
 
+            // manual reset flag for waiting dotnet command execution
+            ManualResetEvent resetEvent = new ManualResetEvent(true);
+
+            // background stream reader tasks collection
             List<Task> tasks = new List<Task>();
             Action<string, StreamReader> readAction =
                 (prefix, reader) =>
@@ -113,6 +192,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
                         {
                             while (true)
                             {
+                                // break the infinite loop until received cancel token
                                 if (cancellationToken.IsCancellationRequested)
                                 {
                                     break;
@@ -122,6 +202,9 @@ namespace DotNetCoreBootstrap.DatabaseDemo
                                 if (!string.IsNullOrWhiteSpace(msg))
                                 {
                                     Console.WriteLine($"[{prefix}] {msg}");
+
+                                    // set manual reset flag, unblock command execution
+                                    resetEvent.Set();
                                 }
                             }
                         });
@@ -136,54 +219,123 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             {
                 Console.WriteLine($"[trace] running command: {command}");
                 process.StandardInput.WriteLine(command);
+
+                // waiting dotnet command execution until manual reset flag set
+                if (command.StartsWith("dotnet"))
+                {
+                    resetEvent.Reset();
+                    resetEvent.WaitOne();
+                }
             }
 
+            // exit the bash process
             process.StandardInput.WriteLine("exit");
             process.WaitForExit();
 
+            // cancel all background stream reader threads
             cancellationTokenSource.Cancel(false);
             Task.WaitAll(tasks.ToArray());
+
+            process.Dispose();
         }
 
+        #endregion
+
+        /// <summary>
+        /// Defines the demo database context.
+        /// </summary>
         public class DemoContext : DbContext
         {
+            /// <summary>
+            /// Gets or Sets the nested entities dataset.
+            /// </summary>
+            /// <returns>The nested entities dataset.</returns>
             public DbSet<DemoNestedEntity> NestedEntities { get; set; }
 
+            /// <summary>
+            /// Gets or sets the sub entities dataset.
+            /// </summary>
+            /// <returns>The sub entities dataset.</returns>
             public DbSet<DemoEntity> Entities { get; set; }
 
+            /// <summary>
+            /// Override this method to configure the database (and other options)
+            /// to be used for this context.
+            /// This method is called for each instance of the context that is created.
+            /// </summary>
+            /// <param name="optionsBuilder">
+            /// A builder used to create or modify options for this context.
+            /// Databases (and other extensions) typically define extension methods
+            /// on this object that allow you to configure the context.
+            /// </param>
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder.UseSqlite($"Data Source={DatabaseFileName}");
             }
         }
 
+        /// <summary>
+        /// Defines the nested entities class, mapping to NestedEntities table.
+        /// </summary>
         [Table("NestedEntities")]
         public class DemoNestedEntity
         {
+            /// <summary>
+            /// Gets or sets the nested entity identifier, mapping to id column,
+            /// this column is primary key and the value is auto generated identity.
+            /// </summary>
+            /// <returns>The nested entity identifier.</returns>
             [Column("id")]
             [Key]
             [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int Id { get; set; }
 
+            /// <summary>
+            /// Gets or sets the nested entity name, mapping to name column,
+            /// this column is mandatory.
+            /// </summary>
+            /// <returns>The nested entity name.</returns>
             [Column("name")]
             [Required]
             public string Name { get; set; }
 
+            /// <summary>
+            /// Gets or sets the sub entities collection.
+            /// </summary>
+            /// <returns>The sub entities collection.</returns>
             public List<DemoEntity> SubEntities { get; set; }
         }
 
+        /// <summary>
+        /// Defines the sub entity class, mapping to Entities table.
+        /// </summary>
         [Table("Entities")]
         public class DemoEntity
         {
+            /// <summary>
+            /// Gets or sets the sub entity identifier, mapping to id column,
+            /// this column is primary key and the value is auto generated identity.
+            /// </summary>
+            /// <returns>The sub entity identifier.</returns>
             [Column("id")]
             [Key]
             [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int SubId { get; set; }
 
+            /// <summary>
+            /// Gets or sets the sub entity name, mapping to name column,
+            /// this column is mandatory.
+            /// </summary>
+            /// <returns>The sub entity name.</returns>
             [Column("name")]
             [Required]
             public string SubName { get; set; }
 
+            /// <summary>
+            /// Gets or sets the parent entity, this column is a foreign key.
+            /// </summary>
+            /// <returns>The parent entity.</returns>
+            [ForeignKey("ParentEntityId")]
             public DemoNestedEntity ParentEntity { get; set; }
         }
     }
