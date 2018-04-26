@@ -11,6 +11,11 @@
  *              https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite
  *              https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design
  *              https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools.DotNet
+ *              http://www.bricelam.net/2015/04/29/sqlite-on-corefx.html
+ *              https://www.nuget.org/packages/Microsoft.Data.Sqlite
+ *              https://github.com/aspnet/Microsoft.Data.Sqlite
+ *              http://sqlitebrowser.org/
+ *              http://www.sqlite.org/cli.html#querying_the_database_schema
  *****************************************************************************/
 
 namespace DotNetCoreBootstrap.DatabaseDemo
@@ -21,9 +26,10 @@ namespace DotNetCoreBootstrap.DatabaseDemo
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-
+    using Microsoft.Data.Sqlite;
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
@@ -94,8 +100,8 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             }
             finally
             {
-                // TODO: print all SQLite tables after SQLite for .Net core release
-                // reference: https://system.data.sqlite.org/index.html/info/5c89cecd1b
+                // print all tables in SQLite demo database.
+                PrintAllTables();
 
                 // remove SQLite demo database file.
                 File.Delete(DatabaseFileName);
@@ -103,6 +109,52 @@ namespace DotNetCoreBootstrap.DatabaseDemo
         }
 
         #region Helper Methods
+
+        /// <summary>
+        /// Print all SQLite tables.
+        /// </summary>
+        private static void PrintAllTables()
+        {
+            Console.WriteLine();
+            using (SqliteConnection connection =
+                new SqliteConnection($"Data Source={DatabaseFileName}"))
+            {
+                connection.Open();
+
+                SqliteCommand command = connection.CreateCommand();
+                command.CommandText = @"SELECT name FROM sqlite_master WHERE type='table'";
+                Console.WriteLine($"[trace] {command.CommandText}");
+
+                SqliteDataReader reader = command.ExecuteReader();
+
+                List<string> tableNames = new List<string>();
+                while (reader.Read())
+                {
+                    string tableName = reader.GetString(0);
+                    tableNames.Add(tableName);
+                    Console.WriteLine($" - table name: {tableName}");
+                }
+                Console.WriteLine();
+
+                foreach (string tableName in tableNames)
+                {
+                    command = connection.CreateCommand();
+                    command.CommandText = $"SELECT * FROM {tableName}";
+                    Console.WriteLine($"[trace] {command.CommandText}");
+
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        IEnumerable<string> fields = new int[reader.FieldCount]
+                            .Select(
+                                (v, i) =>
+                                $"'{reader.GetName(i)}' = '{reader.GetValue(i)}'");
+                        Console.WriteLine(string.Join(",", fields));
+                    }
+                    Console.WriteLine();
+                }
+            }
+        }
 
         /// <summary>
         /// Create SQLite demo database file.
