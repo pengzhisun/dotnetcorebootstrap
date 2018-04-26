@@ -20,6 +20,16 @@
                 "${workspaceFolder}/demos/logging_demo/logging_demo.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build database_demo",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/demos/database_demo/database_demo.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }
