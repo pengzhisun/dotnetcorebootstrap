@@ -41,6 +41,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
     /// Microsoft.EntityFrameworkCore.Sqlite
     /// Microsoft.EntityFrameworkCore.Design
     /// Microsoft.EntityFrameworkCore.Tools.DotNet
+    /// Microsoft.Data.Sqlite
     /// </remarks>
     internal static class EntityFrameworkSqliteDemo
     {
