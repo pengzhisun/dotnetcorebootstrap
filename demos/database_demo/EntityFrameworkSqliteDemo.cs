@@ -41,7 +41,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
     /// Microsoft.EntityFrameworkCore.Design
     /// Microsoft.EntityFrameworkCore.Tools.DotNet
     /// </remarks>
-    public static class EntityFrameworkSqliteDemo
+    internal static class EntityFrameworkSqliteDemo
     {
         /// <summary>
         /// Temp directory for SQLite database file generation.
@@ -74,17 +74,17 @@ namespace DotNetCoreBootstrap.DatabaseDemo
 
             try
             {
-                using (var db = new DemoContext())
+                using (DemoContext db = new DemoContext())
                 {
                     // insert entities and save changes to database.
                     db.NestedEntities.Add(nestedEntity);
-                    var count = db.SaveChanges();
+                    int count = db.SaveChanges();
                     Console.WriteLine($"{count} records saved to database");
 
                     // query all nested entities data.
                     Console.WriteLine();
                     Console.WriteLine("All nested entities in database:");
-                    foreach (var entity in db.NestedEntities)
+                    foreach (DemoNestedEntity entity in db.NestedEntities)
                     {
                         Console.WriteLine($" - id: '{entity.Id}', name '{entity.Name}'");
                     }
@@ -92,7 +92,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
                     // query all sub entities data.
                     Console.WriteLine();
                     Console.WriteLine("All sub entities in database:");
-                    foreach (var entity in db.Entities)
+                    foreach (DemoEntity entity in db.Entities)
                     {
                         Console.WriteLine($" - id: '{entity.SubId}', name '{entity.SubName}'");
                     }
@@ -103,8 +103,11 @@ namespace DotNetCoreBootstrap.DatabaseDemo
                 // print all tables in SQLite demo database.
                 PrintAllTables();
 
-                // remove SQLite demo database file.
-                File.Delete(DatabaseFileName);
+                // remove SQLite demo database file if not in debug mode.
+                if (!Debugger.IsAttached)
+                {
+                    File.Delete(DatabaseFileName);
+                }
             }
         }
 
@@ -329,7 +332,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
         /// <summary>
         /// Defines the nested entities class, mapping to NestedEntities table.
         /// </summary>
-        [Table("NestedEntities")]
+        [Table("nested_entities")]
         public class DemoNestedEntity
         {
             /// <summary>
@@ -361,7 +364,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
         /// <summary>
         /// Defines the sub entity class, mapping to Entities table.
         /// </summary>
-        [Table("Entities")]
+        [Table("entities")]
         public class DemoEntity
         {
             /// <summary>
@@ -387,7 +390,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             /// Gets or sets the parent entity, this column is a foreign key.
             /// </summary>
             /// <returns>The parent entity.</returns>
-            [ForeignKey("ParentEntityId")]
+            [ForeignKey("parent_id")]
             public DemoNestedEntity ParentEntity { get; set; }
         }
     }
