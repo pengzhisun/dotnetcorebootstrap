@@ -24,38 +24,38 @@
 
     * Data Models: `DemoEntity` class and `DemoNestedEntity` class.
 
-    ```csharp
-    public class DemoNestedEntity
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public List<DemoEntity> SubEntities { get; set; }
-    }
+        ```csharp
+        public class DemoNestedEntity
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public List<DemoEntity> SubEntities { get; set; }
+        }
 
-    public class DemoEntity
-    {
-        public int SubId { get; set; }
-        public string SubName { get; set; }
-        public DemoNestedEntity ParentEntity { get; set; }
-    }
-    ```
+        public class DemoEntity
+        {
+            public int SubId { get; set; }
+            public string SubName { get; set; }
+            public DemoNestedEntity ParentEntity { get; set; }
+        }
+        ```
 
     * Database Context: `DemoContext` class.
 
-    > `{DatabaseFileName}` sample: EntityFrameworkSqliteDemo.db
+        > `{DatabaseFileName}` sample: EntityFrameworkSqliteDemo.db
 
-    ```csharp
-    public class DemoContext : DbContext
-    {
-        public DbSet<DemoNestedEntity> NestedEntities { get; set; }
-        public DbSet<DemoEntity> Entities { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        ```csharp
+        public class DemoContext : DbContext
         {
-            optionsBuilder.UseSqlite($"Data Source={DatabaseFileName}");
+            public DbSet<DemoNestedEntity> NestedEntities { get; set; }
+            public DbSet<DemoEntity> Entities { get; set; }
+
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            {
+                optionsBuilder.UseSqlite($"Data Source={DatabaseFileName}");
+            }
         }
-    }
-    ```
+        ```
 
 4. Optionally, [create Sqlite database file](https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite#create-the-database) for previous defined data models.
 
@@ -96,7 +96,19 @@
 
 5. [Insert and query data from database context](https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite#use-your-model).
 
+    > e.g. [EntityFrameworkSqliteDemo.cs](../../demos/database_demo/EntityFrameworkSqliteDemo.cs)
+
     ```csharp
+    DemoNestedEntity nestedEntity =
+        new DemoNestedEntity { Name = "nested_entity_1" };
+    List<DemoEntity> subEntities = new List<DemoEntity>
+    {
+        new DemoEntity { SubName = "sub_entity_1", ParentEntity = nestedEntity },
+        new DemoEntity { SubName = "sub_entity_2", ParentEntity = nestedEntity },
+        new DemoEntity { SubName = "sub_entity_3", ParentEntity = nestedEntity },
+    };
+    nestedEntity.SubEntities = subEntities;
+
     using (DemoContext db = new DemoContext())
     {
         db.NestedEntities.Add(nestedEntity);

@@ -4,7 +4,7 @@
  *
  * File Name:   EntityFrameworkInMemoryDemo.cs
  * Author:      Pengzhi Sun
- * Description: .Net Core Entity Framework for in-memory database provider demos.
+ * Description: .Net Core Entity Framework with in-memory database provider demos.
  * Reference:   https://docs.microsoft.com/en-us/ef/core/miscellaneous/testing/in-memory
  *              https://docs.microsoft.com/en-us/ef/core/providers/in-memory/
  *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore
@@ -24,7 +24,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
     using Microsoft.Extensions.Logging;
 
     /// <summary>
-    /// Defines the Entity Framework for in-memory database provider demo class.
+    /// Defines the Entity Framework with in-memory database provider demo class.
     /// </summary>
     /// <remarks>
     /// Depends on Nuget packages:
