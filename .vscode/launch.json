@@ -33,6 +33,20 @@
             "internalConsoleOptions": "openOnSessionStart"
         },
         {
+            "name": "run database_demo",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build database_demo",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/demos/database_demo/bin/Debug/netcoreapp2.0/database_demo.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/demos/database_demo",
+            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

@@ -23,14 +23,31 @@
     </PropertyGroup>
     ```
 
-3. Set user secrets via `dotnet user-secrets set {key} {value}` command.
+3. Set user secrets.
 
-    > e.g. [UserSecretsConfigDemo.cs](../../demos/config_demo/UserSecretsConfigDemo.cs)
-    ```bash
-    dotnet user-secrets set str_setting_1 str_value_1
-    dotnet user-secrets set int_setting_1 1
-    dotnet user-secrets set section1:nested_setting_1 nested_value_1
-    ```
+    * Add the dotnet cli tool reference: `Microsoft.Extensions.SecretManager.Tools` in csproj file.
+
+        > e.g. [config_demo.csproj](demos/config_demo/config_demo.csproj)
+
+        ```xml
+        <Project Sdk="Microsoft.NET.Sdk">
+            ...
+            <ItemGroup>
+                <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+            </ItemGroup>
+        </Project>
+        ```
+
+        > run `dotnet resotre` after csproj file modifed.
+
+    * Run `dotnet user-secrets set {key} {value}` commands in the same directory of csproj file.
+        ```bash
+        dotnet user-secrets set str_setting_1 str_value_1
+        dotnet user-secrets set int_setting_1 1
+        dotnet user-secrets set section1:nested_setting_1 nested_value_1
+        ```
+
+        > The demo file [UserSecretsConfigDemo.cs](../../demos/config_demo/UserSecretsConfigDemo.cs) provides an example for how to set user secrets in runtime.
 
 4. Add `Microsoft.Extensions.Configuration` namespace.
 

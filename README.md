@@ -113,6 +113,13 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [LoggerMessage demo](demos/logging_demo/LoggerMessageDemo.cs)
     * [How to use LoggerMessage in .Net Core](docs/logging/how_to_use_logger_message.md)
 
+* [Database](demos/database_demo)
+
+  This project contains following demo scenarios:
+
+  * [Entity Framework Core for SQLite demo](demos/database_demo/EntityFrameworkSqliteDemo.cs)
+    * [How to use Entity Framework Core to access Sqlite database in .Net Core](docs/database/how_to_use_ef_sqlite.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)
