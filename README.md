@@ -110,6 +110,9 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [Trace Source logging demo](demos/logging_demo/TraceSourceLogDemo.cs)
     * [How to use trace source log in .Net Core](docs/logging/how_to_use_trace_source_log.md)
 
+  * [LoggerMessage demo](demos/logging_demo/LoggerMessageDemo.cs)
+    * [How to use LoggerMessage in .Net Core](docs/logging/how_to_use_logger_message.md)
+
 * [Database](demos/database_demo)
 
   This project contains following demo scenarios:
