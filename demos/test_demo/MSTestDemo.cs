@@ -13,6 +13,7 @@ namespace DotNetCoreBootstrap.TestDemo
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     /// <summary>
     /// Defines the MSTest demos.
@@ -31,11 +32,11 @@ namespace DotNetCoreBootstrap.TestDemo
                 // cleanup old temp files
                 $"rm -r -f {TempDir}",
 
-                // create temp dir and copy files
-                $"mkdir {TempDir}",
+                // create temp mstest project and copy files
+                $"dotnet new mstest -o {TempDir}",
+                $"rm -f {TempDir}/UnitTest1.cs",
                 $"cp ToBeTestedClass.cs {TempDir}/",
                 $"cp MSTestDemoTestClass.cs {TempDir}/",
-                $"cp MSTestDemo.csproj.xml {TempDir}/MSTestDemo.csproj",
 
                 // switch working folder to temp dir
                 $"pushd .",
@@ -52,10 +53,13 @@ namespace DotNetCoreBootstrap.TestDemo
 
                 // switch working folder back
                 $"popd",
-
-                // remove temp dir
-                $"rm -r -f {TempDir}",
             };
+
+            // remove temp dir if not in debug mode.
+            if (!Debugger.IsAttached)
+            {
+                commands.Add($"rm -r -f {TempDir}");
+            }
 
             TestDemoHelper.RunCommands(commands);
         }
