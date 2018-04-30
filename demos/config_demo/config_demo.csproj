@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>DotNetCoreBootstrap.ConfigDemo</RootNamespace>
     <UserSecretsId>3ABF019D-847E-49BF-9D32-7E52B46707B2</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>

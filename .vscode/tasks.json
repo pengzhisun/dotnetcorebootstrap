@@ -30,6 +30,16 @@
                 "${workspaceFolder}/demos/database_demo/database_demo.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build test_demo",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/demos/test_demo/test_demo.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }
