@@ -188,10 +188,13 @@ namespace DotNetCoreBootstrap.DatabaseDemo
                 // restore nuget packages
                 $"dotnet restore",
 
-                // add new migration
-                $"dotnet ef migrations add InitialCreate -c {dataContext}",
+                // build temp project
+                $"dotnet build",
 
-                // apply migration to databae
+                // add new migration
+                $"dotnet ef migrations add InitialCreate --no-build -c {dataContext}",
+
+                // apply migration to databae, must rebuild after new migration created.
                 $"dotnet ef database update -c {dataContext}",
 
                 // switch working folder back
@@ -199,10 +202,13 @@ namespace DotNetCoreBootstrap.DatabaseDemo
 
                 // copy generated database file
                 $"cp {TempDir}/{DatabaseFileName} ./",
-
-                // remove temp dir
-                $"rm -r -f {TempDir}",
             };
+
+            // remove temp dir if not in debug mode.
+            if (!Debugger.IsAttached)
+            {
+                commands.Add($"rm -r -f {TempDir}");
+            }
 
             RunCommands(commands);
             Console.WriteLine();
