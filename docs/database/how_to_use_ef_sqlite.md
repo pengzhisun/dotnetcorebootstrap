@@ -68,7 +68,7 @@
         dotnet restore
         ```
 
-    * Add .Net Cli tool reference `Microsoft.EntityFrameworkCore.Tools.DotNet` in csproj file.
+    * Add dotnet cli tool reference `Microsoft.EntityFrameworkCore.Tools.DotNet` in csproj file.
 
         > e.g. [database_demo.csproj](demos/databae_demo/database_demo.csproj)
 
