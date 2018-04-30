@@ -25,22 +25,29 @@ namespace DotNetCoreBootstrap.TestDemo
         /// </summary>
         public static void Run()
         {
-            const string TempDir = @"../MSTestDemo_temp";
+            const string ToBeTestedTempDir = @"../MSTestDemo_to_be_tested_temp";
+            const string TestTempDir = @"../MSTestDemo_test_temp";
 
             List<string> commands = new List<string>
             {
                 // cleanup old temp files
-                $"rm -r -f {TempDir}",
+                $"rm -r -f {ToBeTestedTempDir}",
+                $"rm -r -f {TestTempDir}",
 
-                // create temp mstest project and copy files
-                $"dotnet new mstest -o {TempDir}",
-                $"rm -f {TempDir}/UnitTest1.cs",
-                $"cp ToBeTestedClass.cs {TempDir}/",
-                $"cp MSTestDemoTestClass.cs {TempDir}/",
+                // create to-be-tested project and copy files
+                $"dotnet new library -o {ToBeTestedTempDir}",
+                $"rm -f {ToBeTestedTempDir}/Class1.cs",
+                $"cp ToBeTestedClass.cs {ToBeTestedTempDir}/",
 
-                // switch working folder to temp dir
+                // create temp mstest project, add reference to to-be-tested project and copy files
+                $"dotnet new mstest -o {TestTempDir}",
+                $"rm -f {TestTempDir}/UnitTest1.cs",
+                $"dotnet add {TestTempDir}/*.csproj reference {ToBeTestedTempDir}/*.csproj",
+                $"cp MSTestDemoTestClass.cs {TestTempDir}/",
+
+                // switch working folder to mstest project temp dir
                 $"pushd .",
-                $"cd {TempDir}",
+                $"cd {TestTempDir}",
 
                 // restore nuget packages
                 $"dotnet restore",
@@ -58,7 +65,8 @@ namespace DotNetCoreBootstrap.TestDemo
             // remove temp dir if not in debug mode.
             if (!Debugger.IsAttached)
             {
-                commands.Add($"rm -r -f {TempDir}");
+                commands.Add($"rm -r -f {ToBeTestedTempDir}");
+                commands.Add($"rm -r -f {TestTempDir}");
             }
 
             TestDemoHelper.RunCommands(commands);

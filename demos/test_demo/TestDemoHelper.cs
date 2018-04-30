@@ -4,7 +4,7 @@
  *
  * File Name:   TestDemoHelper.cs
  * Author:      Pengzhi Sun
- * Description: .Net Core test demos.
+ * Description: .Net Core test demo helper methods.
  *****************************************************************************/
 
 namespace DotNetCoreBootstrap.TestDemo
@@ -71,7 +71,7 @@ namespace DotNetCoreBootstrap.TestDemo
                                 }
 
                                 string msg = reader.ReadLine();
-                                if (!string.IsNullOrWhiteSpace(msg))
+                                if (msg != null)
                                 {
                                     Console.WriteLine($"[{prefix}] {msg}");
 

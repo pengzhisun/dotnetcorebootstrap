@@ -12,6 +12,7 @@
 namespace DotNetCoreBootstrap.TestDemo
 {
     using System;
+    using System.Diagnostics;
     using System.Reflection;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -52,6 +53,25 @@ namespace DotNetCoreBootstrap.TestDemo
             OwnerAttribute ownerAttribute =
                 methodInfo.GetCustomAttribute<OwnerAttribute>();
             Console.WriteLine($"Owner          : {ownerAttribute.Owner}");
+
+            Stopwatch testMethodStopwatch = new Stopwatch();
+            testMethodStopwatch.Start();
+
+            this.TestContext.Properties["TestMethodStopwatch"] =
+                testMethodStopwatch;
+        }
+
+        /// <summary>
+        /// The test method cleanup method.
+        /// </summary>
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Stopwatch testMethodStopwatch =
+                (Stopwatch)this.TestContext.Properties["TestMethodStopwatch"];
+            testMethodStopwatch.Stop();
+
+            Console.WriteLine($"Execution time : {testMethodStopwatch.Elapsed}");
         }
 
         /// <summary>
@@ -59,13 +79,12 @@ namespace DotNetCoreBootstrap.TestDemo
         /// with odd values worked correctly.
         /// </summary>
         /// <param name="number">The given integer value for testing.</param>
-        [TestMethod]
+        [DataTestMethod]
         [Description("Tests for verifying ToBeTestedClass.IsOdd(int number)"
             + " method with odd values worked correctly.")]
         [TestCategory("BVT")]
         [Priority(0)]
         [Owner("Pengzhi Sun")]
-        [DataTestMethod]
         [DataRow(-1)]
         [DataRow(-33)]
         [DataRow(-57)]
@@ -86,13 +105,12 @@ namespace DotNetCoreBootstrap.TestDemo
         /// with even values worked correctly.
         /// </summary>
         /// <param name="number">The given integer value for testing.</param>
-        [TestMethod]
+        [DataTestMethod]
         [Description("Tests for verifying ToBeTestedClass.IsOdd(int number)"
             + " method with even values worked correctly.")]
         [TestCategory("BVT")]
         [Priority(0)]
         [Owner("Pengzhi Sun")]
-        [DataTestMethod]
         [DataRow(0)]
         [DataRow(-22)]
         [DataRow(-446)]
