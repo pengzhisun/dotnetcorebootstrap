@@ -11,6 +11,7 @@
  *              https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite
  *              https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design
  *              https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools.DotNet
+ *              https://github.com/aspnet/EntityFrameworkCore/tree/dev/src/EFCore.Sqlite.Core
  *              http://www.bricelam.net/2015/04/29/sqlite-on-corefx.html
  *              https://www.nuget.org/packages/Microsoft.Data.Sqlite
  *              https://github.com/aspnet/Microsoft.Data.Sqlite

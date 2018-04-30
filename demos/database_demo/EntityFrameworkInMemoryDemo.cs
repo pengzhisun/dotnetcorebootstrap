@@ -9,6 +9,7 @@
  *              https://docs.microsoft.com/en-us/ef/core/providers/in-memory/
  *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore
  *              https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory
+ *              https://github.com/aspnet/EntityFrameworkCore/tree/dev/src/EFCore.InMemory
  *****************************************************************************/
 
 namespace DotNetCoreBootstrap.DatabaseDemo
@@ -28,6 +29,8 @@ namespace DotNetCoreBootstrap.DatabaseDemo
     /// <remarks>
     /// Depends on Nuget packages:
     /// Microsoft.EntityFrameworkCore.InMemory
+    /// Microsoft.Extensions.Logging
+    /// Microsoft.Extensions.Logging.TraceSource
     /// </remarks>
     internal static class EntityFrameworkInMemoryDemo
     {
@@ -90,6 +93,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             }
             finally
             {
+                // release log file handler
                 loggerFactory.Dispose();
             }
         }
