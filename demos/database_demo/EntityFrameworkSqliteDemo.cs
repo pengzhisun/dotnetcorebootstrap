@@ -76,6 +76,8 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             {
                 using (DemoContext db = new DemoContext())
                 {
+                    Console.WriteLine($"Is Sqlite database: {db.Database.IsSqlite()}");
+
                     // insert entities and save changes to database.
                     db.NestedEntities.Add(nestedEntity);
                     int count = db.SaveChanges();

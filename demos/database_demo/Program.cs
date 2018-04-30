@@ -25,6 +25,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             PrintMessageBlock("Begin .Net Core Database Demos", '#');
 
             RunDemo("EntityFrameworkSqliteDemo", EntityFrameworkSqliteDemo.Run);
+            RunDemo("EntityFrameworkInMemoryDemo", EntityFrameworkInMemoryDemo.Run);
 
             PrintMessageBlock("End .Net Core Database Demos", '#');
         }
