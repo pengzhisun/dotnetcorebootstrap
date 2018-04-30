@@ -117,11 +117,14 @@ This bootstrap project provides the sample code and simple how-to guide for regu
 
   This project contains following demo scenarios:
 
-  * [Entity Framework Core for SQLite demo](demos/database_demo/EntityFrameworkSqliteDemo.cs)
+  * [Entity Framework Core for Sqlite demo](demos/database_demo/EntityFrameworkSqliteDemo.cs)
     * [How to use Entity Framework Core to access Sqlite database in .Net Core](docs/database/how_to_use_ef_sqlite.md)
 
   * [Entity Framework Core with in-memory database provider demo](demos/database_demo/EntityFrameworkSqliteDemo.cs)
     * [How to use Entity Framework Core with in-memory database provider in .Net Core](docs/database/how_to_use_ef_in_memory.md)
+
+  * [Entity Framework Core with Sqlite database in-memory mode demo](demos/database_demo/EntityFrameworkSqliteInMemoryDemo.cs)
+    * [How to use Entity Framework Core with Sqlite database in-memory mode in .Net Core](docs/database/how_to_use_ef_sqlite_in_memory.md)
 
 ## Cheat Sheets
 

@@ -4,7 +4,7 @@
  *
  * File Name:   EntityFrameworkSqliteInMemoryDemo.cs
  * Author:      Pengzhi Sun
- * Description: .Net Core Entity Framework for SQLite in-memory mode demos.
+ * Description: .Net Core Entity Framework for Sqlite in-memory mode demos.
  * Reference:   https://docs.microsoft.com/en-us/ef/core/miscellaneous/testing/sqlite
  *              https://docs.microsoft.com/en-us/ef/core/providers/sqlite/
  *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore
@@ -31,7 +31,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
-    /// Defines the Entity Framework for SQLite in-memory demo class.
+    /// Defines the Entity Framework for Sqlite in-memory demo class.
     /// </summary>
     /// <remarks>
     /// Depends on Nuget packages:
@@ -57,17 +57,20 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             };
             nestedEntity.SubEntities = subEntities;
 
+            // sqlite in-memory database only exists while the connection opening.
             SqliteConnection sqliteConnection =
                 new SqliteConnection("DataSource=:memory:");
             sqliteConnection.Open();
 
-            DbContextOptionsBuilder<DemoContext> optionsBuilder =
+            // create the database context options for using sqlite in-memory database.
+            DbContextOptions<DemoContext> options =
                 new DbContextOptionsBuilder<DemoContext>()
-                    .UseSqlite(sqliteConnection);
+                    .UseSqlite(sqliteConnection)
+                    .Options;
 
             try
             {
-                using (DemoContext db = new DemoContext(optionsBuilder.Options))
+                using (DemoContext db = new DemoContext(options))
                 {
                     Console.WriteLine($"Is In-Memory database: {db.Database.IsInMemory()}");
                     Console.WriteLine($"Is IsSqlite database: {db.Database.IsSqlite()}");
@@ -108,10 +111,25 @@ namespace DotNetCoreBootstrap.DatabaseDemo
                     sqliteConnection.Close();
                 }
             }
+
+            // the previous sqlite in-memory datbase will be destroyed after connection close.
+            try
+            {
+                sqliteConnection.Open();
+                PrintAllTables(sqliteConnection);
+            }
+            finally
+            {
+                // close sqlite connection.
+                if (sqliteConnection.State != ConnectionState.Closed)
+                {
+                    sqliteConnection.Close();
+                }
+            }
         }
 
         /// <summary>
-        /// Print all SQLite tables.
+        /// Print all sqlite tables.
         /// </summary>
         /// <param name="connection">The Sqlite connection.</param>
         private static void PrintAllTables(SqliteConnection connection)
@@ -191,6 +209,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             /// </param>
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
+                // the IsConfigured flag will be true while received the options parameter from constructor.
                 if (!optionsBuilder.IsConfigured)
                 {
                     // use in-memory database by default.

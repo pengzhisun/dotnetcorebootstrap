@@ -4,7 +4,7 @@
  *
  * File Name:   EntityFrameworkSqliteDemo.cs
  * Author:      Pengzhi Sun
- * Description: .Net Core Entity Framework for SQLite demos.
+ * Description: .Net Core Entity Framework for Sqlite demos.
  * Reference:   https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite
  *              https://docs.microsoft.com/en-us/ef/core/providers/sqlite/
  *              https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore
@@ -34,7 +34,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
-    /// Defines the Entity Framework for SQLite demo class.
+    /// Defines the Entity Framework for Sqlite demo class.
     /// </summary>
     /// <remarks>
     /// Depends on Nuget packages:
@@ -46,12 +46,12 @@ namespace DotNetCoreBootstrap.DatabaseDemo
     internal static class EntityFrameworkSqliteDemo
     {
         /// <summary>
-        /// Temp directory for SQLite database file generation.
+        /// Temp directory for Sqlite database file generation.
         /// </summary>
         const string TempDir = @"../EntityFrameworkSqliteDemo_temp";
 
         /// <summary>
-        /// SQLite demo databae file name.
+        /// Sqlite demo databae file name.
         /// </summary>
         const string DatabaseFileName = @"EntityFrameworkSqliteDemo.db";
 
@@ -104,10 +104,10 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             }
             finally
             {
-                // print all tables in SQLite demo database.
+                // print all tables in Sqlite demo database.
                 PrintAllTables();
 
-                // remove SQLite demo database file if not in debug mode.
+                // remove Sqlite demo database file if not in debug mode.
                 if (!Debugger.IsAttached)
                 {
                     File.Delete(DatabaseFileName);
@@ -118,7 +118,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
         #region Helper Methods
 
         /// <summary>
-        /// Print all SQLite tables.
+        /// Print all Sqlite tables.
         /// </summary>
         private static void PrintAllTables()
         {
@@ -164,7 +164,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
         }
 
         /// <summary>
-        /// Create SQLite demo database file.
+        /// Create Sqlite demo database file.
         /// </summary>
         private static void CreateDemoDatabaseFile()
         {
