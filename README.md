@@ -126,6 +126,13 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [Entity Framework Core with Sqlite database in-memory mode demo](demos/database_demo/EntityFrameworkSqliteInMemoryDemo.cs)
     * [How to use Entity Framework Core with Sqlite database in-memory mode in .Net Core](docs/database/how_to_use_ef_sqlite_in_memory.md)
 
+* [Test](demos/test_demo)
+
+  This project contains following demo scenarios:
+
+  * [MSTest demo](demos/test_demo/MSTestDemo.cs)
+    * [How to use MSTest in .Net Core](docs/test/how_to_use_mstest.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)

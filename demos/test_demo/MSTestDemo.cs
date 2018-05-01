@@ -6,7 +6,12 @@
  * Author:      Pengzhi Sun
  * Description: .Net Core MSTest demos.
  * Reference:   https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest
-*               https://github.com/Microsoft/vstest-docs/blob/master/docs/report.md
+ *              https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/
+ *              https://github.com/Microsoft/vstest
+ *              https://www.nuget.org/packages/MSTest.TestAdapter/
+ *              https://www.nuget.org/packages/MSTest.TestFramework/
+ *              https://github.com/microsoft/testfx
+ *              https://github.com/Microsoft/vstest-docs/blob/master/docs/report.md
  *****************************************************************************/
 
 namespace DotNetCoreBootstrap.TestDemo
