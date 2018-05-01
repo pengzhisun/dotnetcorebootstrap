@@ -71,8 +71,7 @@ namespace DotNetCoreBootstrap.TestDemo
                     bool actualResult = toBeTestedInstance.IsOdd(number);
 
                     Assert.True(actualResult);
-                },
-                number);
+                });
         }
 
         /// <summary>
@@ -104,8 +103,7 @@ namespace DotNetCoreBootstrap.TestDemo
                     bool actualResult = toBeTestedInstance.IsOdd(number);
 
                     Assert.False(actualResult);
-                },
-                number);
+                });
         }
 
         /// <summary>
@@ -161,11 +159,7 @@ namespace DotNetCoreBootstrap.TestDemo
         /// </summary>
         /// <param name="methodName">The test method name.</param>
         /// <param name="testAction">The actual test action.</param>
-        /// <param name="testMethodParameters">The given parameters for test method.</param>
-        private void RunXUnitTest(
-            string methodName,
-            Action testAction,
-            params object[] testMethodParameters)
+        private void RunXUnitTest(string methodName, Action testAction)
         {
             MethodInfo testMethodInfo = this.GetType().GetMethod(methodName);
 

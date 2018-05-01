@@ -8,3 +8,7 @@ MSTestDemo_test_temp
 # xUnit demo temp files
 XUnitDemo_to_be_tested_temp
 XUnitDemo_test_temp
+
+# NUnit demo temp files
+NUnitDemo_to_be_tested_temp
+NUnitDemo_test_temp

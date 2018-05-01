@@ -26,6 +26,7 @@ namespace DotNetCoreBootstrap.TestDemo
 
             RunDemo("MSTestDemo", MSTestDemo.Run);
             RunDemo("XUnitDemo", XUnitDemo.Run);
+            RunDemo("NUnitDemo", NUnitDemo.Run);
 
             PrintMessageBlock("End .Net Core Test Demos", '#');
         }
