@@ -1,2 +1,6 @@
+# Entity Framework Core for Sqlite dmeo temp files
 EntityFrameworkSqliteDemo_temp
-MSTestDemo_temp
+
+# MSTest demo temp files
+MSTestDemo_to_be_tested_temp
+MSTestDemo_test_temp
