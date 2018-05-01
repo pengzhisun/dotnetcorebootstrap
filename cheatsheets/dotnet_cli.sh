@@ -21,3 +21,6 @@ dotnet run -p demos/config_demo/config_demo.csproj
 
 # run test project with console logger
 dotnet test demos/test_demo/test_demo.csproj --logger:"console;verbosity=normal"
+
+# add project reference
+dotnet add demos/MSTestDemo_test_temp/*.csproj reference demos/MSTestDemo_to_be_tested_temp/*.csproj
