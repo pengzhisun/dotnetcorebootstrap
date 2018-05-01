@@ -133,6 +133,9 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [MSTest demo](demos/test_demo/MSTestDemo.cs)
     * [How to use MSTest in .Net Core](docs/test/how_to_use_mstest.md)
 
+  * [xUnit demo](demos/test_demo/XUnitDemo.cs)
+    * [How to use xUnit in .Net Core](docs/test/how_to_use_xunit.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)

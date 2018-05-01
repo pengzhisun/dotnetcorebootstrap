@@ -120,6 +120,21 @@
         }
 
         ...
+
+        [TestMethod]
+        [Description("Test for verifying ToBeTestedClass.IsOdd(int number)"
+            + " method with Int32.MinValue (-2,147,483,648) worked correctly.")]
+        [TestCategory("BVT")]
+        [Priority(0)]
+        [Owner("Pengzhi Sun")]
+        public void IsOddGivenIntMinValueSuccessTest()
+        {
+            ToBeTestedClass toBeTestedInstance = new ToBeTestedClass();
+
+            bool actualResult = toBeTestedInstance.IsOdd(int.MinValue);
+
+            Assert.IsFalse(actualResult);
+        }
     }
     ```
 

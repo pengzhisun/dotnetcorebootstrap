@@ -82,17 +82,17 @@ namespace DotNetCoreBootstrap.TestDemo
         /// </summary>
         /// <param name="number">The given integer value for testing.</param>
         [DataTestMethod]
-        [Description("Tests for verifying ToBeTestedClass.IsOdd(int number)"
-            + " method with odd values worked correctly.")]
-        [TestCategory("BVT")]
-        [Priority(0)]
-        [Owner("Pengzhi Sun")]
         [DataRow(-1)]
         [DataRow(-33)]
         [DataRow(-57)]
         [DataRow(101)]
         [DataRow(3123)]
         [DataRow(513129)]
+        [Description("Tests for verifying ToBeTestedClass.IsOdd(int number)"
+            + " method with odd values worked correctly.")]
+        [TestCategory("BVT")]
+        [Priority(0)]
+        [Owner("Pengzhi Sun")]
         public void IsOddGivenOddValuesSuccessTest(int number)
         {
             ToBeTestedClass toBeTestedInstance = new ToBeTestedClass();
@@ -108,11 +108,6 @@ namespace DotNetCoreBootstrap.TestDemo
         /// </summary>
         /// <param name="number">The given integer value for testing.</param>
         [DataTestMethod]
-        [Description("Tests for verifying ToBeTestedClass.IsOdd(int number)"
-            + " method with even values worked correctly.")]
-        [TestCategory("BVT")]
-        [Priority(0)]
-        [Owner("Pengzhi Sun")]
         [DataRow(0)]
         [DataRow(-22)]
         [DataRow(-446)]
@@ -120,6 +115,11 @@ namespace DotNetCoreBootstrap.TestDemo
         [DataRow(2468)]
         [DataRow(412456)]
         [DataRow(6123458)]
+        [Description("Tests for verifying ToBeTestedClass.IsOdd(int number)"
+            + " method with even values worked correctly.")]
+        [TestCategory("BVT")]
+        [Priority(0)]
+        [Owner("Pengzhi Sun")]
         public void IsOddGivenEvenValuesSuccessTest(int number)
         {
             ToBeTestedClass toBeTestedInstance = new ToBeTestedClass();
