@@ -13,6 +13,7 @@
  *              https://www.nuget.org/packages/NUnit/
  *              https://www.nuget.org/packages/NUnit3TestAdapter/
  *              https://github.com/nunit/nunit
+ *              https://github.com/nunit/dotnet-new-nunit
  *              https://github.com/Microsoft/vstest-docs/blob/master/docs/report.md
  *****************************************************************************/
 

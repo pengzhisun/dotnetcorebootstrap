@@ -105,10 +105,7 @@
                 });
         }
 
-        private void RunXUnitTest(
-            string methodName,
-            Action testAction,
-            params object[] testMethodParameters)
+        private void RunXUnitTest(string methodName, Action testAction)
         {
             MethodInfo testMethodInfo = this.GetType().GetMethod(methodName);
 
@@ -144,5 +141,6 @@
 * [xunit.runner.visualstudio (nuget.org)](https://www.nuget.org/packages/xunit.runner.visualstudio)
 * [xunit (github.com)](https://github.com/xunit/xunit)
 * [xUnit.net project home (xunit.github.io)](https://xunit.github.io/)
+* [Getting started with xUnit.net (.NET Core / ASP.NET Core) > xUnit.net](http://xunit.github.io/docs/getting-started-dotnet-core)
 * [Capturing Output (xunit.github.io)](https://xunit.github.io/docs/capturing-output)
 * [Reporting test results (github.com)](https://github.com/Microsoft/vstest-docs/blob/master/docs/report.md)

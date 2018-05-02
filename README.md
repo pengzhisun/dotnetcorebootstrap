@@ -136,6 +136,9 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [xUnit demo](demos/test_demo/XUnitDemo.cs)
     * [How to use xUnit in .Net Core](docs/test/how_to_use_xunit.md)
 
+  * [NUnit demo](demos/test_demo/NUnitDemo.cs)
+    * [How to use NUnit in .Net Core](docs/test/how_to_use_nunit.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)
