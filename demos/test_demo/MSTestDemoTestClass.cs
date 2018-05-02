@@ -46,7 +46,7 @@ namespace DotNetCoreBootstrap.TestDemo
 
             TestCategoryAttribute testCategoryAttribute =
                 methodInfo.GetCustomAttribute<TestCategoryAttribute>();
-            Console.WriteLine($"Test Categories: {string.Join(',', testCategoryAttribute.TestCategories)}");
+            Console.WriteLine($"Category       : {string.Join(',', testCategoryAttribute.TestCategories)}");
 
             PriorityAttribute priorityAttribute =
                 methodInfo.GetCustomAttribute<PriorityAttribute>();
