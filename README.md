@@ -139,6 +139,13 @@ This bootstrap project provides the sample code and simple how-to guide for regu
   * [NUnit demo](demos/test_demo/NUnitDemo.cs)
     * [How to use NUnit in .Net Core](docs/test/how_to_use_nunit.md)
 
+* [Dependency Injection](demos/di_demo)
+
+  This project contains following demo scenarios:
+
+  * [Unity demo](demos/di_demo/UnityDemo.cs)
+    * [How to use Unity in .Net Core](docs/di/how_to_use_unity.md)
+
 ## Cheat Sheets
 
 * [dotnet cli](cheatsheets/dotnet_cli.sh)
