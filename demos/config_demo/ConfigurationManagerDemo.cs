@@ -8,8 +8,12 @@
  * Reference:   https://www.nuget.org/packages/System.Configuration.ConfigurationManager/
  *              https://github.com/dotnet/corefx/tree/master/src/System.Configuration.ConfigurationManager
  *              https://docs.microsoft.com/en-us/dotnet/api/system.configuration
+ *              https://docs.microsoft.com/zh-cn/dotnet/api/system.configuration.configurationmanager
+ *              https://docs.microsoft.com/zh-cn/dotnet/api/system.configuration.configurationmanager.openmappedexeconfiguration
+ *              https://docs.microsoft.com/zh-cn/dotnet/api/system.configuration.configurationsectiongroup
  *              https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configurationsection
  *              https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configurationelement
+ *              https://docs.microsoft.com/zh-cn/dotnet/api/system.configuration.configurationelementcollection
  *              https://docs.microsoft.com/en-us/dotnet/framework/configure-apps/file-schema/
  *****************************************************************************/
 
@@ -17,11 +21,17 @@ namespace DotNetCoreBootstrap.ConfigDemo
 {
     using System;
     using System.Configuration;
+    using System.IO;
     using System.Linq;
+    using System.Text;
 
     /// <summary>
     /// Defines the ConfigurationManager demo class.
     /// </summary>
+    /// <remarks>
+    /// Depends on Nuget packages:
+    /// System.Configuration.ConfigurationManager
+    /// </remarks>
     public sealed class ConfigurationManagerDemo
     {
         /// <summary>
@@ -47,23 +57,55 @@ namespace DotNetCoreBootstrap.ConfigDemo
             Console.WriteLine($"app setting '{appSettingKey}': '{appSettingValue}'");
 
             // Get demo configuration sections.
-            foreach (DemoConfigurationSection demoSection in
-                configuration.Sections.OfType<DemoConfigurationSection>())
+            DemoConfigurationSection demoSection1 =
+                (DemoConfigurationSection)configuration.GetSection("demoSection1");
+
+            // get section name
+            string demoSectionName1 = demoSection1.SectionInformation.SectionName;
+
+            // get section property
+            string demoSectionDescription1 = demoSection1.SectionDescription;
+            Console.WriteLine($"Demo section name: '{demoSectionName1}', description: '{demoSectionDescription1}'");
+
+            // get sub element inside the section
+            DemoConfigurationElement demoElement1 = demoSection1.DemoElement;
+            string demoElementName1 = demoElement1.Name;
+            string demoElementValue1 = demoElement1.Value;
+            Console.WriteLine($"Demo element name: '{demoElementName1}', description: '{demoElementValue1}'");
+
+            DemoConfigurationSection demoSection2 =
+                (DemoConfigurationSection)configuration.GetSection("demoSection2");
+            string demoSectionName2 = demoSection2.SectionInformation.SectionName;
+            string demoSectionDescription2 = demoSection2.SectionDescription;
+            Console.WriteLine($"Demo section name: '{demoSectionName2}', description: '{demoSectionDescription2}'");
+
+            // iterate sub elements collection inside the section
+            foreach (DemoConfigurationElement subElement in
+                    demoSection2.DemoElementsCollection)
             {
-                Console.WriteLine($"Demo section name: '{demoSection.SectionInformation.SectionName}', description: '{demoSection.SectionDescription}'");
-                Console.WriteLine($"Demo element name: '{demoSection.DemoElement.Name}', description: '{demoSection.DemoElement.Value}'");
-                foreach (DemoConfigurationElement demoElement in
-                    demoSection.DemoElementsCollection)
-                {
-                    Console.WriteLine($"Demo sub element name: '{demoElement.Name}', description: '{demoElement.Value}'");
-                }
+                string subElementName = subElement.Name;
+                string subElementValue = subElement.Value;
+                Console.WriteLine($"Demo sub element name: '{subElementName}', description: '{subElementValue}'");
             }
 
-            // Get demo configuration section group and inner section.
+            // get demo configuration section group and inner section.
             DemoConfigurationSectionGroup demoSectionGroup =
                 (DemoConfigurationSectionGroup)configuration.GetSectionGroup("demoSectionGroup");
+
+            // get sub section inside the section group.
             DemoConfigurationSection demoSection3 = demoSectionGroup.DemoSection3;
-            Console.WriteLine($"Demo section name: '{demoSection3.SectionInformation.SectionName}', description: '{demoSection3.SectionDescription}'");
+            string demoSectionName3 = demoSection3.SectionInformation.SectionName;
+            string demoSectionDescription3 = demoSection3.SectionDescription;
+            Console.WriteLine($"Demo section name: '{demoSectionName3}', description: '{demoSectionDescription3}'");
+
+            // print config file.
+            Console.WriteLine();
+            string appSettingsFilePath =
+                Path.Combine(AppContext.BaseDirectory, "appsettings.config");
+            Console.WriteLine($"[Trace] config file path: {appSettingsFilePath}");
+            string appSettingsFileContent =
+                File.ReadAllText(appSettingsFilePath, Encoding.UTF8);
+            Console.WriteLine(appSettingsFileContent);
         }
 
         /// <summary>
