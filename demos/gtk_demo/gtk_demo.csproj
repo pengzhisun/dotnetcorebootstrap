@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>DotNetCoreBootstrap.GtkDemo</RootNamespace>
+    <!-- <StartupObject>DotNetCoreBootstrap.GtkDemo.GladeDemoProgram</StartupObject> -->
+    <StartupObject>DotNetCoreBootstrap.GtkDemo.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="GtkSharp" Version="3.22.24.36" />
+  </ItemGroup>
+</Project>

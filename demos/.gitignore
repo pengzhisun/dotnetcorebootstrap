@@ -12,3 +12,6 @@ XUnitDemo_test_temp
 # NUnit demo temp files
 NUnitDemo_to_be_tested_temp
 NUnitDemo_test_temp
+
+# Glade demo temp files
+GladeDemo_temp

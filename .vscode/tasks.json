@@ -50,6 +50,16 @@
                 "${workspaceFolder}/demos/di_demo/di_demo.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build gtk_demo",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/demos/gtk_demo/gtk_demo.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

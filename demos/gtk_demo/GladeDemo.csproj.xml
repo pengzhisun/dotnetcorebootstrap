@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <NoWarn>$(NoWarn);NU1605;NU1603</NoWarn>
+    <RootNamespace>DotNetCoreBootstrap.GtkDemo</RootNamespace>
+    <AssemblyName>GladeDemo</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GladeDemoMainWindow.glade">
+      <LogicalName>GladeDemoMainWindow.glade</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="GtkSharp" Version="3.22.24.36" />
+  </ItemGroup>
+</Project>
