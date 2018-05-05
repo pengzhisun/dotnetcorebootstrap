@@ -73,6 +73,9 @@ This bootstrap project provides the sample code and simple how-to guide for regu
 
   This project contains following demo scenarios:
 
+  * [ConfigurationManager demo](demos/config_demo/ConfigurationManagerDemo.cs)
+    * [How to use ConfigurationManager in .Net Core](docs/config/how_to_use_config_manager.md)
+
   * [JSON format configuration file demo](demos/config_demo/JsonFileConfigDemo.cs)
     * [How to use a JSON format configuration file in .Net Core](docs/config/how_to_use_json_config_file.md)
 
