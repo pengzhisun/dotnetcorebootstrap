@@ -192,7 +192,7 @@ namespace DotNetCoreBootstrap.DatabaseDemo
                 $"dotnet build",
 
                 // add new migration
-                $"dotnet ef migrations add InitialCreate --no-build -c {dataContext}",
+                $"dotnet ef migrations add InitialCreate -c {dataContext}",
 
                 // apply migration to databae, must rebuild after new migration created.
                 $"dotnet ef database update -c {dataContext}",
