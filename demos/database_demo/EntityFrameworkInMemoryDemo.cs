@@ -94,7 +94,10 @@ namespace DotNetCoreBootstrap.DatabaseDemo
             finally
             {
                 // release log file handler
-                loggerFactory.Dispose();
+                if (loggerFactory != null)
+                {
+                    loggerFactory.Dispose();
+                }
             }
         }
 
