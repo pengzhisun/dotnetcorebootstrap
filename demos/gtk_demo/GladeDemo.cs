@@ -61,7 +61,14 @@ namespace DotNetCoreBootstrap.GtkDemo
                 $"dotnet build",
             };
 
-            if (isMacOSX)
+            if (isLinux)
+            {
+                commands.AddRange(new[]{
+                    // switch working folder back
+                    $"dotnet run",
+                });
+            }
+            else if (isMacOSX)
             {
                 const string config = "Release";
                 const string framework = "netcoreapp2.0";
