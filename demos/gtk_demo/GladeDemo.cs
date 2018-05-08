@@ -64,9 +64,14 @@ namespace DotNetCoreBootstrap.GtkDemo
             const string framework = "netcoreapp2.0";
             if (isLinux)
             {
+                const string runtime = "linux-x64";
+                const string appName = "GladeDemo";
                 commands.AddRange(new[]{
-                    // switch working folder back
-                    $"dotnet run",
+                    // publish glade demo project
+                    $"dotnet publish --configuration {config} --framework {framework} --runtime {runtime}",
+
+                    // execute linux app
+                    $"bin/{config}/{framework}/{runtime}/publish/{appName}",
                 });
             }
             else if (isWindows)
