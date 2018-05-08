@@ -32,7 +32,6 @@ namespace DotNetCoreBootstrap.GtkDemo
             // reference: https://github.com/dotnet/corefx/issues/19694
             bool isMacOSX = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
-            // TODO: package for windows and linux
             bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             bool isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
 
@@ -61,6 +60,8 @@ namespace DotNetCoreBootstrap.GtkDemo
                 $"dotnet build",
             };
 
+            const string config = "Release";
+            const string framework = "netcoreapp2.0";
             if (isLinux)
             {
                 commands.AddRange(new[]{
@@ -68,10 +69,20 @@ namespace DotNetCoreBootstrap.GtkDemo
                     $"dotnet run",
                 });
             }
+            else if (isWindows)
+            {
+                const string runtime = "win-x64";
+                const string appName = "GladeDemo.exe";
+                commands.AddRange(new[]{
+                    // publish glade demo project
+                    $"dotnet publish --configuration {config} --framework {framework} --runtime {runtime}",
+
+                    // execute windows app
+                    $"bin/{config}/{framework}/{runtime}/publish/{appName}",
+                });
+            }
             else if (isMacOSX)
             {
-                const string config = "Release";
-                const string framework = "netcoreapp2.0";
                 const string runtime = "osx-x64";
                 const string appDir = "app";
                 const string appName = "GladeDemo.app";
