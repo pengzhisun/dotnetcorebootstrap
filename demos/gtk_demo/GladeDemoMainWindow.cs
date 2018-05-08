@@ -25,9 +25,16 @@ namespace DotNetCoreBootstrap.GtkDemo
         {
             builder.Autoconnect(this);
 
+            this.countbutton.Clicked += CountButton_Clicked;
             this.DeleteEvent += this.Window_DeleteEvent;
             this.FocusInEvent += this.Window_FocusInEvent;
-            this.countbutton.Clicked += CountButton_Clicked;
+        }
+
+        private void CountButton_Clicked(object sender, EventArgs eventArgs)
+        {
+            this.counter++;
+            this.messageLabel.Text =
+                $"This button has been clicked {this.counter} time(s).";
         }
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs eventArgs)
@@ -79,13 +86,6 @@ namespace DotNetCoreBootstrap.GtkDemo
                 {
                     action();
                 });
-        }
-
-        private void CountButton_Clicked(object sender, EventArgs eventArgs)
-        {
-            this.counter++;
-            this.messageLabel.Text =
-                $"This button has been clicked {this.counter} time(s).";
         }
     }
 }

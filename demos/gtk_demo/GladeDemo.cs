@@ -29,12 +29,6 @@ namespace DotNetCoreBootstrap.GtkDemo
         {
             const string TempDir = @"../GladeDemo_temp";
 
-            // reference: https://github.com/dotnet/corefx/issues/19694
-            bool isMacOSX = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
-
-            bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-            bool isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
-
             List<string> commands = new List<string>
             {
                 // cleanup old temp files
@@ -59,6 +53,11 @@ namespace DotNetCoreBootstrap.GtkDemo
                 // build glade demo project
                 $"dotnet build",
             };
+
+            // reference: https://github.com/dotnet/corefx/issues/19694
+            bool isMacOSX = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+            bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            bool isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
 
             const string config = "Release";
             const string framework = "netcoreapp2.0";
