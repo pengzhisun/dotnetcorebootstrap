@@ -96,8 +96,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 }
                 catch (InvalidOperationException ex)
                 {
-                    this.output.WriteLine(ex.Message);
-                    this.output.WriteLine(ex.StackTrace);
+                    this.output.PrintException(ex);
                     throw;
                 }
             });

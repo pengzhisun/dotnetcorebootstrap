@@ -46,8 +46,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 catch (ArgumentNullException ex)
                 {
                     Assert.Equal(nameof(category), ex.ParamName);
-                    this.output.WriteLine(ex.Message);
-                    this.output.WriteLine(ex.StackTrace);
+                    this.output.PrintException(ex);
                     throw;
                 }
             });
@@ -69,8 +68,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 catch (ArgumentException ex)
                 {
                     Assert.Equal(nameof(category), ex.ParamName);
-                    this.output.WriteLine(ex.Message);
-                    this.output.WriteLine(ex.StackTrace);
+                    this.output.PrintException(ex);
                     throw;
                 }
             });
@@ -89,8 +87,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 catch (ArgumentNullException ex)
                 {
                     Assert.Equal(nameof(actionTypeType), ex.ParamName);
-                    this.output.WriteLine(ex.Message);
-                    this.output.WriteLine(ex.StackTrace);
+                    this.output.PrintException(ex);
                     throw;
                 }
             });
@@ -112,8 +109,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 catch (ArgumentException ex)
                 {
                     Assert.Equal(nameof(actionTypeType), ex.ParamName);
-                    this.output.WriteLine(ex.Message);
-                    this.output.WriteLine(ex.StackTrace);
+                    this.output.PrintException(ex);
                     throw;
                 }
             });

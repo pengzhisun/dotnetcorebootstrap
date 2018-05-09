@@ -94,6 +94,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 catch (ArgumentException ex)
                 {
                     Assert.Equal(nameof(arg), ex.ParamName);
+                    this.output.PrintException(ex);
                     throw;
                 }
             });

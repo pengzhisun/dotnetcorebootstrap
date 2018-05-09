@@ -48,6 +48,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 catch (ArgumentNullException ex)
                 {
                     Assert.Equal(nameof(aliases), ex.ParamName);
+                    this.output.PrintException(ex);
                     throw;
                 }
             });
@@ -70,6 +71,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 catch (ArgumentException ex)
                 {
                     Assert.Equal(nameof(aliases), ex.ParamName);
+                    this.output.PrintException(ex);
                     throw;
                 }
             });
