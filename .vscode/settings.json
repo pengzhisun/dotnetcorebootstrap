@@ -1,0 +1,3 @@
+{
+    "dotnet-test-explorer.testProjectPath": "./samples/task_planner/test"
+}

@@ -50,6 +50,61 @@
                 "${workspaceFolder}/demos/di_demo/di_demo.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build task_planner",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/samples/task_planner/src/task_planner.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build task_planner_test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/samples/task_planner/test/task_planner_test.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build task_planner_test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/samples/task_planner/test/task_planner_test.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "test task_planner_test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
+                "--logger:\"console;verbosity=normal\"",
+                "${workspaceFolder}/samples/task_planner/test/task_planner_test.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "test with coverage task_planner_test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
+                "--logger:\"console;verbosity=normal\"",
+                "/p:CollectCoverage=true",
+                "/p:CoverletOutputFormat=lcov",
+                "/p:CoverletOutput=../coverage/lcov",
+                "${workspaceFolder}/samples/task_planner/test/task_planner_test.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

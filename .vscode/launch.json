@@ -75,6 +75,23 @@
             "internalConsoleOptions": "openOnSessionStart"
         },
         {
+            "name": "run task_planner",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build task_planner",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/samples/task_planner/src/bin/Debug/netcoreapp2.0/tp.dll",
+            "args": [
+                "-param1",
+                "value"
+            ],
+            "cwd": "${workspaceFolder}/samples/task_planner/src",
+            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
