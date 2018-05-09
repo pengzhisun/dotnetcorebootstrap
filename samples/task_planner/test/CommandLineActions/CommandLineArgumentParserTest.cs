@@ -8,14 +8,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using Xunit;
     using Xunit.Abstractions;
 
-    public sealed class CommandLineArgumentParserTests
+    public sealed class CommandLineArgumentParserTest
     {
-        private static readonly CommandLineArgument DefaultCommandLineArgument =
-            new CommandLineArgument();
-
         private readonly ITestOutputHelper output;
 
-        public CommandLineArgumentParserTests(ITestOutputHelper output)
+        public CommandLineArgumentParserTest(ITestOutputHelper output)
         {
             this.output = output;
         }
@@ -23,7 +20,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [Fact]
         public void ParseGivenNullArgsSuccessTest()
         {
-            CommandLineArgument expectedValue = DefaultCommandLineArgument;
+            CommandLineArgument expectedValue =
+                new CommandLineArgument();
             CommandLineArgument actualValue =
                 CommandLineArgumentParser.Parse(null);
             this.output.WriteLine($"actual value: {actualValue}");

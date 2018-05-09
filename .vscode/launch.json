@@ -82,8 +82,7 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/samples/task_planner/src/bin/Debug/netcoreapp2.0/tp.dll",
             "args": [
-                "-param1",
-                "value"
+                "--version"
             ],
             "cwd": "${workspaceFolder}/samples/task_planner/src",
             // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window

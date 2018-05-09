@@ -1,6 +1,7 @@
 namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     using System;
+    using System.Reflection;
 
     [Category("General", typeof(GeneralActionType))]
     internal sealed class GeneralCategory
@@ -8,6 +9,13 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [Action(GeneralActionType.Default)]
         public void DefaultAction(GeneralActionArg arg)
         {
+            if (!arg.IsValid())
+            {
+                throw new ArgumentException(
+                    $"The argument '{arg}' is invalid",
+                    nameof(arg));
+            }
+
             if (arg.HelpSwtichEnabled)
             {
                 this.ShowHelp();
@@ -16,21 +24,17 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             {
                 this.ShowVersion();
             }
-            else
-            {
-                Console.WriteLine("Unknown state...");
-                this.ShowHelp();
-            }
         }
 
         private void ShowHelp()
         {
-            Console.WriteLine("Help...");
+            Console.WriteLine(Constants.HelpMessage);
         }
 
         private void ShowVersion()
         {
-            Console.WriteLine("Version...");
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            Console.WriteLine(Constants.VersionMessageFormat, version);
         }
     }
 }

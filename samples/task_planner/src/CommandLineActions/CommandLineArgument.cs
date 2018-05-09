@@ -8,17 +8,17 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
     internal class CommandLineArgument
     {
-        private const string DefaultCategory = "General";
+        public const string DefaultCategory = "General";
 
-        private const string DefaultAction = "Default";
+        public const string DefaultAction = "Default";
 
         public CommandLineArgument(
-            string category = DefaultCategory,
-            string action = DefaultAction,
+            string category = null,
+            string action = null,
             IDictionary<string, string> actionParams = null)
         {
-            this.Category = category;
-            this.Action = action;
+            this.Category = category ?? DefaultCategory;
+            this.Action = action ?? DefaultAction;
             this.ActionParameters =
                 (actionParams ?? new Dictionary<string, string>())
                 as IReadOnlyDictionary<string, string>;
@@ -57,10 +57,12 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
                         if (paramValueString != null)
                         {
+                            Type paramType =
+                                Nullable.GetUnderlyingType(propInfo.PropertyType)
+                                ?? propInfo.PropertyType;
+
                             object paramValue =
-                            Convert.ChangeType(
-                                paramValueString,
-                                propInfo.PropertyType);
+                                Convert.ChangeType(paramValueString, paramType);
 
                             propInfo.SetValue(this, paramValue);
                         }
@@ -73,6 +75,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                             throw new InvalidOperationException(
                                 $"Action parameter '{propInfo.Name}' should have param value.");
                         }
+
+                        paramFound = true;
                     }
                 }
 

@@ -13,7 +13,7 @@
                 CommandLineArgument arg =
                     CommandLineArgumentParser.Parse(args);
 
-                Console.WriteLine($"Command line argument received: {arg}");
+                CommandLineEngine.Process(arg);
             }
             catch (Exception excption)
             {
@@ -22,6 +22,4 @@
             }
         }
     }
-
-
 }

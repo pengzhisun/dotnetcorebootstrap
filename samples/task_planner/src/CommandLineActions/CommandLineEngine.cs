@@ -15,17 +15,37 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             MethodInfo actionMethod = GetActionMethod(categoryType, actionType);
 
-
+            RunAction(categoryType, actionMethod, arg);
         }
 
         private static void RunAction(
+            Type categoryType,
             MethodInfo actionMethod,
             CommandLineArgument arg)
         {
             ParameterInfo[] methodParams = actionMethod.GetParameters();
 
-            if(methodParams.Count() != 1)
+            if (methodParams.Count() != 1)
+            {
+                throw new InvalidOperationException(
+                    $"The action method '{actionMethod}' should only accept one parameter.");
+            }
 
+            ParameterInfo methodParam = methodParams.Single();
+            if (!methodParam.ParameterType.IsSubclassOf(typeof(CommandLineArgument)))
+            {
+                throw new InvalidOperationException(
+                    $"The action method '{actionMethod}' should only accept one CommandLineArgument type parameter.");
+            }
+
+            object actionArg =
+                Convert.ChangeType(
+                    Activator.CreateInstance(methodParam.ParameterType, arg),
+                    methodParam.ParameterType);
+
+            object categoryInstance =
+                Activator.CreateInstance(categoryType);
+            actionMethod.Invoke(categoryInstance, new[]{ actionArg });
         }
 
         private static MethodInfo GetActionMethod(
@@ -79,7 +99,9 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                         CategoryAttribute categoryAttr =
                             t.GetCustomAttribute<CategoryAttribute>();
                         return categoryAttr != null
-                            & category.Equals(categoryAttr.Category);
+                            && category.Equals(
+                                categoryAttr.Category,
+                                StringComparison.InvariantCultureIgnoreCase);
                     });
 
             if (types.Count() == 0)
