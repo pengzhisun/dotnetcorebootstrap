@@ -52,7 +52,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                         if (paramFound)
                         {
                             throw new InvalidOperationException(
-                                $"Action parameter '{propInfo.Name}' should only have one.");
+                                $"Action parameter '{propInfo.Name}' found more than one alias.");
                         }
 
                         if (paramValueString != null)

@@ -100,7 +100,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             });
         }
 
-        private GeneralActionArg GetGeneralActionArg(string[] args)
+        private static GeneralActionArg GetGeneralActionArg(string[] args)
         {
             Dictionary<string, string> actionParams =
                 new Dictionary<string, string>();
