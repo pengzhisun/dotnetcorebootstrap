@@ -2,6 +2,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     internal static class Constants
     {
+        public const string GeneralCategory = @"General";
+
         public const string HelpMessage = @"tp command line arguments:
 -----------------------------------------------------------
 general arguments:

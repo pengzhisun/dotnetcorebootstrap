@@ -8,9 +8,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
     internal class CommandLineArgument
     {
-        public const string DefaultCategory = "General";
+        public const string DefaultCategory = Constants.GeneralCategory;
 
-        public const string DefaultAction = "Default";
+        public static readonly string DefaultAction =
+            GeneralActionType.Default.ToString();
 
         public CommandLineArgument(
             string category = null,

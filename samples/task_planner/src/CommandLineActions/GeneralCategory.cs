@@ -3,7 +3,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using System;
     using System.Reflection;
 
-    [Category("General", typeof(GeneralActionType))]
+    [Category(Constants.GeneralCategory, typeof(GeneralActionType))]
     internal sealed class GeneralCategory
     {
         [Action(GeneralActionType.Default)]
