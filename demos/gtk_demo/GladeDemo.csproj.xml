@@ -2,12 +2,14 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <!--Workaround for NU1605 "Detected package downgrade", refer: https://github.com/dotnet/core/issues/907-->
     <NoWarn>$(NoWarn);NU1605;NU1603</NoWarn>
     <RootNamespace>DotNetCoreBootstrap.GtkDemo</RootNamespace>
     <AssemblyName>GladeDemo</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="GladeDemoMainWindow.glade">
+      <!--Resource name used for builder.-->
       <LogicalName>GladeDemoMainWindow.glade</LogicalName>
     </EmbeddedResource>
   </ItemGroup>

@@ -6,6 +6,8 @@
  * Author:      Pengzhi Sun
  * Description: .Net Core GTK# + Glade demos.
  * Reference:   https://github.com/GtkSharp/GtkSharp
+ *              https://github.com/GtkSharp/GtkSharp/tree/develop/Source/Templates/GtkSharp.Template.CSharp/content/GtkSharp.Application.CSharp
+ *              https://www.nuget.org/packages/GtkSharp
  *****************************************************************************/
 
 namespace DotNetCoreBootstrap.GtkDemo
@@ -20,6 +22,10 @@ namespace DotNetCoreBootstrap.GtkDemo
     /// <summary>
     /// Defines the GTK# + Glade demos.
     /// </summary>
+    /// <remarks>
+    /// Depends on Nuget packages:
+    /// GtkSharp
+    /// </remarks>
     internal static class GladeDemo
     {
         /// <summary>
