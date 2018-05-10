@@ -111,7 +111,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             }
 
             return new GeneralActionArg(
-                    new CommandLineArgument(null, null, actionParams));
+                new CommandLineArgument(null, null, actionParams));
         }
     }
 }

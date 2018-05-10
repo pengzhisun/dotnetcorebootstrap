@@ -20,6 +20,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             this.output = output;
         }
 
+        #region Test methods for all supported commands
+
         [Theory]
         [InlineData("-h")]
         [InlineData("--help")]
@@ -83,6 +85,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 Assert.Equal(expectedOut, actualOut);
             }
         }
+
+        #endregion
+
+        #region Test methods for exception cases.
 
         [Fact]
         public void ProcessNoCommandLineArgParamMethodCategoryFailedTest()
@@ -255,6 +261,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             });
         }
 
+        #endregion
+
+        #region Nested dummy category classes for exception case tests.
+
         [Category(
             "No_comand_line_arg_param_method_category",
             typeof(DummyActionTypeEnum))]
@@ -323,5 +333,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
             DummyAction
         }
+
+        #endregion
     }
 }
