@@ -72,7 +72,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             bool? expectedDummyNullableBoolFalseParam = false;
             CommandLineArgument commandLineArg =
                 this.GetDummyCommandLineArg(
-                    new Dictionary<string, string>
+                    actionParams: new Dictionary<string, string>
                     {
                         { "-dummy-int-param", $"{expectedDummyIntParam}" },
                         { "-dummy-string-param", expectedDummyStringParam },
@@ -122,7 +122,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 DefaultValueArg.DefaultIntValue;
             CommandLineArgument commandLineArg =
                 this.GetDummyCommandLineArg(
-                    new Dictionary<string, string>
+                    actionParams: new Dictionary<string, string>
                     {
                         { "-dummy-nullable-bool-null-param", null },
                     });
@@ -162,7 +162,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                     .FormatInvariant(nameof(MoreThanOneAliasesArg.DupDummyParam));
             CommandLineArgument commandLineArg =
                 this.GetDummyCommandLineArg(
-                    new Dictionary<string, string>
+                    actionParams: new Dictionary<string, string>
                     {
                         { "--dummy-param", "dummy_value" },
                         { "--dup-dummy-param", "dummy_value" }
@@ -184,7 +184,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                     .FormatInvariant(nameof(NotFoundParamValueArg.NotFoundParam));
             CommandLineArgument commandLineArg =
                 this.GetDummyCommandLineArg(
-                    new Dictionary<string, string>
+                    actionParams: new Dictionary<string, string>
                     {
                         { "--not-found-value-param", null }
                     });

@@ -8,20 +8,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using Xunit;
     using Xunit.Abstractions;
 
-    public sealed class GeneralCategoryTest
+    public sealed class GeneralCategoryTest : CommandLineTestBase
     {
-        private readonly ITestOutputHelper output;
-
         public GeneralCategoryTest(ITestOutputHelper output)
+            : base(output)
         {
-            this.output = output;
-        }
-
-        [Fact]
-        public void DefaultConstructorSuccessTest()
-        {
-            GeneralCategory instance = new GeneralCategory();
-            Assert.NotNull(instance);
         }
 
         [Theory]
@@ -31,20 +22,12 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [InlineData("--help", "true")]
         public void DefaultActionGivenHelpArgSuccessTest(params string[] args)
         {
-            GeneralActionArg arg = GetGeneralActionArg(args);
-
             string expectedOut = Constants.HelpMessage + Environment.NewLine;
-            using (StringWriter writer = new StringWriter())
-            {
-                Console.SetOut(writer);
+            GeneralActionArg arg = this.GetGeneralActionArg(args);
 
-                new GeneralCategory().DefaultAction(arg);
-
-                writer.Flush();
-                string actualOut = writer.GetStringBuilder().ToString();
-                this.output.WriteLine($"actual out: {actualOut}");
-                Assert.Equal(expectedOut, actualOut);
-            }
+            this.AssertConsoleOut(
+                expectedOut,
+                () => RunDefaultAction(arg));
         }
 
         [Theory]
@@ -54,8 +37,6 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [InlineData("--version", "true")]
         public void DefaultActionGivenVersionArgSuccessTest(params string[] args)
         {
-            GeneralActionArg arg = GetGeneralActionArg(args);
-
             Version assemblyVersion =
                 Assembly.GetAssembly(typeof(GeneralCategory)).GetName().Version;
             string expectedOut =
@@ -63,17 +44,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                     CultureInfo.InvariantCulture,
                     Constants.VersionMessageFormat,
                     assemblyVersion) + Environment.NewLine;
-            using (StringWriter writer = new StringWriter())
-            {
-                Console.SetOut(writer);
+            GeneralActionArg arg = this.GetGeneralActionArg(args);
 
-                new GeneralCategory().DefaultAction(arg);
-
-                writer.Flush();
-                string actualOut = writer.GetStringBuilder().ToString();
-                this.output.WriteLine($"actual out: {actualOut}");
-                Assert.Equal(expectedOut, actualOut);
-            }
+            this.AssertConsoleOut(
+                expectedOut,
+                () => RunDefaultAction(arg));
         }
 
         [Theory]
@@ -83,34 +58,18 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [InlineData("--help", "true", "--version", "true")]
         public void DefaultActionGivenInvalidArgSuccessTest(params string[] args)
         {
-            GeneralActionArg arg = GetGeneralActionArg(args);
-
             string expectedOut = Constants.HelpMessage + Environment.NewLine;
-            using (StringWriter writer = new StringWriter())
-            {
-                Console.SetOut(writer);
+            GeneralActionArg arg = this.GetGeneralActionArg(args);
 
-                new GeneralCategory().DefaultAction(arg);
-
-                writer.Flush();
-                string actualOut = writer.GetStringBuilder().ToString();
-                this.output.WriteLine($"actual out: {actualOut}");
-                Assert.Equal(expectedOut, actualOut);
-            }
+            this.AssertConsoleOut(
+                expectedOut,
+                () => RunDefaultAction(arg));
         }
 
-        private static GeneralActionArg GetGeneralActionArg(string[] args)
-        {
-            Dictionary<string, string> actionParams =
-                new Dictionary<string, string>();
+        private static void RunDefaultAction(GeneralActionArg arg)
+            => new GeneralCategory().DefaultAction(arg);
 
-            for (int i = 0; i < args.Length; i += 2)
-            {
-                actionParams[args[i]] = args[i + 1];
-            }
-
-            return new GeneralActionArg(
-                new CommandLineArgument(null, null, actionParams));
-        }
+        private GeneralActionArg GetGeneralActionArg(string[] args)
+            => new GeneralActionArg(this.GetDefaultCommandLineArg(args));
     }
 }

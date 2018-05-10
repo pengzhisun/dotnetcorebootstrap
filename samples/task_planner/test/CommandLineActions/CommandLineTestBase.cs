@@ -26,14 +26,23 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 });
 
         internal CommandLineArgument GetDummyCommandLineArg(
+            string category = null,
+            string action = null,
             Dictionary<string, string> actionParams = null)
             => new CommandLineArgument(
-                "DummyCategory",
-                "DummyAction",
+                category ?? "DummyCategory",
+                action ?? "DummyAction",
                 actionParams ?? new Dictionary<string, string>
                     {
                         { "--dummy-param", "dummy_value" }
                     });
+
+        internal CommandLineArgument GetDefaultCommandLineArg(
+            string[] args)
+            => this.GetDummyCommandLineArg(
+                CommandLineArgument.DefaultCategory,
+                CommandLineArgument.DefaultAction.ToString(),
+                actionParams: this.GetActionParams(args));
 
         protected Dictionary<string, string> ParseActionParams(
             string actionParamsString)
