@@ -9,6 +9,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Reflection;
 
@@ -61,7 +62,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             object actionArg =
                 Convert.ChangeType(
                     Activator.CreateInstance(methodParam.ParameterType, arg),
-                    methodParam.ParameterType);
+                    methodParam.ParameterType,
+                    CultureInfo.InvariantCulture);
 
             object categoryInstance =
                 Activator.CreateInstance(categoryType);

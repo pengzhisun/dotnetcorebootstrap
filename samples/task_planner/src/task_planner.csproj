@@ -12,6 +12,8 @@
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- reference: https://github.com/Microsoft/vstest/blob/master/scripts/stylecop.ruleset -->
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Features>IOperation</Features>
     <CodeAnalysisRuleSet>stylecop.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
@@ -23,6 +25,8 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <!-- Microsoft.CodeAnalysis.FxCopAnalyzers version 2.6.0-beta1 to 2.6.0 not worked. -->
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.3.0-beta1" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
   </ItemGroup>

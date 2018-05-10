@@ -7,6 +7,9 @@
 
 namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
+    using System;
+
+    [Serializable]
     public enum CommandLineErrorCode
     {
         Unknown = 0,

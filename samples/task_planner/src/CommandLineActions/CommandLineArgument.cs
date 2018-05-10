@@ -9,6 +9,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Reflection;
     using Newtonsoft.Json;
@@ -73,7 +74,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             }
 
             IEnumerable<string> matchedActionParams =
-                actionParamAttr.Aliases.Append(propInfo.Name.ToLower())
+                actionParamAttr.Aliases.Append(
+                        propInfo.Name.ToUpperInvariant())
                     .Where(k => this.ActionParameters.ContainsKey(k));
 
             if (matchedActionParams.Count() > 1)
@@ -105,7 +107,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                     ?? propInfo.PropertyType;
 
                 object paramValue =
-                    Convert.ChangeType(matchedActionParamValue, paramType);
+                    Convert.ChangeType(
+                        matchedActionParamValue,
+                        paramType,
+                        CultureInfo.InvariantCulture);
 
                 propInfo.SetValue(this, paramValue);
             }

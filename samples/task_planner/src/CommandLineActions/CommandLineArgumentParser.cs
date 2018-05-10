@@ -9,6 +9,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     internal static class CommandLineArgumentParser
@@ -196,7 +197,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             }
 
             private void SetActionParameter(string paramName, string paramValue)
-                => this.ActionParams[paramName.ToLower()] = paramValue;
+            {
+                string actionParamKey =
+                    paramName.ToUpperInvariant();
+                this.ActionParams[actionParamKey] = paramValue;
+            }
         }
     }
 }
