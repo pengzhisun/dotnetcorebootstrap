@@ -4,6 +4,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     {
         Unknown = 0,
         CommandLineArgsParseFailed = 1001,
-        ActionParamPropInitFailed = 1002
+        CommandLineArgInitFailed = 1002,
+        InvalidActionMethodDefinition = 1003,
+        InvalidCategoryDefinition = 1004
     }
 }

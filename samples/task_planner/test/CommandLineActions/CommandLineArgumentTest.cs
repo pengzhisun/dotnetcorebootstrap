@@ -29,7 +29,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 action ?? CommandLineArgument.DefaultAction;
             Dictionary<string, string> actionParams = this.GetActionParams(args);
 
-            this.TestAssert(
+            this.AssertActualValue(
                 () => new CommandLineArgument(category, action, actionParams),
                 actualValue =>
                 {
@@ -46,7 +46,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
             CommandLineArgument commandLineArg = this.GetDummyCommandLineArg();
 
-            this.TestAssert(
+            this.AssertActualValue(
                 () => new NoActionParamAttrArg(commandLineArg),
                 actualValue =>
                 {
@@ -81,7 +81,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                         { "-dummy-nullable-bool-false-param", $"{expectedDummyNullableBoolFalseParam}" },
                     });
 
-            this.TestAssert(
+            this.AssertActualValue(
                 () => new SupportedParamTypesArg(commandLineArg),
                 actualValue =>
                 {
@@ -127,7 +127,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                         { "-dummy-nullable-bool-null-param", null },
                     });
 
-            this.TestAssert(
+            this.AssertActualValue(
                 () => new DefaultValueArg(commandLineArg),
                 actualValue =>
                 {
@@ -156,7 +156,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public void ConstructorForMoreThanOneAliasesArgFailedTest()
         {
             CommandLineErrorCode expectedErrorCode =
-                CommandLineErrorCode.ActionParamPropInitFailed;
+                CommandLineErrorCode.CommandLineArgInitFailed;
             string expectedMessage =
                 ExceptionMessages.PropMatchedMoreThanOneActionParams
                     .FormatInvariant(nameof(MoreThanOneAliasesArg.DupDummyParam));
@@ -178,7 +178,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public void ConstructorForNotFoundParamValueArgFailedTest()
         {
             CommandLineErrorCode expectedErrorCode =
-                CommandLineErrorCode.ActionParamPropInitFailed;
+                CommandLineErrorCode.CommandLineArgInitFailed;
             string expectedMessage =
                 ExceptionMessages.PropMatchedActionParamValueNotNull
                     .FormatInvariant(nameof(NotFoundParamValueArg.NotFoundParam));

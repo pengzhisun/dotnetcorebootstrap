@@ -19,7 +19,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
             Type actionTypeType = typeof(DummyActionEnum);
 
-            this.TestAssert(
+            this.AssertActualValue(
                 () => new CategoryAttribute(category, actionTypeType),
                 actualValue =>
                 {

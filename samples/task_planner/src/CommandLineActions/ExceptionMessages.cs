@@ -25,5 +25,23 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
         public const string PropMatchedActionParamValueNotNull =
             @"The matched action parameter value for property '{0}' shouldn't be null.";
+
+        public const string ActionMethodNotAcceptOneParam =
+            @"The action method '{0}' should accept only one parameter.";
+
+        public const string ActionMethodNotAcceptOneCommandLineArgParam =
+            @"The action method '{0}' should accept one CommandLineArgument type parameter.";
+
+        public const string ActionMethodNotFound =
+            @"Can't find action definition for '{0}'.";
+
+        public const string ActionMethodFoundDupDefinitions =
+            @"Should have only one action definition for '{0}', declard types: {1}.";
+
+        public const string CategoryNotFound =
+            @"Can't find category definition for '{0}'.";
+
+        public const string CategoryNotFoundDupDefinitions =
+            @"Should have only one category definition for '{0}', declard types: {1}.";
     }
 }

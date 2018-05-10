@@ -57,7 +57,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             if (matchedActionParams.Count() > 1)
             {
                 throw new CommandLineException(
-                    CommandLineErrorCode.ActionParamPropInitFailed,
+                    CommandLineErrorCode.CommandLineArgInitFailed,
                     ExceptionMessages.PropMatchedMoreThanOneActionParams,
                     propInfo.Name);
             }
@@ -94,7 +94,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             else
             {
                 throw new CommandLineException(
-                    CommandLineErrorCode.ActionParamPropInitFailed,
+                    CommandLineErrorCode.CommandLineArgInitFailed,
                     ExceptionMessages.PropMatchedActionParamValueNotNull,
                     propInfo.Name);
             }

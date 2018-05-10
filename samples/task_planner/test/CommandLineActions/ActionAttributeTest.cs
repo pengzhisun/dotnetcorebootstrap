@@ -16,7 +16,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public void ConstructorGivenEnumActionSuccessTest()
         {
             DummyActionEnum action = DummyActionEnum.DummyAction;
-            this.TestAssert(
+            this.AssertActualValue(
                 () => new ActionAttribute(action),
                 actualValue =>
                 {

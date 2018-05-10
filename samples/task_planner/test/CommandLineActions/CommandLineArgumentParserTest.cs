@@ -19,7 +19,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
             CommandLineArgument expectedValue = new CommandLineArgument();
 
-            this.TestAssert(
+            this.AssertActualValue(
                 () => CommandLineArgumentParser.Parse(null),
                 actualValue =>
                 {
@@ -53,7 +53,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 new CommandLineArgument(category, action, actionParams);
             string[] args = this.BuildUpArgs(category, action, actionParams);
 
-            this.TestAssert(
+            this.AssertActualValue(
                 () => CommandLineArgumentParser.Parse(args),
                 actualValue =>
                 {

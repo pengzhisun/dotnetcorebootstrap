@@ -35,16 +35,20 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             if (methodParams.Count() != 1)
             {
-                throw new InvalidOperationException(
-                    $"The action method '{actionMethod}' should accept only one parameter.");
+                throw new CommandLineException(
+                    CommandLineErrorCode.InvalidActionMethodDefinition,
+                    ExceptionMessages.ActionMethodNotAcceptOneParam,
+                    actionMethod);
             }
 
             ParameterInfo methodParam = methodParams.Single();
             if (!methodParam.ParameterType.IsSubclassOf(
                 typeof(CommandLineArgument)))
             {
-                throw new InvalidOperationException(
-                    $"The action method '{actionMethod}' should only accept one CommandLineArgument type parameter.");
+                throw new CommandLineException(
+                    CommandLineErrorCode.InvalidActionMethodDefinition,
+                    ExceptionMessages.ActionMethodNotAcceptOneCommandLineArgParam,
+                    actionMethod);
             }
 
             object actionArg =
@@ -75,13 +79,18 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             if (methodInfos.Count() == 0)
             {
-                throw new InvalidOperationException(
-                    $"Can't find action definition for '{actionType}'.");
+                throw new CommandLineException(
+                    CommandLineErrorCode.InvalidActionMethodDefinition,
+                    ExceptionMessages.ActionMethodNotFound,
+                    actionType);
             }
             else if (methodInfos.Count() > 1)
             {
-                throw new InvalidOperationException(
-                    $"Should have only one action definition for '{actionType}', declard types: {string.Join(",", methodInfos.Select(m => m.ToString()))}.");
+                throw new CommandLineException(
+                    CommandLineErrorCode.InvalidActionMethodDefinition,
+                    ExceptionMessages.ActionMethodFoundDupDefinitions,
+                    actionType,
+                    string.Join(",", methodInfos.Select(m => m.ToString())));
             }
 
             return methodInfos.Single();
@@ -117,13 +126,18 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             if (types.Count() == 0)
             {
-                throw new InvalidOperationException(
-                    $"Can't find category definition for '{category}'.");
+                throw new CommandLineException(
+                    CommandLineErrorCode.InvalidCategoryDefinition,
+                    ExceptionMessages.CategoryNotFound,
+                    category);
             }
             else if (types.Count() > 1)
             {
-                throw new InvalidOperationException(
-                    $"Should have only one category definition for '{category}', declard types: {string.Join(",", types.Select(t => t.FullName))}.");
+                throw new CommandLineException(
+                    CommandLineErrorCode.InvalidCategoryDefinition,
+                    ExceptionMessages.CategoryNotFoundDupDefinitions,
+                    category,
+                    string.Join(",", types.Select(t => t.FullName)));
             }
 
             return types.Single();

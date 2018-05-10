@@ -13,6 +13,18 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
         }
 
+        protected void AssertCommandLineException(
+            CommandLineErrorCode expectedErrorCode,
+            string expectedMessage,
+            Action testAction)
+            => this.AssertException<CommandLineException>(
+                testAction,
+                ex =>
+                {
+                    Assert.Equal(expectedErrorCode, ex.ErrorCode);
+                    Assert.Equal(expectedMessage, ex.Message);
+                });
+
         internal CommandLineArgument GetDummyCommandLineArg(
             Dictionary<string, string> actionParams = null)
             => new CommandLineArgument(
@@ -54,17 +66,5 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             return actionParams;
         }
-
-        protected void AssertCommandLineException(
-            CommandLineErrorCode expectedErrorCode,
-            string expectedMessage,
-            Action testAction)
-            => this.AssertException<CommandLineException>(
-                testAction,
-                ex =>
-                {
-                    Assert.Equal(expectedErrorCode, ex.ErrorCode);
-                    Assert.Equal(expectedMessage, ex.Message);
-                });
     }
 }

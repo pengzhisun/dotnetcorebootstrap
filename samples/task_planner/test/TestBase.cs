@@ -1,6 +1,7 @@
 namespace DotNetCoreBootstrap.Samples.TaskPlanner
 {
     using System;
+    using System.IO;
     using Xunit;
     using Xunit.Abstractions;
     using Xunit.Sdk;
@@ -15,27 +16,6 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
         }
 
         protected ITestOutputHelper Output => this.output;
-
-        protected void TestAssert<TValue>(
-            Func<TValue> testAction,
-            Action<TValue> assertAction)
-        {
-            try
-            {
-                TValue actualValue = testAction();
-                this.output.WriteLine($"actual value: {actualValue}");
-                assertAction(actualValue);
-            }
-            catch (XunitException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                this.output.PrintException(ex);
-                throw;
-            }
-        }
 
         protected void AssertException<TException>(
             Action testAction,
@@ -77,6 +57,46 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
                 {
                     Assert.Equal(expectedParamName, ex.ParamName);
                     Assert.Equal(expectedMessage, ex.Message);
+                });
+
+        protected void AssertActualValue<TValue>(
+            Func<TValue> actualValueGetter,
+            Action<TValue> assertAction)
+        {
+            TValue actualValue = default(TValue);
+            try
+            {
+                actualValue = actualValueGetter();
+                this.output.WriteLine($"actual value: {actualValue}");
+            }
+            catch (Exception ex)
+            {
+                this.output.PrintException(ex);
+                throw new XunitException(ex.GetDetail());
+            }
+
+            assertAction(actualValue);
+        }
+
+        protected void AssertConsoleOut(
+            string expectedOut,
+            Action testAction)
+            => this.AssertActualValue(
+                () =>
+                {
+                    using (StringWriter writer = new StringWriter())
+                    {
+                        Console.SetOut(writer);
+
+                        testAction();
+
+                        writer.Flush();
+                        return writer.GetStringBuilder().ToString();
+                    }
+                },
+                actualValue =>
+                {
+                    Assert.Equal(expectedOut, actualValue);
                 });
     }
 }

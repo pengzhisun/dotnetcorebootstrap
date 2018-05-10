@@ -11,13 +11,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using Xunit;
     using Xunit.Abstractions;
 
-    public sealed class CommandLineEngineTest
+    public sealed class CommandLineEngineTest : CommandLineTestBase
     {
-        private readonly ITestOutputHelper output;
-
         public CommandLineEngineTest(ITestOutputHelper output)
+            : base(output)
         {
-            this.output = output;
         }
 
         #region Test methods for all supported commands
@@ -38,17 +36,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                         });
 
             string expectedOut = Constants.HelpMessage + Environment.NewLine;
-            using (StringWriter writer = new StringWriter())
-            {
-                Console.SetOut(writer);
 
-                new CommandLineEngine().Process(arg);
-
-                writer.Flush();
-                string actualOut = writer.GetStringBuilder().ToString();
-                this.output.WriteLine($"actual out: {actualOut}");
-                Assert.Equal(expectedOut, actualOut);
-            }
+            this.AssertConsoleOut(
+                expectedOut,
+                () => new CommandLineEngine().Process(arg));
         }
 
         [Theory]
@@ -73,17 +64,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                     CultureInfo.InvariantCulture,
                     Constants.VersionMessageFormat,
                     assemblyVersion) + Environment.NewLine;
-            using (StringWriter writer = new StringWriter())
-            {
-                Console.SetOut(writer);
 
-                new CommandLineEngine().Process(arg);
-
-                writer.Flush();
-                string actualOut = writer.GetStringBuilder().ToString();
-                this.output.WriteLine($"actual out: {actualOut}");
-                Assert.Equal(expectedOut, actualOut);
-            }
+            this.AssertConsoleOut(
+                expectedOut,
+                () => new CommandLineEngine().Process(arg));
         }
 
         #endregion
@@ -91,128 +75,113 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         #region Test methods for exception cases.
 
         [Fact]
-        public void ProcessNoCommandLineArgParamMethodCategoryFailedTest()
-        {
-            CommandLineArgument arg =
-                new CommandLineArgument(
-                    "No_comand_line_arg_param_method_category",
-                    DummyActionTypeEnum.DummyAction.ToString());
-
-            Assembly actionsAssembly = Assembly.GetExecutingAssembly();
-
-            CommandLineEngine engine = new CommandLineEngine(actionsAssembly);
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    engine.Process(arg);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
-        }
-
-        [Fact]
-        public void ProcessMoreThanOneActionParamMethodCategoryFailedTest()
-        {
-            CommandLineArgument arg =
-                new CommandLineArgument(
-                    "More_than_one_action_param_method_category",
-                    DummyActionTypeEnum.DummyAction.ToString());
-
-            Assembly actionsAssembly = Assembly.GetExecutingAssembly();
-
-            CommandLineEngine engine = new CommandLineEngine(actionsAssembly);
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    engine.Process(arg);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
-        }
-
-        [Fact]
         public void ProcessNoActionParamMethodCategoryFailedTest()
         {
+            CommandLineErrorCode expectedErrorCode =
+                CommandLineErrorCode.InvalidActionMethodDefinition;
+            string expectedMessage =
+                ExceptionMessages.ActionMethodNotAcceptOneParam
+                    .FormatInvariant(
+                        typeof(NoActionParamMethodCategory)
+                            .GetMethod("DummyAction"));
             CommandLineArgument arg =
                 new CommandLineArgument(
                     "No_action_param_method_category",
                     DummyActionTypeEnum.DummyAction.ToString());
 
-            Assembly actionsAssembly = Assembly.GetExecutingAssembly();
-
-            CommandLineEngine engine = new CommandLineEngine(actionsAssembly);
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    engine.Process(arg);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+            this.AssertCommandLineException(
+                expectedErrorCode,
+                expectedMessage,
+                () => DummyEngineProcess(arg));
         }
 
         [Fact]
-        public void ProcessMoreThanOneActionMethodsCategoryFailedTest()
+        public void ProcessMoreThanOneActionParamMethodCategoryFailedTest()
         {
+            CommandLineErrorCode expectedErrorCode =
+                CommandLineErrorCode.InvalidActionMethodDefinition;
+            string expectedMessage =
+                ExceptionMessages.ActionMethodNotAcceptOneParam
+                    .FormatInvariant(
+                        typeof(MoreThanOneActionParamMethodCategory)
+                            .GetMethod("DummyAction"));
             CommandLineArgument arg =
                 new CommandLineArgument(
-                    "More_than_one_action_methods_category",
+                    "More_than_one_action_param_method_category",
                     DummyActionTypeEnum.DummyAction.ToString());
 
-            Assembly actionsAssembly = Assembly.GetExecutingAssembly();
+            this.AssertCommandLineException(
+                expectedErrorCode,
+                expectedMessage,
+                () => DummyEngineProcess(arg));
+        }
 
-            CommandLineEngine engine = new CommandLineEngine(actionsAssembly);
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    engine.Process(arg);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+        [Fact]
+        public void ProcessNoCommandLineArgParamMethodCategoryFailedTest()
+        {
+            CommandLineErrorCode expectedErrorCode =
+                CommandLineErrorCode.InvalidActionMethodDefinition;
+            string expectedMessage =
+                ExceptionMessages.ActionMethodNotAcceptOneCommandLineArgParam
+                    .FormatInvariant(
+                        typeof(NoCommandLineArgParamMethodCategory)
+                            .GetMethod("DummyAction"));
+            CommandLineArgument arg =
+                new CommandLineArgument(
+                    "No_comand_line_arg_param_method_category",
+                    DummyActionTypeEnum.DummyAction.ToString());
+
+            this.AssertCommandLineException(
+                expectedErrorCode,
+                expectedMessage,
+                () => DummyEngineProcess(arg));
         }
 
         [Fact]
         public void ProcessNoActionMethodCategoryFailedTest()
         {
+            CommandLineErrorCode expectedErrorCode =
+                CommandLineErrorCode.InvalidActionMethodDefinition;
+            string expectedMessage =
+                ExceptionMessages.ActionMethodNotFound
+                    .FormatInvariant(DummyActionTypeEnum.DummyAction);
             CommandLineArgument arg =
                 new CommandLineArgument(
                     "No_action_method_category",
                     DummyActionTypeEnum.DummyAction.ToString());
 
-            Assembly actionsAssembly = Assembly.GetExecutingAssembly();
+            this.AssertCommandLineException(
+                expectedErrorCode,
+                expectedMessage,
+                () => DummyEngineProcess(arg));
+        }
 
-            CommandLineEngine engine = new CommandLineEngine(actionsAssembly);
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    engine.Process(arg);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+        [Fact]
+        public void ProcessMoreThanOneActionMethodsCategoryFailedTest()
+        {
+            CommandLineErrorCode expectedErrorCode =
+                CommandLineErrorCode.InvalidActionMethodDefinition;
+            string expectedMessage =
+                ExceptionMessages.ActionMethodFoundDupDefinitions
+                    .FormatInvariant(
+                        DummyActionTypeEnum.DummyAction,
+                        string.Join(
+                            ",",
+                            typeof(MoreThanOneActionMethodsCategory)
+                                .GetMethods(
+                                    BindingFlags.DeclaredOnly
+                                    | BindingFlags.Instance
+                                    | BindingFlags.Public)
+                                .Select(m => m.ToString())));
+            CommandLineArgument arg =
+                new CommandLineArgument(
+                    "More_than_one_action_methods_category",
+                    DummyActionTypeEnum.DummyAction.ToString());
+
+            this.AssertCommandLineException(
+                expectedErrorCode,
+                expectedMessage,
+                () => DummyEngineProcess(arg));
         }
 
         [Fact]
@@ -220,22 +189,15 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
             CommandLineArgument arg =
                 new CommandLineArgument("Not_existed_category");
+            CommandLineErrorCode expectedErrorCode =
+                CommandLineErrorCode.InvalidCategoryDefinition;
+            string expectedMessage =
+                ExceptionMessages.CategoryNotFound.FormatInvariant(arg.Category);
 
-            Assembly actionsAssembly = Assembly.GetExecutingAssembly();
-
-            CommandLineEngine engine = new CommandLineEngine(actionsAssembly);
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    engine.Process(arg);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+            this.AssertCommandLineException(
+                expectedErrorCode,
+                expectedMessage,
+                () => DummyEngineProcess(arg));
         }
 
         [Fact]
@@ -243,22 +205,33 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
             CommandLineArgument arg =
                 new CommandLineArgument("More_than_one_category");
+            CommandLineErrorCode expectedErrorCode =
+                CommandLineErrorCode.InvalidCategoryDefinition;
+            string expectedMessage =
+                ExceptionMessages.CategoryNotFoundDupDefinitions
+                    .FormatInvariant(
+                        arg.Category,
+                        string.Join(
+                            ",",
+                            new[]
+                            {
+                                typeof(MoreThanOneCategory),
+                                typeof(MoreThanOneCategoryDup)
+                            }.Select(t => t.FullName)));
 
+            this.AssertCommandLineException(
+                expectedErrorCode,
+                expectedMessage,
+                () => DummyEngineProcess(arg));
+        }
+
+        private static void DummyEngineProcess(CommandLineArgument arg)
+        {
             Assembly actionsAssembly = Assembly.GetExecutingAssembly();
 
             CommandLineEngine engine = new CommandLineEngine(actionsAssembly);
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    engine.Process(arg);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+
+            engine.Process(arg);
         }
 
         #endregion
@@ -266,12 +239,12 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         #region Nested dummy category classes for exception case tests.
 
         [Category(
-            "No_comand_line_arg_param_method_category",
+            "No_action_param_method_category",
             typeof(DummyActionTypeEnum))]
-        private sealed class NoCommandLineArgParamMethodCategory
+        private sealed class NoActionParamMethodCategory
         {
             [Action(DummyActionTypeEnum.DummyAction)]
-            public void DummyAction(string param1)
+            public void DummyAction()
             {
             }
         }
@@ -288,14 +261,19 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         }
 
         [Category(
-            "No_action_param_method_category",
+            "No_comand_line_arg_param_method_category",
             typeof(DummyActionTypeEnum))]
-        private sealed class NoActionParamMethodCategory
+        private sealed class NoCommandLineArgParamMethodCategory
         {
             [Action(DummyActionTypeEnum.DummyAction)]
-            public void DummyAction()
+            public void DummyAction(string param1)
             {
             }
+        }
+
+        [Category("No_action_method_category", typeof(DummyActionTypeEnum))]
+        private sealed class NoActionMethodCategory
+        {
         }
 
         [Category(
@@ -312,11 +290,6 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             public void DummyActionDup()
             {
             }
-        }
-
-        [Category("No_action_method_category", typeof(DummyActionTypeEnum))]
-        private sealed class NoActionMethodCategory
-        {
         }
 
         [Category("More_than_one_category", typeof(DummyActionTypeEnum))]

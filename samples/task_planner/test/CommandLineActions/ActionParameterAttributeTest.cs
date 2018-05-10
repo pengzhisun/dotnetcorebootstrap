@@ -21,7 +21,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             object defaultValue,
             string[] aliases)
         {
-            this.TestAssert(
+            this.AssertActualValue(
                 () => new ActionParameterAttribute(
                     defaultValue,
                     aliases: aliases),
