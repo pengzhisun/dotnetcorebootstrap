@@ -5,11 +5,19 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using System.Reflection;
     using System.Linq;
 
-    internal static class CommandLineEngine
+    internal sealed class CommandLineEngine
     {
-        public static void Process(CommandLineArgument arg)
+        private readonly Assembly actionsAssembly;
+
+        internal CommandLineEngine(Assembly actionsAssembly = null)
         {
-            Type categoryType = GetCategoryType(arg.Category);
+            this.actionsAssembly =
+                actionsAssembly ?? Assembly.GetExecutingAssembly();
+        }
+
+        public void Process(CommandLineArgument arg)
+        {
+            Type categoryType = this.GetCategoryType(arg.Category);
 
             object actionType = GetActionType(categoryType, arg.Action);
 
@@ -28,11 +36,12 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             if (methodParams.Count() != 1)
             {
                 throw new InvalidOperationException(
-                    $"The action method '{actionMethod}' should only accept one parameter.");
+                    $"The action method '{actionMethod}' should accept only one parameter.");
             }
 
             ParameterInfo methodParam = methodParams.Single();
-            if (!methodParam.ParameterType.IsSubclassOf(typeof(CommandLineArgument)))
+            if (!methodParam.ParameterType.IsSubclassOf(
+                typeof(CommandLineArgument)))
             {
                 throw new InvalidOperationException(
                     $"The action method '{actionMethod}' should only accept one CommandLineArgument type parameter.");
@@ -53,13 +62,15 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             object actionType)
         {
             IEnumerable<MethodInfo> methodInfos =
-                categoryType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                categoryType.GetMethods(
+                    BindingFlags.Public | BindingFlags.Instance)
                 .Where(m =>
                 {
                     ActionAttribute actionAttr =
                         m.GetCustomAttribute<ActionAttribute>();
 
-                    return actionAttr != null && actionType.Equals(actionAttr.Action);
+                    return actionAttr != null
+                        && actionType.Equals(actionAttr.Action);
                 });
 
             if (methodInfos.Count() == 0)
@@ -90,10 +101,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             return actionType;
         }
 
-        private static Type GetCategoryType(string category)
+        private Type GetCategoryType(string category)
         {
             IEnumerable<Type> types =
-                Assembly.GetExecutingAssembly().GetTypes()
+                this.actionsAssembly.GetTypes()
                     .Where(t =>
                     {
                         CategoryAttribute categoryAttr =

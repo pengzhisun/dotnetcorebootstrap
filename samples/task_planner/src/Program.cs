@@ -13,7 +13,9 @@
                 CommandLineArgument arg =
                     CommandLineArgumentParser.Parse(args);
 
-                CommandLineEngine.Process(arg);
+                CommandLineEngine engine = new CommandLineEngine();
+
+                engine.Process(arg);
             }
             catch (Exception excption)
             {
