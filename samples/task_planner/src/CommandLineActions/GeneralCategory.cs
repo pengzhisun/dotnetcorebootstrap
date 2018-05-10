@@ -9,14 +9,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [Action(GeneralActionType.Default)]
         public void DefaultAction(GeneralActionArg arg)
         {
-            if (!arg.IsValid())
-            {
-                throw new ArgumentException(
-                    $"The argument '{arg}' is invalid",
-                    nameof(arg));
-            }
-
-            if (arg.HelpSwtichEnabled)
+            if (!arg.IsValid() || arg.HelpSwtichEnabled)
             {
                 this.ShowHelp();
             }

@@ -81,23 +81,22 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [InlineData("-h", "true", "-v", "true")]
         [InlineData("--help", null, "--version", null)]
         [InlineData("--help", "true", "--version", "true")]
-        public void DefaultActionGivenInvalidArgFailedTest(params string[] args)
+        public void DefaultActionGivenInvalidArgSuccessTest(params string[] args)
         {
             GeneralActionArg arg = GetGeneralActionArg(args);
 
-            Assert.Throws<ArgumentException>(()=>
+            string expectedOut = Constants.HelpMessage + Environment.NewLine;
+            using (StringWriter writer = new StringWriter())
             {
-                try
-                {
-                    new GeneralCategory().DefaultAction(arg);
-                }
-                catch (ArgumentException ex)
-                {
-                    Assert.Equal(nameof(arg), ex.ParamName);
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+                Console.SetOut(writer);
+
+                new GeneralCategory().DefaultAction(arg);
+
+                writer.Flush();
+                string actualOut = writer.GetStringBuilder().ToString();
+                this.output.WriteLine($"actual out: {actualOut}");
+                Assert.Equal(expectedOut, actualOut);
+            }
         }
 
         private static GeneralActionArg GetGeneralActionArg(string[] args)

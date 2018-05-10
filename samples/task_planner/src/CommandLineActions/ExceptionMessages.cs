@@ -5,6 +5,9 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public const string DefaultCommandLineExceptionMessage =
             @"The command line exception message occurred with error code: '{0}'.";
 
+        public const string InvalidCommandLineArguments =
+            @"The input arguments contains invalid value: '{0}', full arguments: '{1}'";
+
         public const string ActionValueNotEnumValue =
             @"The action parameter value '[{0}]{1}' should be an enum value.";
 

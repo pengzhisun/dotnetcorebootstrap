@@ -19,8 +19,7 @@
             }
             catch (Exception excption)
             {
-                Console.WriteLine(excption.Message);
-                Console.WriteLine(excption.StackTrace);
+                Console.WriteLine(excption.GetDetail());
             }
         }
     }

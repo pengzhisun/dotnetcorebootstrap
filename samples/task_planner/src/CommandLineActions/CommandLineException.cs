@@ -70,6 +70,6 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         }
 
         public override string ToString()
-            => $"[{this.GetType().Name}] {nameof(this.ErrorCode)}: {this.ErrorCode}, {nameof(this.message)}: {this.Message}";
+            => $"[{this.GetType().Name}] {nameof(this.ErrorCode)}: {this.ErrorCode}({(int)this.ErrorCode}), {nameof(this.Message)}: {this.Message}";
     }
 }

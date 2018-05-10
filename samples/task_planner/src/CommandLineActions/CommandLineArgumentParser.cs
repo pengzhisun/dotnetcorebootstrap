@@ -6,8 +6,6 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
     internal static class CommandLineArgumentParser
     {
-        private const char DashSymbol = '-';
-
         public static CommandLineArgument Parse(string[] args)
         {
             if (args == null || args.Length == 0)
@@ -39,7 +37,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             if (context.CurretState == ParserState.CategoryAndActionBegin)
             {
-                SetCategoryAndAction(ref context);
+                context.SetCategoryAndAction();
             }
 
             return new CommandLineArgument(
@@ -50,101 +48,75 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
         private static void ProcessInitState(ref ParserContext context)
         {
-            if (context.CurrentArg.HasDashPrefix())
+            if (context.CurrentArgHasDashPrefix())
             {
-                context.CurretState = ParserState.ActionParamBegin;
-                context.ActionParams[context.CurrentArg] = null;
-                context.CurrentParamName = context.CurrentArg;
+                context.SetParamBeginState();
             }
             else
             {
-                context.CurretState = ParserState.CategoryAndActionBegin;
-                context.LastNoDashPrefixArgIndex = context.CurrentArgIndex;
+                context.SetCategoryAndActionState();
             }
         }
 
         private static void ProcessCategoryAndActionBeginState(
             ref ParserContext context)
         {
-            if (!context.CurrentArg.HasDashPrefix())
+            if (!context.CurrentArgHasDashPrefix())
             {
-                context.LastNoDashPrefixArgIndex = context.CurrentArgIndex;
+                context.UpdateCategoryAndActionState();
                 return;
             }
 
-            SetCategoryAndAction(ref context);
+            context.SetCategoryAndAction();
 
-            context.CurretState = ParserState.ActionParamBegin;
-            context.ActionParams[context.CurrentArg] = null;
-            context.CurrentParamName = context.CurrentArg;
-        }
-
-        private static void SetCategoryAndAction(ref ParserContext context)
-        {
-            const string CategorySeparator = " ";
-
-            if (context.LastNoDashPrefixArgIndex == 0)
-            {
-                context.Category = context.Args[0];
-            }
-            else
-            {
-                context.Category =
-                    string.Join(
-                        CategorySeparator,
-                        context.Args.Take(context.LastNoDashPrefixArgIndex));
-                context.Action = context.Args[context.LastNoDashPrefixArgIndex];
-            }
+            context.SetParamBeginState();
         }
 
         private static void ProcessActionParamBeginState(
             ref ParserContext context)
         {
-            if (context.CurrentArg.HasDashPrefix())
+            if (context.CurrentArgHasDashPrefix())
             {
-                context.CurretState = ParserState.ActionParamBegin;
-                context.ActionParams[context.CurrentArg] = null;
-                context.CurrentParamName = context.CurrentArg;
+                context.SetParamBeginState();
             }
             else
             {
-                context.CurretState = ParserState.ActionParamEnd;
-                string paramName = context.CurrentParamName;
-                context.ActionParams[paramName] = context.CurrentArg;
-                context.CurrentParamName = null;
+                context.SetParamEndState();
             }
         }
 
         private static void ProcessActionParamEndState(
             ref ParserContext context)
         {
-            if (!context.CurrentArg.HasDashPrefix())
+            if (!context.CurrentArgHasDashPrefix())
             {
-                throw new InvalidOperationException(
-                    $"The input arguments contains invalid value: '{context.CurrentArg}', full arguments: '{context.ArgsString}'");
+                throw new CommandLineException(
+                    CommandLineErrorCode.CommandLineArgsParseFailed,
+                    ExceptionMessages.InvalidCommandLineArguments,
+                    context.CurrentArg,
+                    context.ArgsString);
             }
 
-            context.CurretState = ParserState.ActionParamBegin;
-            context.ActionParams[context.CurrentArg] = null;
-            context.CurrentParamName = context.CurrentArg;
+            context.SetParamBeginState();
         }
-
-        private static bool HasDashPrefix(this string arg)
-            => arg.StartsWith(DashSymbol);
 
         private sealed class ParserContext
         {
+            private readonly string[] args;
+
+            private int lastNoDashPrefixArgIndex;
+
+            private string currentParamName;
+
             public ParserContext(string[] args)
             {
-                this.Args = args;
+                this.args = args;
                 this.ActionParams = new Dictionary<string, string>();
                 this.CurretState = ParserState.Init;
-                this.LastNoDashPrefixArgIndex = -1;
+                this.lastNoDashPrefixArgIndex = -1;
             }
 
-            public string[] Args { get; private set; }
-
-            public string ArgsString => string.Join(' ', this.Args);
+            public string ArgsString => string.Join(' ', this.args);
 
             public string Category { get; set; }
 
@@ -156,11 +128,60 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             public int CurrentArgIndex { get; set; }
 
-            public string CurrentArg => this.Args[this.CurrentArgIndex];
+            public string CurrentArg => this.args[this.CurrentArgIndex];
 
-            public int LastNoDashPrefixArgIndex { get; set; }
+            public bool CurrentArgHasDashPrefix()
+            {
+                const char DashSymbol = '-';
 
-            public string CurrentParamName { get; set; }
+                return this.CurrentArg.StartsWith(DashSymbol);
+            }
+
+            public void SetParamBeginState()
+            {
+                this.CurretState = ParserState.ActionParamBegin;
+                this.SetActionParameter(this.CurrentArg, null);
+                this.currentParamName = this.CurrentArg;
+            }
+
+            public void SetParamEndState()
+            {
+                this.CurretState = ParserState.ActionParamEnd;
+                this.SetActionParameter(this.currentParamName, this.CurrentArg);
+                this.currentParamName = null;
+            }
+
+            public void SetCategoryAndActionState()
+            {
+                this.CurretState = ParserState.CategoryAndActionBegin;
+                this.lastNoDashPrefixArgIndex = this.CurrentArgIndex;
+            }
+
+            public void UpdateCategoryAndActionState()
+            {
+                this.lastNoDashPrefixArgIndex = this.CurrentArgIndex;
+            }
+
+            public void SetCategoryAndAction()
+            {
+                const string CategorySeparator = " ";
+
+                if (this.lastNoDashPrefixArgIndex == 0)
+                {
+                    this.Category = this.args[0];
+                }
+                else
+                {
+                    this.Category =
+                        string.Join(
+                            CategorySeparator,
+                            this.args.Take(this.lastNoDashPrefixArgIndex));
+                    this.Action = this.args[this.lastNoDashPrefixArgIndex];
+                }
+            }
+
+            private void SetActionParameter(string paramName, string paramValue)
+                => this.ActionParams[paramName.ToLower()] = paramValue;
         }
 
         private enum ParserState

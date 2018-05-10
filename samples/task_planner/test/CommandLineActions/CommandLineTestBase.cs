@@ -2,6 +2,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     using System;
     using System.Collections.Generic;
+    using Newtonsoft.Json;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -21,6 +22,25 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                     {
                         { "--dummy-param", "dummy_value" }
                     });
+
+        protected Dictionary<string, string> ParseActionParams(
+            string actionParamsString)
+        {
+            Dictionary<string, string> actionParams;
+
+            if (!string.IsNullOrWhiteSpace(actionParamsString))
+            {
+                actionParams =
+                    JsonConvert.DeserializeObject<Dictionary<string, string>>(
+                        actionParamsString);
+            }
+            else
+            {
+                actionParams = new Dictionary<string, string>();
+            }
+
+            return actionParams;
+        }
 
         protected Dictionary<string, string> GetActionParams(string[] args)
         {
