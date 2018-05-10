@@ -15,8 +15,9 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             Type actionType = action.GetType();
             if (!actionType.IsEnum)
             {
+                string messageFormat = ExceptionMessages.ActionValueNotEnumValue;
                 throw new ArgumentException(
-                    $"The action parameter value '[{actionType.Name}]{action}' should be an enum value.",
+                    messageFormat.FormatInvariant(actionType.Name, action),
                     nameof(action));
             }
 

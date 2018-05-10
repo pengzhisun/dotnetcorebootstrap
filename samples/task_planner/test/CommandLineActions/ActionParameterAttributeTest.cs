@@ -5,13 +5,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using Xunit;
     using Xunit.Abstractions;
 
-    public sealed class ActionParameterAttributeTest
+    public sealed class ActionParameterAttributeTest : CommandLineTestBase
     {
-        private readonly ITestOutputHelper output;
-
         public ActionParameterAttributeTest(ITestOutputHelper output)
+            : base(output)
         {
-            this.output = output;
         }
 
         [Theory]
@@ -20,15 +18,19 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [InlineData(1234, new[]{ "-h", "--help" })]
         [InlineData(false, new[]{ "-h" })]
         public void ConstructorGivenDefaultValueAndAliasesSuccessTest(
-            object defaultValue, string[] aliases)
+            object defaultValue,
+            string[] aliases)
         {
-            ActionParameterAttribute actualValue =
-                new ActionParameterAttribute(defaultValue, aliases: aliases);
-            this.output.WriteLine($"actual value: {actualValue}");
-
-            Assert.NotNull(actualValue);
-            Assert.Equal(defaultValue, actualValue.DefaultValue);
-            Assert.Equal(aliases, actualValue.Aliases);
+            this.TestAssert(
+                () => new ActionParameterAttribute(
+                    defaultValue,
+                    aliases: aliases),
+                actualValue =>
+                {
+                    Assert.NotNull(actualValue);
+                    Assert.Equal(defaultValue, actualValue.DefaultValue);
+                    Assert.Equal(aliases, actualValue.Aliases);
+                });
         }
 
         [Theory]
@@ -38,20 +40,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [InlineData(false)]
         public void ConstructorGivenNullAliasesFailedTest(object defaultValue)
         {
-            Assert.Throws<ArgumentNullException>(()=>
-            {
-                string[] aliases = null;
-                try
-                {
-                    new ActionParameterAttribute(defaultValue, aliases: aliases);
-                }
-                catch (ArgumentNullException ex)
-                {
-                    Assert.Equal(nameof(aliases), ex.ParamName);
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+            string expectedParamName = @"aliases";
+
+            this.AssertArgumentNullException(
+                expectedParamName,
+                () => new ActionParameterAttribute(defaultValue, aliases: null));
         }
 
         [Theory]
@@ -61,20 +54,17 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [InlineData(false)]
         public void ConstructorGivenEmptyArrayAliasesFailedTest(object defaultValue)
         {
-            Assert.Throws<ArgumentException>(()=>
-            {
-                string[] aliases = new string[0];
-                try
-                {
-                    new ActionParameterAttribute(defaultValue, aliases: aliases);
-                }
-                catch (ArgumentException ex)
-                {
-                    Assert.Equal(nameof(aliases), ex.ParamName);
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+            string expectedParamName = "aliases";
+            string expectedMessage =
+                ExceptionMessages.ActionParamNoAlias
+                + $"\nParameter name: {expectedParamName}";
+
+            this.AssertArgumentException(
+                expectedParamName,
+                expectedMessage,
+                () => new ActionParameterAttribute(
+                    defaultValue,
+                    aliases: new string[0]));
         }
     }
 }

@@ -7,13 +7,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using Xunit;
     using Xunit.Abstractions;
 
-    public sealed class CommandLineArgumentTest
+    public sealed class CommandLineArgumentTest : CommandLineTestBase
     {
-        private readonly ITestOutputHelper output;
-
         public CommandLineArgumentTest(ITestOutputHelper output)
+            : base(output)
         {
-            this.output = output;
         }
 
         [Theory]
@@ -27,69 +25,41 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
             string expectedCategory =
                 category ?? CommandLineArgument.DefaultCategory;
-
             string expectedAction =
                 action ?? CommandLineArgument.DefaultAction;
+            Dictionary<string, string> actionParams = this.GetActionParams(args);
 
-            Dictionary<string, string> actionParams =
-                GetActionParams(args);
-
-            CommandLineArgument actualValue =
-                new CommandLineArgument(category, action, actionParams);
-
-            this.output.WriteLine($"actual value: {actualValue}");
-
-            Assert.NotNull(actualValue);
-            Assert.Equal(expectedCategory, actualValue.Category);
-            Assert.Equal(expectedAction, actualValue.Action);
-            Assert.Equal(actionParams, actualValue.ActionParameters);
-            Assert.True(actualValue.IsValid());
+            this.TestAssert(
+                () => new CommandLineArgument(category, action, actionParams),
+                actualValue =>
+                {
+                    Assert.NotNull(actualValue);
+                    Assert.Equal(expectedCategory, actualValue.Category);
+                    Assert.Equal(expectedAction, actualValue.Action);
+                    Assert.Equal(actionParams, actualValue.ActionParameters);
+                    Assert.True(actualValue.IsValid());
+                });
         }
 
         [Fact]
         public void ConstructorForNoActionParamAttrArgSuccessTest()
         {
-            CommandLineArgument commandLineArg =
-                GetDummyCommandLineArg();
+            CommandLineArgument commandLineArg = this.GetDummyCommandLineArg();
 
-            NoActionParamAttrArg actualValue =
-                new NoActionParamAttrArg(commandLineArg);
-
-            this.output.WriteLine($"actual value: {actualValue}");
-
-            Assert.NotNull(actualValue);
-            Assert.IsAssignableFrom<CommandLineArgument>(actualValue);
-            Assert.Equal(commandLineArg.Category, actualValue.Category);
-            Assert.Equal(commandLineArg.Action, actualValue.Action);
-            Assert.Equal(
-                commandLineArg.ActionParameters,
-                actualValue.ActionParameters);
-            Assert.True(actualValue.IsValid());
-            Assert.Null(actualValue.DummyParam);
-        }
-
-        [Fact]
-        public void ConstructorForMoreThanOneAliasesArgFailedTest()
-        {
-            CommandLineArgument commandLineArg =
-                GetDummyCommandLineArg(new Dictionary<string, string>
-                    {
-                        { "--dummy-param", "dummy_value" },
-                        { "--dup-dummy-param", "dummy_value" }
-                    });
-
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                try
+            this.TestAssert(
+                () => new NoActionParamAttrArg(commandLineArg),
+                actualValue =>
                 {
-                    new MoreThanOneAliasesArg(commandLineArg);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+                    Assert.NotNull(actualValue);
+                    Assert.IsAssignableFrom<CommandLineArgument>(actualValue);
+                    Assert.Equal(commandLineArg.Category, actualValue.Category);
+                    Assert.Equal(commandLineArg.Action, actualValue.Action);
+                    Assert.Equal(
+                        commandLineArg.ActionParameters,
+                        actualValue.ActionParameters);
+                    Assert.True(actualValue.IsValid());
+                    Assert.Null(actualValue.DummyParam);
+                });
         }
 
         [Fact]
@@ -100,9 +70,9 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             bool expectedDummyBoolParam = true;
             int? expectedDummyNullableIntParam = 222;
             bool? expectedDummyNullableBoolFalseParam = false;
-
             CommandLineArgument commandLineArg =
-                GetDummyCommandLineArg(new Dictionary<string, string>
+                this.GetDummyCommandLineArg(
+                    new Dictionary<string, string>
                     {
                         { "-dummy-int-param", $"{expectedDummyIntParam}" },
                         { "-dummy-string-param", expectedDummyStringParam },
@@ -111,39 +81,35 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                         { "-dummy-nullable-bool-false-param", $"{expectedDummyNullableBoolFalseParam}" },
                     });
 
-            SupportedParamTypesArg actualValue =
-                new SupportedParamTypesArg(commandLineArg);
+            this.TestAssert(
+                () => new SupportedParamTypesArg(commandLineArg),
+                actualValue =>
+                {
+                    Assert.NotNull(actualValue);
+                    Assert.IsAssignableFrom<CommandLineArgument>(actualValue);
+                    Assert.Equal(commandLineArg.Category, actualValue.Category);
+                    Assert.Equal(commandLineArg.Action, actualValue.Action);
+                    Assert.Equal(
+                        commandLineArg.ActionParameters,
+                        actualValue.ActionParameters);
+                    Assert.True(actualValue.IsValid());
 
-            this.output.WriteLine($"actual value: {actualValue}");
-
-            Assert.NotNull(actualValue);
-            Assert.IsAssignableFrom<CommandLineArgument>(actualValue);
-            Assert.Equal(commandLineArg.Category, actualValue.Category);
-            Assert.Equal(commandLineArg.Action, actualValue.Action);
-            Assert.Equal(
-                commandLineArg.ActionParameters,
-                actualValue.ActionParameters);
-            Assert.True(actualValue.IsValid());
-
-            Assert.Equal(
-                expectedDummyIntParam,
-                actualValue.DummyIntParam);
-
-            Assert.Equal(
-                expectedDummyBoolParam,
-                actualValue.DummyBoolParam);
-
-            Assert.Equal(
-                expectedDummyStringParam,
-                actualValue.DummyStringParam);
-
-            Assert.Equal(
-                expectedDummyNullableIntParam,
-                actualValue.DummyNullableIntParam);
-
-            Assert.Equal(
-                expectedDummyNullableBoolFalseParam,
-                actualValue.DummyNullableBoolFalseParam);
+                    Assert.Equal(
+                        expectedDummyIntParam,
+                        actualValue.DummyIntParam);
+                    Assert.Equal(
+                        expectedDummyBoolParam,
+                        actualValue.DummyBoolParam);
+                    Assert.Equal(
+                        expectedDummyStringParam,
+                        actualValue.DummyStringParam);
+                    Assert.Equal(
+                        expectedDummyNullableIntParam,
+                        actualValue.DummyNullableIntParam);
+                    Assert.Equal(
+                        expectedDummyNullableBoolFalseParam,
+                        actualValue.DummyNullableBoolFalseParam);
+                });
         }
 
         [Fact]
@@ -154,96 +120,79 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 DefaultValueArg.DefaultStringValue;
             int expectedDummyDefaultIntParam =
                 DefaultValueArg.DefaultIntValue;
-
             CommandLineArgument commandLineArg =
-                GetDummyCommandLineArg(new Dictionary<string, string>
+                this.GetDummyCommandLineArg(
+                    new Dictionary<string, string>
                     {
                         { "-dummy-nullable-bool-null-param", null },
                     });
 
-            DefaultValueArg actualValue =
-                new DefaultValueArg(commandLineArg);
+            this.TestAssert(
+                () => new DefaultValueArg(commandLineArg),
+                actualValue =>
+                {
+                    Assert.NotNull(actualValue);
+                    Assert.IsAssignableFrom<CommandLineArgument>(actualValue);
+                    Assert.Equal(commandLineArg.Category, actualValue.Category);
+                    Assert.Equal(commandLineArg.Action, actualValue.Action);
+                    Assert.Equal(
+                        commandLineArg.ActionParameters,
+                        actualValue.ActionParameters);
+                    Assert.True(actualValue.IsValid());
 
-            this.output.WriteLine($"actual value: {actualValue}");
+                    Assert.Equal(
+                        expectedDummyNullableBoolNullParam,
+                        actualValue.DummyNullableBoolNullParam);
+                    Assert.Equal(
+                        expectedDummyDefaultStringParam,
+                        actualValue.DummyDefaultStringParam);
+                    Assert.Equal(
+                        expectedDummyDefaultIntParam,
+                        actualValue.DummyDefaultIntParam);
+                });
+        }
 
-            Assert.NotNull(actualValue);
-            Assert.IsAssignableFrom<CommandLineArgument>(actualValue);
-            Assert.Equal(commandLineArg.Category, actualValue.Category);
-            Assert.Equal(commandLineArg.Action, actualValue.Action);
-            Assert.Equal(
-                commandLineArg.ActionParameters,
-                actualValue.ActionParameters);
-            Assert.True(actualValue.IsValid());
+        [Fact]
+        public void ConstructorForMoreThanOneAliasesArgFailedTest()
+        {
+            CommandLineErrorCode expectedErrorCode =
+                CommandLineErrorCode.ActionParamPropInitFailed;
+            string expectedMessage =
+                ExceptionMessages.PropMatchedMoreThanOneActionParams
+                    .FormatInvariant(nameof(MoreThanOneAliasesArg.DupDummyParam));
+            CommandLineArgument commandLineArg =
+                this.GetDummyCommandLineArg(
+                    new Dictionary<string, string>
+                    {
+                        { "--dummy-param", "dummy_value" },
+                        { "--dup-dummy-param", "dummy_value" }
+                    });
 
-            Assert.Equal(
-                expectedDummyNullableBoolNullParam,
-                actualValue.DummyNullableBoolNullParam);
-
-            Assert.Equal(
-                expectedDummyDefaultStringParam,
-                actualValue.DummyDefaultStringParam);
-
-            Assert.Equal(
-                expectedDummyDefaultIntParam,
-                actualValue.DummyDefaultIntParam);
+            this.AssertCommandLineException(
+                expectedErrorCode,
+                expectedMessage,
+                () => new MoreThanOneAliasesArg(commandLineArg));
         }
 
         [Fact]
         public void ConstructorForNotFoundParamValueArgFailedTest()
         {
+            CommandLineErrorCode expectedErrorCode =
+                CommandLineErrorCode.ActionParamPropInitFailed;
+            string expectedMessage =
+                ExceptionMessages.PropMatchedActionParamValueNotNull
+                    .FormatInvariant(nameof(NotFoundParamValueArg.NotFoundParam));
             CommandLineArgument commandLineArg =
-                GetDummyCommandLineArg(new Dictionary<string, string>
+                this.GetDummyCommandLineArg(
+                    new Dictionary<string, string>
                     {
                         { "--not-found-value-param", null }
                     });
 
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                try
-                {
-                    new NotFoundParamValueArg(commandLineArg);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
-        }
-
-        private static CommandLineArgument GetDummyCommandLineArg(
-            Dictionary<string, string> actionParams = null)
-            => new CommandLineArgument(
-                "DummyCategory",
-                "DummyAction",
-                actionParams ?? new Dictionary<string, string>
-                    {
-                        { "--dummy-param", "dummy_value" }
-                    });
-
-        private static Dictionary<string, string> GetActionParams(string[] args)
-        {
-            Dictionary<string, string> actionParams =
-                new Dictionary<string, string>();
-
-            for (int i = 0; i < args.Length; i += 2)
-            {
-                actionParams[args[i]] = args[i + 1];
-            }
-
-            return actionParams;
-        }
-
-        private sealed class NotFoundParamValueArg
-            : CommandLineArgument
-        {
-            public NotFoundParamValueArg(CommandLineArgument arg)
-                : base(arg)
-            {
-            }
-
-            [ActionParameter(null, "--not-found-value-param")]
-            internal string NotFoundParam { get; set; }
+            this.AssertCommandLineException(
+                expectedErrorCode,
+                expectedMessage,
+                () => new NotFoundParamValueArg(commandLineArg));
         }
 
         private sealed class DefaultValueArg
@@ -290,6 +239,18 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             [ActionParameter(null, "-dummy-nullable-bool-false-param")]
             internal bool? DummyNullableBoolFalseParam { get; set; }
+        }
+
+        private sealed class NotFoundParamValueArg
+            : CommandLineArgument
+        {
+            public NotFoundParamValueArg(CommandLineArgument arg)
+                : base(arg)
+            {
+            }
+
+            [ActionParameter(null, "--not-found-value-param")]
+            internal string NotFoundParam { get; set; }
         }
 
         private sealed class MoreThanOneAliasesArg

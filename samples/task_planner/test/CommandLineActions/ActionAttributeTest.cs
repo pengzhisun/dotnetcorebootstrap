@@ -5,44 +5,34 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using Xunit;
     using Xunit.Abstractions;
 
-    public sealed class ActionAttributeTest
+    public sealed class ActionAttributeTest : CommandLineTestBase
     {
-        private readonly ITestOutputHelper output;
-
         public ActionAttributeTest(ITestOutputHelper output)
+            : base(output)
         {
-            this.output = output;
         }
 
         [Fact]
         public void ConstructorGivenEnumActionSuccessTest()
         {
             DummyActionEnum action = DummyActionEnum.DummyAction;
-
-            ActionAttribute actualValue = new ActionAttribute(action);
-            this.output.WriteLine($"actual value: {actualValue}");
-
-            Assert.NotNull(actualValue);
-            Assert.Equal(action, actualValue.Action);
+            this.TestAssert(
+                () => new ActionAttribute(action),
+                actualValue =>
+                {
+                    Assert.NotNull(actualValue);
+                    Assert.Equal(action, actualValue.Action);
+                });
         }
 
         [Fact]
         public void ConstructorGivenNullActionFailedTest()
         {
-            Assert.Throws<ArgumentNullException>(()=>
-            {
-                object action = null;
-                try
-                {
-                    new ActionAttribute(action);
-                }
-                catch (ArgumentNullException ex)
-                {
-                    Assert.Equal(nameof(action), ex.ParamName);
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+            string expectedParamName = @"action";
+
+            this.AssertArgumentNullException(
+                expectedParamName,
+                () => new ActionAttribute(null));
         }
 
         [Theory]
@@ -51,19 +41,16 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [InlineData(false)]
         public void ConstructorGivenNonEnumActionFailedTest(object action)
         {
-            Assert.Throws<ArgumentException>(()=>
-            {
-                try
-                {
-                    new ActionAttribute(action);
-                }
-                catch (ArgumentException ex)
-                {
-                    Assert.Equal(nameof(action), ex.ParamName);
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+            string expectedParamName = @"action";
+            string expectedMessage =
+                ExceptionMessages.ActionValueNotEnumValue
+                    .FormatInvariant(action.GetType().Name, action)
+                + $"\nParameter name: {expectedParamName}";
+
+            this.AssertArgumentException(
+                expectedParamName,
+                expectedMessage,
+                () => new ActionAttribute(action));
         }
 
         private enum DummyActionEnum

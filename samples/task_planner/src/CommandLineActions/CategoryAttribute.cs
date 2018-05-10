@@ -14,8 +14,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             if (string.IsNullOrWhiteSpace(category))
             {
+                string messageFormat =
+                    ExceptionMessages.CategoryNotEmptyNorWhitespace;
                 throw new ArgumentException(
-                    @"The category parameter '{category}' shouldn't be empty or whitespace.",
+                    messageFormat.FormatInvariant(category),
                     nameof(category));
             }
 
@@ -26,8 +28,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             if (!actionTypeType.IsEnum)
             {
+                string messageFormat =
+                    ExceptionMessages.AciontTypeTypeNotEnumType;
                 throw new ArgumentException(
-                    $"The actionTypeType parameter '{actionTypeType.Name}' should be an enum type.",
+                    messageFormat.FormatInvariant(actionTypeType.Name),
                     nameof(actionTypeType));
             }
 

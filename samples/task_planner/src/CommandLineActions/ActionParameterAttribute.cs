@@ -21,7 +21,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             if (aliases.Length == 0)
             {
                 throw new ArgumentException(
-                    @"Action parameter should have at least one alias",
+                    ExceptionMessages.ActionParamNoAlias,
                     nameof(aliases));
             }
 

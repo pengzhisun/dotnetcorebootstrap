@@ -5,13 +5,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using Xunit;
     using Xunit.Abstractions;
 
-    public sealed class CategoryAttributeTest
+    public sealed class CategoryAttributeTest : CommandLineTestBase
     {
-        private readonly ITestOutputHelper output;
-
         public CategoryAttributeTest(ITestOutputHelper output)
+            : base(output)
         {
-            this.output = output;
         }
 
         [Theory]
@@ -21,13 +19,14 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
             Type actionTypeType = typeof(DummyActionEnum);
 
-            CategoryAttribute actualValue =
-                new CategoryAttribute(category, actionTypeType);
-            this.output.WriteLine($"actual value: {actualValue}");
-
-            Assert.NotNull(actualValue);
-            Assert.Equal(category, actualValue.Category);
-            Assert.Equal(actionTypeType, actualValue.ActionTypeType);
+            this.TestAssert(
+                () => new CategoryAttribute(category, actionTypeType),
+                actualValue =>
+                {
+                    Assert.NotNull(actualValue);
+                    Assert.Equal(category, actualValue.Category);
+                    Assert.Equal(actionTypeType, actualValue.ActionTypeType);
+                });
         }
 
         [Theory]
@@ -35,21 +34,14 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [InlineData(null, typeof(string))]
         [InlineData(null, null)]
         public void ConstructorGivenNullCategoryFailedTest(
-            string category, Type actionTypeType)
+            string category,
+            Type actionTypeType)
         {
-            Assert.Throws<ArgumentNullException>(()=>
-            {
-                try
-                {
-                    new CategoryAttribute(category, actionTypeType);
-                }
-                catch (ArgumentNullException ex)
-                {
-                    Assert.Equal(nameof(category), ex.ParamName);
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+            string expectedParamName = @"category";
+
+            this.AssertArgumentNullException(
+                expectedParamName,
+                () => new CategoryAttribute(category, actionTypeType));
         }
 
         [Theory]
@@ -59,38 +51,26 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public void ConstructorGivenEmptyOrWhitespaceCategoryFailedTest(
             string category, Type actionTypeType)
         {
-            Assert.Throws<ArgumentException>(()=>
-            {
-                try
-                {
-                    new CategoryAttribute(category, actionTypeType);
-                }
-                catch (ArgumentException ex)
-                {
-                    Assert.Equal(nameof(category), ex.ParamName);
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+            string expectedParamName = "category";
+            string expectedMessage =
+                ExceptionMessages.CategoryNotEmptyNorWhitespace
+                    .FormatInvariant(category)
+                + $"\nParameter name: {expectedParamName}";
+
+            this.AssertArgumentException(
+                expectedParamName,
+                expectedMessage,
+                () => new CategoryAttribute(category, actionTypeType));
         }
 
         [Fact]
         public void ConstructorGivenNullActionTypeTypeFailedTest()
         {
-            Assert.Throws<ArgumentNullException>(()=>
-            {
-                Type actionTypeType = null;
-                try
-                {
-                    new CategoryAttribute("Dummy", actionTypeType);
-                }
-                catch (ArgumentNullException ex)
-                {
-                    Assert.Equal(nameof(actionTypeType), ex.ParamName);
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+            string expectedParamName = @"actionTypeType";
+
+            this.AssertArgumentNullException(
+                expectedParamName,
+                () => new CategoryAttribute("Dummy", null));
         }
 
         [Theory]
@@ -100,19 +80,16 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public void ConstructorGivenNonEnumActionTypeTypeFailedTest(
             Type actionTypeType)
         {
-            Assert.Throws<ArgumentException>(()=>
-            {
-                try
-                {
-                    new CategoryAttribute("Dummy", actionTypeType);
-                }
-                catch (ArgumentException ex)
-                {
-                    Assert.Equal(nameof(actionTypeType), ex.ParamName);
-                    this.output.PrintException(ex);
-                    throw;
-                }
-            });
+            string expectedParamName = @"actionTypeType";
+            string expectedMessage =
+                ExceptionMessages.AciontTypeTypeNotEnumType
+                    .FormatInvariant(actionTypeType.Name)
+                + $"\nParameter name: {expectedParamName}";
+
+            this.AssertArgumentException(
+                expectedParamName,
+                expectedMessage,
+                () => new CategoryAttribute("Dummy", actionTypeType));
         }
 
         private enum DummyActionEnum

@@ -25,8 +25,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 as IReadOnlyDictionary<string, string>;
         }
 
-        public CommandLineArgument(
-            CommandLineArgument commandLineArgument)
+        public CommandLineArgument(CommandLineArgument commandLineArgument)
         {
             this.Category = commandLineArgument.Category;
             this.Action = commandLineArgument.Action;
@@ -34,57 +33,70 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             Type argType = this.GetType();
             foreach (PropertyInfo propInfo in
-                argType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance))
+                argType.GetProperties(
+                    BindingFlags.NonPublic | BindingFlags.Instance))
             {
-                ActionParameterAttribute actionParamAttr =
+                this.InitActionParamProperty(propInfo);
+            }
+        }
+
+        private void InitActionParamProperty(PropertyInfo propInfo)
+        {
+            ActionParameterAttribute actionParamAttr =
                     propInfo.GetCustomAttribute<ActionParameterAttribute>();
 
-                if (actionParamAttr == null)
-                {
-                    continue;
-                }
+            if (actionParamAttr == null)
+            {
+                return;
+            }
 
-                bool paramFound = false;
-                foreach (string alias in actionParamAttr.Aliases)
-                {
-                    if (this.ActionParameters.TryGetValue(
-                        alias, out string paramValueString))
-                    {
-                        if (paramFound)
-                        {
-                            throw new InvalidOperationException(
-                                $"Action parameter '{propInfo.Name}' found more than one alias.");
-                        }
+            IEnumerable<string> matchedActionParams =
+                actionParamAttr.Aliases.Append(propInfo.Name.ToLower())
+                    .Where(k => this.ActionParameters.ContainsKey(k));
 
-                        if (paramValueString != null)
-                        {
-                            Type paramType =
-                                Nullable.GetUnderlyingType(propInfo.PropertyType)
-                                ?? propInfo.PropertyType;
+            if (matchedActionParams.Count() > 1)
+            {
+                throw new CommandLineException(
+                    CommandLineErrorCode.ActionParamPropInitFailed,
+                    ExceptionMessages.PropMatchedMoreThanOneActionParams,
+                    propInfo.Name);
+            }
 
-                            object paramValue =
-                                Convert.ChangeType(paramValueString, paramType);
-
-                            propInfo.SetValue(this, paramValue);
-                        }
-                        else if (propInfo.PropertyType == typeof(bool?))
-                        {
-                            propInfo.SetValue(this, true);
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException(
-                                $"Action parameter '{propInfo.Name}' should have param value.");
-                        }
-
-                        paramFound = true;
-                    }
-                }
-
-                if (!paramFound && actionParamAttr.DefaultValue != null)
+            string matchedActionParam = matchedActionParams.FirstOrDefault();
+            if (matchedActionParam == null)
+            {
+                if (actionParamAttr.DefaultValue != null)
                 {
                     propInfo.SetValue(this, actionParamAttr.DefaultValue);
                 }
+
+                return;
+            }
+
+            string matchedActionParamValue =
+                this.ActionParameters[matchedActionParam];
+
+            if (matchedActionParamValue != null)
+            {
+                Type paramType =
+                    Nullable.GetUnderlyingType(propInfo.PropertyType)
+                    ?? propInfo.PropertyType;
+
+                object paramValue =
+                    Convert.ChangeType(matchedActionParamValue, paramType);
+
+                propInfo.SetValue(this, paramValue);
+            }
+            else if (propInfo.PropertyType == typeof(bool?))
+            {
+                propInfo.SetValue(this, true);
+            }
+            else
+            {
+                throw new CommandLineException(
+                    CommandLineErrorCode.ActionParamPropInitFailed,
+                    ExceptionMessages.PropMatchedActionParamValueNotNull,
+                    propInfo.Name);
             }
         }
 
@@ -92,7 +104,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
         public string Action { get; private set; }
 
-        public IReadOnlyDictionary<string, string> ActionParameters { get; private set; }
+        public IReadOnlyDictionary<string, string> ActionParameters
+        {
+            get;
+            private set;
+        }
 
         public virtual bool IsValid() => true;
 
