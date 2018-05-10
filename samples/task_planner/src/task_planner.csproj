@@ -10,14 +10,13 @@
     <Version Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</Version>
   </PropertyGroup>
   <PropertyGroup>
-    <!--Workaround for NU1605 "Detected package downgrade", refer: https://github.com/dotnet/core/issues/907-->
-    <NoWarn>$(NoWarn);NU1605;NU1603</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
-    <!-- <GenerateDocumentationFile>true</GenerateDocumentationFile> -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- reference: https://github.com/Microsoft/vstest/blob/master/scripts/stylecop.ruleset -->
     <CodeAnalysisRuleSet>stylecop.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+    <!--Workaround for NU1605 "Detected package downgrade", refer: https://github.com/dotnet/core/issues/907-->
+    <NoWarn>$(NoWarn);NU1605;NU1603</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <!-- reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md -->
