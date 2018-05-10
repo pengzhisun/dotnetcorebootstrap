@@ -1,3 +1,10 @@
 {
-    "dotnet-test-explorer.testProjectPath": "./samples/task_planner/test"
+    "dotnet-test-explorer.testProjectPath": "./samples/task_planner/test",
+    "files.associations": {
+        "*.ruleset": "xml",
+    },
+    "editor.rulers": [
+        80,
+        120
+    ],
 }

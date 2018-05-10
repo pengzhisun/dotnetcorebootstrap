@@ -2,14 +2,29 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <!--Workaround for NU1605 "Detected package downgrade", refer: https://github.com/dotnet/core/issues/907-->
-    <NoWarn>$(NoWarn);NU1605;NU1603</NoWarn>
     <RootNamespace>DotNetCoreBootstrap.Samples.TaskPlanner</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
     <AssemblyName>tp</AssemblyName>
     <Version Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.0.1-local</Version>
     <Version Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</Version>
   </PropertyGroup>
+  <PropertyGroup>
+    <!--Workaround for NU1605 "Detected package downgrade", refer: https://github.com/dotnet/core/issues/907-->
+    <NoWarn>$(NoWarn);NU1605;NU1603</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- <GenerateDocumentationFile>true</GenerateDocumentationFile> -->
+    <!-- reference: https://github.com/Microsoft/vstest/blob/master/scripts/stylecop.ruleset -->
+    <CodeAnalysisRuleSet>stylecop.ruleset</CodeAnalysisRuleSet>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md -->
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
   </ItemGroup>
 </Project>

@@ -1,3 +1,10 @@
+// -----------------------------------------------------------------------
+// <copyright file="ExceptionExtensions.cs" company="Pengzhi Sun">
+// Copyright (c) Pengzhi Sun. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace DotNetCoreBootstrap.Samples.TaskPlanner
 {
     using System;
@@ -34,6 +41,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
                             {
                                 propValue = JsonConvert.SerializeObject(current.Data);
                             }
+
                             break;
                         default:
                             propValue = propInfo.GetValue(current);

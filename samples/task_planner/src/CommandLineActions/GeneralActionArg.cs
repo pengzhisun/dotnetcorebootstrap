@@ -1,3 +1,10 @@
+// -----------------------------------------------------------------------
+// <copyright file="GeneralActionArg.cs" company="Pengzhi Sun">
+// Copyright (c) Pengzhi Sun. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     internal sealed class GeneralActionArg : CommandLineArgument
@@ -7,15 +14,15 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
         }
 
+        public bool HelpSwtichEnabled => this.HelpSwitch ?? false;
+
+        public bool VersionSwtichEnabled => this.VersionSwith ?? false;
+
         [ActionParameter(false, "-h", "--help")]
         private bool? HelpSwitch { get; set; }
 
-        public bool HelpSwtichEnabled => this.HelpSwitch ?? false;
-
         [ActionParameter(false, "-v", "--version")]
         private bool? VersionSwith { get; set; }
-
-        public bool VersionSwtichEnabled => this.VersionSwith ?? false;
 
         public override bool IsValid() =>
             this.HelpSwtichEnabled ^ this.VersionSwtichEnabled;

@@ -1,3 +1,10 @@
+// -----------------------------------------------------------------------
+// <copyright file="CommandLineArgument.cs" company="Pengzhi Sun">
+// Copyright (c) Pengzhi Sun. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     using System;
@@ -39,6 +46,21 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 this.InitActionParamProperty(propInfo);
             }
         }
+
+        public string Category { get; private set; }
+
+        public string Action { get; private set; }
+
+        public IReadOnlyDictionary<string, string> ActionParameters
+        {
+            get;
+            private set;
+        }
+
+        public virtual bool IsValid() => true;
+
+        public override string ToString()
+            => JsonConvert.SerializeObject(this, Formatting.Indented);
 
         private void InitActionParamProperty(PropertyInfo propInfo)
         {
@@ -99,20 +121,5 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                     propInfo.Name);
             }
         }
-
-        public string Category { get; private set; }
-
-        public string Action { get; private set; }
-
-        public IReadOnlyDictionary<string, string> ActionParameters
-        {
-            get;
-            private set;
-        }
-
-        public virtual bool IsValid() => true;
-
-        public override string ToString()
-            => JsonConvert.SerializeObject(this, Formatting.Indented);
     }
 }
