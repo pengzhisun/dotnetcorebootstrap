@@ -15,7 +15,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
         | AttributeTargets.Property
         | AttributeTargets.Method
         | AttributeTargets.Constructor)]
-    public sealed class ExcludeFromCoverageAttribute
+    internal sealed class ExcludeFromCoverageAttribute
         : Attribute
     {
     }

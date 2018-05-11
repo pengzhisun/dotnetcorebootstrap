@@ -7,8 +7,14 @@
 
 namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
+    /// <summary>
+    /// Defines the genral category supported types enumeration.
+    /// </summary>
     internal enum GeneralActionType
     {
+        /// <summary>
+        /// The default action.
+        /// </summary>
         Default
     }
 }

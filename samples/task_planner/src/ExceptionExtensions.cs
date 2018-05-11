@@ -12,7 +12,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
     using System.Text;
     using Newtonsoft.Json;
 
-    public static class ExceptionExtensions
+    internal static class ExceptionExtensions
     {
         public static string GetDetail(this Exception exception)
         {

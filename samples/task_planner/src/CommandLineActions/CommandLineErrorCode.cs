@@ -9,13 +9,35 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     using System;
 
+    /// <summary>
+    /// Defines the command line error codes enumeration.
+    /// </summary>
     [Serializable]
     public enum CommandLineErrorCode
     {
+        /// <summary>
+        /// The unknown command line error.
+        /// </summary>
         Unknown = 0,
+
+        /// <summary>
+        /// The command line arguments parsing failed error.
+        /// </summary>
         CommandLineArgsParseFailed = 1001,
+
+        /// <summary>
+        /// The command line argument initializing failed error.
+        /// </summary>
         CommandLineArgInitFailed = 1002,
+
+        /// <summary>
+        /// The invalid action method definition error.
+        /// </summary>
         InvalidActionMethodDefinition = 1003,
+
+        /// <summary>
+        /// The invalid category definition error.
+        /// </summary>
         InvalidCategoryDefinition = 1004
     }
 }
