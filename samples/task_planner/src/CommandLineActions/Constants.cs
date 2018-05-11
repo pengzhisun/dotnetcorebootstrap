@@ -7,16 +7,28 @@
 
 namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
+    /// <summary>
+    /// Defines the constant values used for command line actions.
+    /// </summary>
     internal static class Constants
     {
+        /// <summary>
+        /// The general category.
+        /// </summary>
         public const string GeneralCategory = @"General";
 
+        /// <summary>
+        /// The help message.
+        /// </summary>
         public const string HelpMessage = @"tp command line arguments:
 -----------------------------------------------------------
 general arguments:
    -h, --help:      show tp command help message.
    -v, --version:   show tp command version.";
 
+        /// <summary>
+        /// The version message format, expect one version arg.
+        /// </summary>
         public const string VersionMessageFormat = @"Version: {0}";
     }
 }

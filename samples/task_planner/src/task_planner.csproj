@@ -15,7 +15,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <Features>IOperation</Features>
     <CodeAnalysisRuleSet>stylecop.ruleset</CodeAnalysisRuleSet>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <!-- <TreatWarningsAsErrors>True</TreatWarningsAsErrors> -->
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <!--Workaround for NU1605 "Detected package downgrade", refer: https://github.com/dotnet/core/issues/907-->
     <NoWarn>$(NoWarn);NU1605;NU1603</NoWarn>

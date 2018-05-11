@@ -7,14 +7,29 @@
 
 namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
+    /// <summary>
+    /// Defines the exception messages for command line actions.
+    /// </summary>
     internal static class ExceptionMessages
     {
+        /// <summary>
+        /// The default command line exception message format, expect one
+        /// <see cref="CommandLineErrorCode" /> arg.
+        /// </summary>
         public const string DefaultCommandLineExceptionMessage =
             @"The command line exception message occurred with error code: '{0}'.";
 
+        /// <summary>
+        /// The invalid command line arguments exception message format, expect
+        /// one invalid argument value and one full arguments string.
+        /// </summary>
         public const string InvalidCommandLineArguments =
             @"The input arguments contains invalid value: '{0}', full arguments: '{1}'";
 
+        /// <summary>
+        /// The action value is not an enumeration value exception message format,
+        /// expect one action value type name and one invalid action value.
+        /// </summary>
         public const string ActionValueNotEnumValue =
             @"The action parameter value '[{0}]{1}' should be an enum value.";
 
