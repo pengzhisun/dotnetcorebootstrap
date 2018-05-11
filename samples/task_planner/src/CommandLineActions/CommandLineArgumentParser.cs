@@ -197,11 +197,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             }
 
             private void SetActionParameter(string paramName, string paramValue)
-            {
-                string actionParamKey =
-                    paramName.ToUpperInvariant();
-                this.ActionParams[actionParamKey] = paramValue;
-            }
+                => this.ActionParams[paramName] = paramValue;
         }
     }
 }

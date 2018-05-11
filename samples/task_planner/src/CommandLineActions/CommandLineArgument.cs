@@ -74,9 +74,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             }
 
             IEnumerable<string> matchedActionParams =
-                actionParamAttr.Aliases.Append(
-                        propInfo.Name.ToUpperInvariant())
-                    .Where(k => this.ActionParameters.ContainsKey(k));
+                actionParamAttr.Aliases.Append(propInfo.Name)
+                    .Where(n =>
+                        this.ActionParameters.Keys.Any(
+                            k => k.Equals(n, StringComparison.OrdinalIgnoreCase)));
 
             if (matchedActionParams.Count() > 1)
             {

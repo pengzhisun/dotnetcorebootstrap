@@ -8,6 +8,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
 
     public abstract class TestBase
     {
+        private static readonly object AsssertConsoleOutLock = new object();
+
         private readonly ITestOutputHelper output;
 
         protected TestBase(ITestOutputHelper output)
@@ -84,15 +86,27 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
             => this.AssertActualValue(
                 () =>
                 {
-                    using (StringWriter writer = new StringWriter())
+                    string actualOut = null;
+
+                    lock (AsssertConsoleOutLock)
                     {
-                        Console.SetOut(writer);
+                        using (StringWriter writer = new StringWriter())
+                        {
+                            Console.SetOut(writer);
 
-                        testAction();
+                            testAction();
 
-                        writer.Flush();
-                        return writer.GetStringBuilder().ToString();
+                            writer.Flush();
+                            actualOut = writer.GetStringBuilder().ToString();
+
+                            StreamWriter standardOutput =
+                                new StreamWriter(Console.OpenStandardOutput());
+                            standardOutput.AutoFlush = true;
+                            Console.SetOut(standardOutput);
+                        }
                     }
+
+                    return actualOut;
                 },
                 actualValue =>
                 {
