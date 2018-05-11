@@ -12,8 +12,19 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
     using System.Text;
     using Newtonsoft.Json;
 
-    internal static class ExceptionExtensions
+    /// <summary>
+    /// Defines the <see cref="Exception"/> class extension methods.
+    /// </summary>
+    public static class ExceptionExtensions
     {
+        /// <summary>
+        /// Get the <see cref="Exception"/> instance detail infomration.
+        /// </summary>
+        /// <param name="exception">The <see cref="Exception"/> instance.</param>
+        /// <returns>
+        /// A string representation the detail information for the given
+        /// <see cref="Exception"/> instance.
+        /// </returns>
         public static string GetDetail(this Exception exception)
         {
             StringBuilder builder = new StringBuilder();
