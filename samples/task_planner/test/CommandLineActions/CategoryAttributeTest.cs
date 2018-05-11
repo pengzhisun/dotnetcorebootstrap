@@ -55,7 +55,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             string expectedMessage =
                 ExceptionMessages.CategoryNotEmptyNorWhitespace
                     .FormatInvariant(category)
-                + $"\nParameter name: {expectedParamName}";
+                + $"{Environment.NewLine}Parameter name: {expectedParamName}";
 
             this.AssertArgumentException(
                 expectedParamName,
@@ -84,7 +84,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             string expectedMessage =
                 ExceptionMessages.AciontTypeTypeNotEnumType
                     .FormatInvariant(actionTypeType.Name)
-                + $"\nParameter name: {expectedParamName}";
+                + $"{Environment.NewLine}Parameter name: {expectedParamName}";
 
             this.AssertArgumentException(
                 expectedParamName,

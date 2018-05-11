@@ -57,7 +57,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             string expectedParamName = "aliases";
             string expectedMessage =
                 ExceptionMessages.ActionParamNoAlias
-                + $"\nParameter name: {expectedParamName}";
+                + $"{Environment.NewLine}Parameter name: {expectedParamName}";
 
             this.AssertArgumentException(
                 expectedParamName,

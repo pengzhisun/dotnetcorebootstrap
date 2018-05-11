@@ -11,27 +11,27 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using System.Reflection;
 
     [Category(Constants.GeneralCategory, typeof(GeneralActionType))]
-    internal sealed class GeneralCategory
+    internal static class GeneralCategory
     {
         [Action(GeneralActionType.Default)]
-        public void DefaultAction(GeneralActionArg arg)
+        public static void DefaultAction(GeneralActionArg arg)
         {
             if (!arg.IsValid() || arg.HelpSwtichEnabled)
             {
-                this.ShowHelp();
+                ShowHelp();
             }
             else if (arg.VersionSwtichEnabled)
             {
-                this.ShowVersion();
+                ShowVersion();
             }
         }
 
-        private void ShowHelp()
+        private static void ShowHelp()
         {
             Console.WriteLine(Constants.HelpMessage);
         }
 
-        private void ShowVersion()
+        private static void ShowVersion()
         {
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
             Console.WriteLine(Constants.VersionMessageFormat, version);

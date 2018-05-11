@@ -13,6 +13,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     [Serializable]
     public class CommandLineException : Exception
     {
+        [NonSerialized]
         private readonly string message;
 
         public CommandLineException()

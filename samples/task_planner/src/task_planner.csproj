@@ -24,10 +24,28 @@
     <!-- reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md -->
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  <PropertyGroup>
+    <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Core'">
+    <!-- Workaround for detecting os version in dotnet core, refer: https://github.com/Microsoft/msbuild/issues/539 -->
+    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+  </PropertyGroup>
+  <Target Name="PrintRID" BeforeTargets="Build">
+    <Message Text="IsWindows $(IsWindows)" Importance="high" />
+    <Message Text="IsOSX $(IsOSX)" Importance="high" />
+    <Message Text="IsLinux $(IsLinux)" Importance="high" />
+  </Target>
+  <ItemGroup Condition="'$(IsWindows)' == 'true'">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" PrivateAssets="All" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsOSX)' == 'true'">
     <!-- Microsoft.CodeAnalysis.FxCopAnalyzers version 2.6.0-beta1 to 2.6.0 not worked. -->
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.3.0-beta1" PrivateAssets="All" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
   </ItemGroup>
 </Project>

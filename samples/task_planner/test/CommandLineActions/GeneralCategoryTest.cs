@@ -67,7 +67,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         }
 
         private static void RunDefaultAction(GeneralActionArg arg)
-            => new GeneralCategory().DefaultAction(arg);
+            => GeneralCategory.DefaultAction(arg);
 
         private GeneralActionArg GetGeneralActionArg(string[] args)
             => new GeneralActionArg(this.GetDefaultCommandLineArg(args));

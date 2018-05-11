@@ -45,7 +45,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             string expectedMessage =
                 ExceptionMessages.ActionValueNotEnumValue
                     .FormatInvariant(action.GetType().Name, action)
-                + $"\nParameter name: {expectedParamName}";
+                + $"{Environment.NewLine}Parameter name: {expectedParamName}";
 
             this.AssertArgumentException(
                 expectedParamName,

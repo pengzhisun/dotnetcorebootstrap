@@ -31,11 +31,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             MethodInfo actionMethod = GetActionMethod(categoryType, actionType);
 
-            RunAction(categoryType, actionMethod, arg);
+            RunAction(actionMethod, arg);
         }
 
         private static void RunAction(
-            Type categoryType,
             MethodInfo actionMethod,
             CommandLineArgument arg)
         {
@@ -65,9 +64,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                     methodParam.ParameterType,
                     CultureInfo.InvariantCulture);
 
-            object categoryInstance =
-                Activator.CreateInstance(categoryType);
-            actionMethod.Invoke(categoryInstance, new[] { actionArg });
+            actionMethod.Invoke(null, new[] { actionArg });
         }
 
         private static MethodInfo GetActionMethod(
@@ -76,7 +73,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
             IEnumerable<MethodInfo> methodInfos =
                 categoryType.GetMethods(
-                    BindingFlags.Public | BindingFlags.Instance)
+                    BindingFlags.Public | BindingFlags.Static)
                 .Where(m =>
                 {
                     ActionAttribute actionAttr =

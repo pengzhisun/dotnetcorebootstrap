@@ -170,7 +170,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                             typeof(MoreThanOneActionMethodsCategory)
                                 .GetMethods(
                                     BindingFlags.DeclaredOnly
-                                    | BindingFlags.Instance
+                                    | BindingFlags.Static
                                     | BindingFlags.Public)
                                 .Select(m => m.ToString())));
             CommandLineArgument arg =
@@ -241,10 +241,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [Category(
             "No_action_param_method_category",
             typeof(DummyActionTypeEnum))]
-        private sealed class NoActionParamMethodCategory
+        private static class NoActionParamMethodCategory
         {
             [Action(DummyActionTypeEnum.DummyAction)]
-            public void DummyAction()
+            public static void DummyAction()
             {
             }
         }
@@ -252,10 +252,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [Category(
             "More_than_one_action_param_method_category",
             typeof(DummyActionTypeEnum))]
-        private sealed class MoreThanOneActionParamMethodCategory
+        private static class MoreThanOneActionParamMethodCategory
         {
             [Action(DummyActionTypeEnum.DummyAction)]
-            public void DummyAction(string param1, string parm2)
+            public static void DummyAction(string param1, string parm2)
             {
             }
         }
@@ -263,42 +263,42 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         [Category(
             "No_comand_line_arg_param_method_category",
             typeof(DummyActionTypeEnum))]
-        private sealed class NoCommandLineArgParamMethodCategory
+        private static class NoCommandLineArgParamMethodCategory
         {
             [Action(DummyActionTypeEnum.DummyAction)]
-            public void DummyAction(string param1)
+            public static void DummyAction(string param1)
             {
             }
         }
 
         [Category("No_action_method_category", typeof(DummyActionTypeEnum))]
-        private sealed class NoActionMethodCategory
+        private static class NoActionMethodCategory
         {
         }
 
         [Category(
             "More_than_one_action_methods_category",
             typeof(DummyActionTypeEnum))]
-        private sealed class MoreThanOneActionMethodsCategory
+        private static class MoreThanOneActionMethodsCategory
         {
             [Action(DummyActionTypeEnum.DummyAction)]
-            public void DummyAction()
+            public static void DummyAction()
             {
             }
 
             [Action(DummyActionTypeEnum.DummyAction)]
-            public void DummyActionDup()
+            public static void DummyActionDup()
             {
             }
         }
 
         [Category("More_than_one_category", typeof(DummyActionTypeEnum))]
-        private sealed class MoreThanOneCategory
+        private static class MoreThanOneCategory
         {
         }
 
         [Category("More_than_one_category", typeof(DummyActionTypeEnum))]
-        private sealed class MoreThanOneCategoryDup
+        private static class MoreThanOneCategoryDup
         {
         }
 
