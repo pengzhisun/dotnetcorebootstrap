@@ -9,18 +9,33 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Reflection;
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Defines the common command line argument class.
+    /// </summary>
     internal class CommandLineArgument
     {
+        /// <summary>
+        /// The default command line category.
+        /// </summary>
         public const string DefaultCategory = Constants.GeneralCategory;
 
+        /// <summary>
+        /// The default command line action.
+        /// </summary>
         public static readonly string DefaultAction =
             GeneralActionType.Default.ToString();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommandLineArgument"/>
+        /// class with specific category, action and action parameters.
+        /// </summary>
+        /// <param name="category">The specific category.</param>
+        /// <param name="action">The specific action.</param>
+        /// <param name="actionParams">
+        /// The action parameters for specific action.
+        /// </param>
         public CommandLineArgument(
             string category = null,
             string action = null,
@@ -33,99 +48,33 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 as IReadOnlyDictionary<string, string>;
         }
 
-        public CommandLineArgument(CommandLineArgument commandLineArgument)
-        {
-            this.Category = commandLineArgument.Category;
-            this.Action = commandLineArgument.Action;
-            this.ActionParameters = commandLineArgument.ActionParameters;
-
-            Type argType = this.GetType();
-            foreach (PropertyInfo propInfo in
-                argType.GetProperties(
-                    BindingFlags.NonPublic | BindingFlags.Instance))
-            {
-                this.InitActionParamProperty(propInfo);
-            }
-        }
-
+        /// <summary>
+        /// Gets the category from the current command line argument.
+        /// </summary>
         public string Category { get; private set; }
 
+        /// <summary>
+        /// Gets the action from the current command line argument.
+        /// </summary>
         public string Action { get; private set; }
 
+        /// <summary>
+        /// Gets the action parameters from the current command line argument.
+        /// </summary>
         public IReadOnlyDictionary<string, string> ActionParameters
         {
             get;
             private set;
         }
 
-        public virtual bool IsValid() => true;
-
+        /// <summary>
+        /// Creates and returns a string representation of the current command
+        /// line argument.
+        /// </summary>
+        /// <returns>
+        /// A string representation of the current command line argument.
+        /// </returns>
         public override string ToString()
             => JsonConvert.SerializeObject(this, Formatting.Indented);
-
-        private void InitActionParamProperty(PropertyInfo propInfo)
-        {
-            ActionParameterAttribute actionParamAttr =
-                    propInfo.GetCustomAttribute<ActionParameterAttribute>();
-
-            if (actionParamAttr == null)
-            {
-                return;
-            }
-
-            IEnumerable<string> matchedActionParams =
-                actionParamAttr.Aliases.Append(propInfo.Name)
-                    .Where(n =>
-                        this.ActionParameters.Keys.Any(
-                            k => k.Equals(n, StringComparison.OrdinalIgnoreCase)));
-
-            if (matchedActionParams.Count() > 1)
-            {
-                throw new CommandLineException(
-                    CommandLineErrorCode.CommandLineArgInitFailed,
-                    ExceptionMessages.PropMatchedMoreThanOneActionParams,
-                    propInfo.Name);
-            }
-
-            string matchedActionParam = matchedActionParams.FirstOrDefault();
-            if (matchedActionParam == null)
-            {
-                if (actionParamAttr.DefaultValue != null)
-                {
-                    propInfo.SetValue(this, actionParamAttr.DefaultValue);
-                }
-
-                return;
-            }
-
-            string matchedActionParamValue =
-                this.ActionParameters[matchedActionParam];
-
-            if (matchedActionParamValue != null)
-            {
-                Type paramType =
-                    Nullable.GetUnderlyingType(propInfo.PropertyType)
-                    ?? propInfo.PropertyType;
-
-                object paramValue =
-                    Convert.ChangeType(
-                        matchedActionParamValue,
-                        paramType,
-                        CultureInfo.InvariantCulture);
-
-                propInfo.SetValue(this, paramValue);
-            }
-            else if (propInfo.PropertyType == typeof(bool?))
-            {
-                propInfo.SetValue(this, true);
-            }
-            else
-            {
-                throw new CommandLineException(
-                    CommandLineErrorCode.CommandLineArgInitFailed,
-                    ExceptionMessages.PropMatchedActionParamValueNotNull,
-                    propInfo.Name);
-            }
-        }
     }
 }

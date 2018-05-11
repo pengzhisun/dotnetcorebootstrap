@@ -23,7 +23,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public void DefaultActionGivenHelpArgSuccessTest(params string[] args)
         {
             string expectedOut = Constants.HelpMessage + Environment.NewLine;
-            GeneralActionArg arg = this.GetGeneralActionArg(args);
+            GeneralActionArgument arg = this.GetGeneralActionArg(args);
 
             this.AssertConsoleOut(
                 expectedOut,
@@ -44,7 +44,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                     CultureInfo.InvariantCulture,
                     Constants.VersionMessageFormat,
                     assemblyVersion) + Environment.NewLine;
-            GeneralActionArg arg = this.GetGeneralActionArg(args);
+            GeneralActionArgument arg = this.GetGeneralActionArg(args);
 
             this.AssertConsoleOut(
                 expectedOut,
@@ -59,17 +59,17 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public void DefaultActionGivenInvalidArgSuccessTest(params string[] args)
         {
             string expectedOut = Constants.HelpMessage + Environment.NewLine;
-            GeneralActionArg arg = this.GetGeneralActionArg(args);
+            GeneralActionArgument arg = this.GetGeneralActionArg(args);
 
             this.AssertConsoleOut(
                 expectedOut,
                 () => RunDefaultAction(arg));
         }
 
-        private static void RunDefaultAction(GeneralActionArg arg)
+        private static void RunDefaultAction(GeneralActionArgument arg)
             => GeneralCategory.DefaultAction(arg);
 
-        private GeneralActionArg GetGeneralActionArg(string[] args)
-            => new GeneralActionArg(this.GetDefaultCommandLineArg(args));
+        private GeneralActionArgument GetGeneralActionArg(string[] args)
+            => new GeneralActionArgument(this.GetDefaultCommandLineArg(args));
     }
 }

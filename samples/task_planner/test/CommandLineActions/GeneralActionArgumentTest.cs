@@ -4,9 +4,9 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using Xunit;
     using Xunit.Abstractions;
 
-    public sealed class GeneralActionArgTest : CommandLineTestBase
+    public sealed class GeneralActionArgumentTest : CommandLineTestBase
     {
-        public GeneralActionArgTest(ITestOutputHelper output)
+        public GeneralActionArgumentTest(ITestOutputHelper output)
             : base(output)
         {
         }
@@ -22,16 +22,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 this.GetDefaultCommandLineArg(args);
 
             this.AssertActualValue(
-                () => new GeneralActionArg(commandLineArg),
+                () => new GeneralActionArgument(commandLineArg),
                 actualValue =>
                 {
                     Assert.NotNull(actualValue);
-                    Assert.IsAssignableFrom<CommandLineArgument>(actualValue);
-                    Assert.Equal(commandLineArg.Category, actualValue.Category);
-                    Assert.Equal(commandLineArg.Action, actualValue.Action);
-                    Assert.Equal(
-                        commandLineArg.ActionParameters,
-                        actualValue.ActionParameters);
+                    Assert.IsAssignableFrom<ActionArgumentBase>(actualValue);
                     Assert.True(actualValue.HelpSwtichEnabled);
                     Assert.False(actualValue.VersionSwtichEnabled);
                     Assert.True(actualValue.IsValid());
@@ -49,16 +44,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 this.GetDefaultCommandLineArg(args);
 
             this.AssertActualValue(
-                () => new GeneralActionArg(commandLineArg),
+                () => new GeneralActionArgument(commandLineArg),
                 actualValue =>
                 {
                     Assert.NotNull(actualValue);
-                    Assert.IsAssignableFrom<CommandLineArgument>(actualValue);
-                    Assert.Equal(commandLineArg.Category, actualValue.Category);
-                    Assert.Equal(commandLineArg.Action, actualValue.Action);
-                    Assert.Equal(
-                        commandLineArg.ActionParameters,
-                        actualValue.ActionParameters);
+                    Assert.IsAssignableFrom<ActionArgumentBase>(actualValue);
                     Assert.False(actualValue.HelpSwtichEnabled);
                     Assert.True(actualValue.VersionSwtichEnabled);
                     Assert.True(actualValue.IsValid());
@@ -78,7 +68,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 this.GetDefaultCommandLineArg(args);
 
             this.AssertActualValue(
-                () => new GeneralActionArg(commandLineArg),
+                () => new GeneralActionArgument(commandLineArg),
                 actualValue =>
                 {
                     Assert.False(actualValue.IsValid());

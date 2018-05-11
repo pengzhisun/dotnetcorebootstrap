@@ -36,8 +36,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public const string ActionMethodNotAcceptOneParam =
             @"The action method '{0}' should accept only one parameter.";
 
-        public const string ActionMethodNotAcceptOneCommandLineArgParam =
-            @"The action method '{0}' should accept one CommandLineArgument type parameter.";
+        public const string ActionMethodNotAcceptOneActionArgumentParam =
+            @"The action method '{0}' should accept one ActionArgumentBase type parameter.";
 
         public const string ActionMethodNotFound =
             @"Can't find action definition for '{0}'.";

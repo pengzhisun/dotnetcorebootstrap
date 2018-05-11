@@ -122,7 +122,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             CommandLineErrorCode expectedErrorCode =
                 CommandLineErrorCode.InvalidActionMethodDefinition;
             string expectedMessage =
-                ExceptionMessages.ActionMethodNotAcceptOneCommandLineArgParam
+                ExceptionMessages.ActionMethodNotAcceptOneActionArgumentParam
                     .FormatInvariant(
                         typeof(NoCommandLineArgParamMethodCategory)
                             .GetMethod("DummyAction"));

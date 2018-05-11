@@ -14,7 +14,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     internal static class GeneralCategory
     {
         [Action(GeneralActionType.Default)]
-        public static void DefaultAction(GeneralActionArg arg)
+        public static void DefaultAction(GeneralActionArgument arg)
         {
             if (!arg.IsValid() || arg.HelpSwtichEnabled)
             {

@@ -50,11 +50,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             ParameterInfo methodParam = methodParams.Single();
             if (!methodParam.ParameterType.IsSubclassOf(
-                typeof(CommandLineArgument)))
+                typeof(ActionArgumentBase)))
             {
                 throw new CommandLineException(
                     CommandLineErrorCode.InvalidActionMethodDefinition,
-                    ExceptionMessages.ActionMethodNotAcceptOneCommandLineArgParam,
+                    ExceptionMessages.ActionMethodNotAcceptOneActionArgumentParam,
                     actionMethod);
             }
 
