@@ -39,13 +39,12 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public CommandLineArgument(
             string category = null,
             string action = null,
-            IDictionary<string, string> actionParams = null)
+            IReadOnlyDictionary<string, string> actionParams = null)
         {
             this.Category = category ?? DefaultCategory;
             this.Action = action ?? DefaultAction;
             this.ActionParameters =
-                (actionParams ?? new Dictionary<string, string>())
-                as IReadOnlyDictionary<string, string>;
+                actionParams ?? new Dictionary<string, string>();
         }
 
         /// <summary>

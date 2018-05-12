@@ -82,6 +82,8 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/samples/task_planner/src/bin/Debug/netcoreapp2.0/tp.dll",
             "args": [
+                "general",
+                "default",
                 "--version"
             ],
             "cwd": "${workspaceFolder}/samples/task_planner/src",
