@@ -228,7 +228,12 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             /// <param name="args">The original command line arguments.</param>
             public ParserContext(IReadOnlyList<string> args)
             {
-                Debug.Assert(args.Count > 0, @"The given arguments shouldn't be empty.");
+                Debug.Assert(
+                    args != null,
+                    @"The given arguments shouldn't be null.");
+                Debug.Assert(
+                    args.Count > 0,
+                    @"The given arguments shouldn't be empty.");
 
                 this.args = args;
                 this.currentArgIndex = -1;
@@ -266,7 +271,18 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             /// <summary>
             /// Gets the current argument.
             /// </summary>
-            public string CurrentArg => this.args[this.currentArgIndex];
+            public string CurrentArg
+            {
+                get
+                {
+                    Debug.Assert(
+                        this.currentArgIndex >= 0
+                        && this.currentArgIndex < this.args.Count,
+                        @"Current argument index shouldn't out of the range of the command line arguments");
+
+                    return this.args[this.currentArgIndex];
+                }
+            }
 
             /// <summary>
             /// Goes to the next argument.
@@ -276,6 +292,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             /// </returns>
             public bool GoNext()
             {
+                Debug.Assert(
+                    this.currentArgIndex >= 0
+                    && this.currentArgIndex < this.args.Count,
+                    @"Current argument index shouldn't out of the range of the command line arguments");
+
                 if (this.currentArgIndex == this.args.Count - 1)
                 {
                     return false;
@@ -295,6 +316,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             /// </returns>
             public bool CurrentArgIsParamName()
             {
+                Debug.Assert(
+                    !string.IsNullOrWhiteSpace(this.CurrentArg),
+                    @"Current argument shouldn't be null or empty or whitespace.");
+
                 const char DashSymbol = '-';
 
                 return this.CurrentArg.StartsWith(DashSymbol);
@@ -308,6 +333,10 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 Debug.Assert(
                     this.CurretState == ParserState.Initial,
                     @"Should switch state from initial.");
+                Debug.Assert(
+                    this.currentArgIndex >= 0
+                    && this.currentArgIndex < this.args.Count,
+                    @"Current argument index shouldn't out of the range of the command line arguments");
 
                 this.CurretState = ParserState.CategoryAndAction;
                 this.lastCategoryAndActionArgIndex = this.currentArgIndex;
@@ -319,6 +348,14 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             /// </summary>
             public void UpdateCategoryAndActionState()
             {
+                Debug.Assert(
+                    this.CurretState == ParserState.CategoryAndAction,
+                    @"Should switch state from initial.");
+                Debug.Assert(
+                    this.currentArgIndex >= 0
+                    && this.currentArgIndex < this.args.Count,
+                    @"Current argument index shouldn't out of the range of the command line arguments");
+
                 this.lastCategoryAndActionArgIndex = this.currentArgIndex;
             }
 
@@ -328,12 +365,12 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             public void SetCategoryAndAction()
             {
                 Debug.Assert(
-                    this.lastCategoryAndActionArgIndex >= 0
-                    && this.lastCategoryAndActionArgIndex < this.args.Count,
-                    @"The last category and action argument index should be valid index.");
-                Debug.Assert(
                     this.CurretState == ParserState.CategoryAndAction,
                     @"Current state should be category and action or action parameter begin.");
+                Debug.Assert(
+                    this.lastCategoryAndActionArgIndex >= 0
+                    && this.lastCategoryAndActionArgIndex < this.args.Count,
+                    @"The last category and action argument index shouldn't out of the range of the command line arguments");
 
                 const string CategorySeparator = " ";
 
@@ -381,7 +418,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                     @"Should change state from parameter begin.");
                 Debug.Assert(
                     !this.CurrentArgIsParamName(),
-                    @"Current argument shouldn'o't be parameter name.");
+                    @"Current argument shouldn't be a parameter name.");
 
                 this.CurretState = ParserState.ActionParamEnd;
                 this.SetActionParameter(this.currentParamName, this.CurrentArg);
@@ -394,7 +431,13 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             /// <param name="paramName">The parameter name.</param>
             /// <param name="paramValue">The parameter value.</param>
             private void SetActionParameter(string paramName, string paramValue)
-                => this.actionParams[paramName] = paramValue;
+            {
+                Debug.Assert(
+                    !string.IsNullOrWhiteSpace(paramName),
+                    @"Parameter name shouldn't be null or empty or whitespace.");
+
+                this.actionParams[paramName] = paramValue;
+            }
         }
     }
 }

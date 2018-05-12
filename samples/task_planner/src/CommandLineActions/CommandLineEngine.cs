@@ -83,8 +83,22 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             Type categoryType,
             string action)
         {
+            Debug.Assert(
+                categoryType != null,
+                @"Category type shouldn't be null.");
+            Debug.Assert(
+                !string.IsNullOrWhiteSpace(action),
+                @"Action shouldn't be null or empty or whitespace.");
+
             CategoryAttribute categoryAttr =
                 categoryType.GetCustomAttribute<CategoryAttribute>();
+
+            Debug.Assert(
+                categoryAttr != null,
+                @"Category attribute shouldn't be null.");
+            Debug.Assert(
+                categoryAttr.ActionTypeType.IsEnum,
+                @"The type of the action type defined in category attribute should be an enumeration type.");
 
             Enum.TryParse(
                 enumType: categoryAttr.ActionTypeType,
@@ -96,8 +110,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         }
 
         /// <summary>
-        /// Gets the action method from specific category definition type and
-        /// matched the given action type value.
+        /// Gets a public static action method from specific category definition
+        /// type which matched the given action type value.
         /// </summary>
         /// <param name="categoryType">The category definition type.</param>
         /// <param name="actionTypeValue">The action type value.</param>
@@ -157,9 +171,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         /// <param name="actionMethod">The action method information.</param>
         /// <param name="arg">The command line argument.</param>
         /// <exception cref="CommandLineException">
-        /// Thrown if the action method is not a static method
-        /// or the action method not only accept one parameter which type is a
-        /// derived class of the <see cref="ActionArgumentBase"/>.
+        /// Thrown if the action method not only accept one parameter which type
+        /// is a derived class of the <see cref="ActionArgumentBase"/>.
         /// </exception>
         private static void RunAction(
             MethodInfo actionMethod,
@@ -169,16 +182,11 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 actionMethod != null,
                 @"The action method shouldn't be null.");
             Debug.Assert(
+                actionMethod.IsPublic && actionMethod.IsStatic,
+                @"The action method should be public and static.");
+            Debug.Assert(
                 arg != null,
                 @"The command line argument shouldn't be null.");
-
-            if (!actionMethod.IsStatic)
-            {
-                throw new CommandLineException(
-                    CommandLineErrorCode.InvalidActionMethodDefinition,
-                    ExceptionMessages.ActionMethodNotStatic,
-                    actionMethod);
-            }
 
             ParameterInfo[] methodParams = actionMethod.GetParameters();
 

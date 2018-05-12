@@ -22,15 +22,20 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         /// message.
         /// If the version switch enabled then show the version message.
         /// </summary>
-        /// <param name="arg">The general action argument.</param>
+        /// <param name="actionArg">The general action argument.</param>
         [Action(GeneralActionType.Default)]
-        public static void DefaultAction(GeneralActionArgument arg)
+        public static void DefaultAction(GeneralActionArgument actionArg)
         {
-            if (!arg.IsValid() || arg.HelpSwtichEnabled)
+            if (actionArg == null)
+            {
+                throw new ArgumentNullException(nameof(actionArg));
+            }
+
+            if (!actionArg.IsValid() || actionArg.HelpSwtichEnabled)
             {
                 ShowHelp();
             }
-            else if (arg.VersionSwtichEnabled)
+            else if (actionArg.VersionSwtichEnabled)
             {
                 ShowVersion();
             }
