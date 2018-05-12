@@ -5,7 +5,7 @@
         <!-- <Rule Id="SA1633" Action="None" /> -->
         <!-- XML documentation checks are temporarily disabled -->
         <!-- <Rule Id="CS1591" Action="None" /> -->
-        <Rule Id="SA1600" Action="None" />
+        <!-- <Rule Id="SA1600" Action="None" /> -->
         <!-- <Rule Id="SA1602" Action="None" /> -->
         <!-- <Rule Id="SA1652" Action="None" /> -->
     </Rules>

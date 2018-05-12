@@ -22,7 +22,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             if (string.IsNullOrWhiteSpace(category))
             {
                 string messageFormat =
-                    ExceptionMessages.CategoryNotEmptyNorWhitespace;
+                    ExceptionMessages.CategoryIsEmptyOrWhitespace;
                 throw new ArgumentException(
                     messageFormat.FormatInvariant(category),
                     nameof(category));

@@ -16,7 +16,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     internal sealed class ActionAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CommandLineException"/>
+        /// Initializes a new instance of the <see cref="ActionAttribute"/>
         /// class with a specified action enumeration value.
         /// </summary>
         /// <param name="action">The action enumeration value.</param>

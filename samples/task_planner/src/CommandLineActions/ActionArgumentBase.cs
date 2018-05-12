@@ -41,9 +41,13 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         }
 
         /// <summary>
-        /// Checks the action argument is valid or not, the derived should
+        /// Checks the action argument is valid or not, the derived class should
         /// override this method based on its own logic.
         /// </summary>
+        /// <returns>
+        /// Return true by default, the derived class should return based on its
+        /// own logic.
+        /// </returns>
         public virtual bool IsValid() => true;
 
         /// <summary>
@@ -118,7 +122,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             {
                 throw new CommandLineException(
                     CommandLineErrorCode.CommandLineArgInitFailed,
-                    ExceptionMessages.PropMatchedActionParamValueNotNull,
+                    ExceptionMessages.PropMatchedActionParamValueIsNull,
                     propInfo.Name);
             }
         }

@@ -53,7 +53,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
             string expectedParamName = "category";
             string expectedMessage =
-                ExceptionMessages.CategoryNotEmptyNorWhitespace
+                ExceptionMessages.CategoryIsEmptyOrWhitespace
                     .FormatInvariant(category)
                 + $"{Environment.NewLine}Parameter name: {expectedParamName}";
 

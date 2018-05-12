@@ -208,7 +208,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             CommandLineErrorCode expectedErrorCode =
                 CommandLineErrorCode.InvalidCategoryDefinition;
             string expectedMessage =
-                ExceptionMessages.CategoryNotFoundDupDefinitions
+                ExceptionMessages.CategoryFoundDupDefinitions
                     .FormatInvariant(
                         arg.Category,
                         string.Join(

@@ -137,7 +137,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             CommandLineErrorCode expectedErrorCode =
                 CommandLineErrorCode.CommandLineArgInitFailed;
             string expectedMessage =
-                ExceptionMessages.PropMatchedActionParamValueNotNull
+                ExceptionMessages.PropMatchedActionParamValueIsNull
                     .FormatInvariant(nameof(NotFoundParamValueArg.NotFoundParam));
             CommandLineArgument commandLineArg =
                 this.GetDummyCommandLineArg(

@@ -8,9 +8,9 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     using Xunit;
     using Xunit.Abstractions;
 
-    public sealed class GeneralCategoryTest : CommandLineTestBase
+    public sealed class GeneralCategoryDefinitionTest : CommandLineTestBase
     {
-        public GeneralCategoryTest(ITestOutputHelper output)
+        public GeneralCategoryDefinitionTest(ITestOutputHelper output)
             : base(output)
         {
         }
@@ -38,7 +38,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public void DefaultActionGivenVersionArgSuccessTest(params string[] args)
         {
             Version assemblyVersion =
-                Assembly.GetAssembly(typeof(GeneralCategory)).GetName().Version;
+                Assembly.GetAssembly(typeof(GeneralCategoryDefinition)).GetName().Version;
             string expectedOut =
                 string.Format(
                     CultureInfo.InvariantCulture,
@@ -67,7 +67,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         }
 
         private static void RunDefaultAction(GeneralActionArgument arg)
-            => GeneralCategory.DefaultAction(arg);
+            => GeneralCategoryDefinition.DefaultAction(arg);
 
         private GeneralActionArgument GetGeneralActionArg(string[] args)
             => new GeneralActionArgument(this.GetDefaultCommandLineArg(args));

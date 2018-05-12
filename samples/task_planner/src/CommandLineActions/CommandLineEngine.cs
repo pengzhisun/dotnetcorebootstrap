@@ -141,7 +141,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             {
                 throw new CommandLineException(
                     CommandLineErrorCode.InvalidCategoryDefinition,
-                    ExceptionMessages.CategoryNotFoundDupDefinitions,
+                    ExceptionMessages.CategoryFoundDupDefinitions,
                     category,
                     string.Join(",", types.Select(t => t.FullName)));
             }
