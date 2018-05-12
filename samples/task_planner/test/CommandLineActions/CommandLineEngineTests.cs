@@ -75,6 +75,16 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         #region Test methods for exception cases.
 
         [Fact]
+        public void ProcessGivenNullCommandLineArgFailedTest()
+        {
+            string expectedParamName = @"commandLineArg";
+
+            this.AssertArgumentNullException(
+                expectedParamName,
+                () => new CommandLineEngine().Process(null));
+        }
+
+        [Fact]
         public void ProcessNoActionParamMethodCategoryFailedTest()
         {
             CommandLineErrorCode expectedErrorCode =

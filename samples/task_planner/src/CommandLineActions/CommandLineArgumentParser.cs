@@ -292,17 +292,17 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             /// </returns>
             public bool GoNext()
             {
-                Debug.Assert(
-                    this.currentArgIndex >= 0
-                    && this.currentArgIndex < this.args.Count,
-                    @"Current argument index shouldn't out of the range of the command line arguments");
-
                 if (this.currentArgIndex == this.args.Count - 1)
                 {
                     return false;
                 }
 
                 this.currentArgIndex++;
+
+                Debug.Assert(
+                    this.currentArgIndex >= 0
+                    && this.currentArgIndex < this.args.Count,
+                    @"Current argument index shouldn't out of the range of the command line arguments");
 
                 return true;
             }

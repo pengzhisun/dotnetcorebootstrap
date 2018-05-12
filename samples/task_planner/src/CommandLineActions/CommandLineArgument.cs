@@ -73,6 +73,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         /// <returns>
         /// A string representation of the current command line argument.
         /// </returns>
+        [ExcludeFromCoverage(@"Only used for debugging and testing purpose.")]
         public override string ToString()
             => JsonConvert.SerializeObject(this, Formatting.Indented);
     }

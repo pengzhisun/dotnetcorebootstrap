@@ -15,6 +15,16 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         }
 
         [Fact]
+        public void ConstructorGivenNullCommandLineArgFailedTest()
+        {
+            string expectedParamName = @"commandLineArgument";
+
+            this.AssertArgumentNullException(
+                expectedParamName,
+                () => new DummyActionArg(null));
+        }
+
+        [Fact]
         public void ConstructorForNoActionParamAttrArgSuccessTest()
         {
             CommandLineArgument commandLineArg = this.GetDummyCommandLineArg();
@@ -231,6 +241,15 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             }
 
             internal string DummyParam { get; set; }
+        }
+
+        private sealed class DummyActionArg
+            : ActionArgumentBase
+        {
+            public DummyActionArg(CommandLineArgument arg)
+                : base(arg)
+            {
+            }
         }
     }
 }

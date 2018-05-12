@@ -15,6 +15,16 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         {
         }
 
+        [Fact]
+        public void DefaultActionGivenNullCommandLineArgFailedTest()
+        {
+            string expectedParamName = @"actionArg";
+
+            this.AssertArgumentNullException(
+                expectedParamName,
+                () => RunDefaultAction(null));
+        }
+
         [Theory]
         [InlineData("-h", null)]
         [InlineData("-h", "true")]

@@ -41,7 +41,9 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         /// <summary>
         /// Processes the specific command line argument.
         /// </summary>
-        /// <param name="arg">The specifi command line argument instance.</param>
+        /// <param name="commandLineArg">
+        /// The specific command line argument instance.
+        /// </param>
         /// <exception cref="ArgumentNullException">
         /// Thrown if the given command line argument is null.
         /// </exception>
@@ -50,22 +52,22 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         /// or the action method is not found or invalid,
         /// or the action parameters are not found or invalid.
         /// </exception>
-        public void Process(CommandLineArgument arg)
+        public void Process(CommandLineArgument commandLineArg)
         {
-            if (arg == null)
+            if (commandLineArg == null)
             {
-                throw new ArgumentNullException(nameof(arg));
+                throw new ArgumentNullException(nameof(commandLineArg));
             }
 
-            Type categoryType = this.GetCategoryType(arg.Category);
+            Type categoryType = this.GetCategoryType(commandLineArg.Category);
 
             object actionTypeValue =
-                GetActionTypeValue(categoryType, arg.Action);
+                GetActionTypeValue(categoryType, commandLineArg.Action);
 
             MethodInfo actionMethod =
                 GetActionMethod(categoryType, actionTypeValue);
 
-            RunAction(actionMethod, arg);
+            RunAction(actionMethod, commandLineArg);
         }
 
         /// <summary>
@@ -169,14 +171,14 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         /// Run the action method.
         /// </summary>
         /// <param name="actionMethod">The action method information.</param>
-        /// <param name="arg">The command line argument.</param>
+        /// <param name="commandLineArg">The command line argument.</param>
         /// <exception cref="CommandLineException">
         /// Thrown if the action method not only accept one parameter which type
         /// is a derived class of the <see cref="ActionArgumentBase"/>.
         /// </exception>
         private static void RunAction(
             MethodInfo actionMethod,
-            CommandLineArgument arg)
+            CommandLineArgument commandLineArg)
         {
             Debug.Assert(
                 actionMethod != null,
@@ -185,7 +187,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 actionMethod.IsPublic && actionMethod.IsStatic,
                 @"The action method should be public and static.");
             Debug.Assert(
-                arg != null,
+                commandLineArg != null,
                 @"The command line argument shouldn't be null.");
 
             ParameterInfo[] methodParams = actionMethod.GetParameters();
@@ -210,7 +212,9 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 
             object actionArg =
                 Convert.ChangeType(
-                    Activator.CreateInstance(methodParam.ParameterType, arg),
+                    Activator.CreateInstance(
+                        methodParam.ParameterType,
+                        commandLineArg),
                     methodParam.ParameterType,
                     CultureInfo.InvariantCulture);
 

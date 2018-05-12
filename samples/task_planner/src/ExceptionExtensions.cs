@@ -15,6 +15,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
     /// <summary>
     /// Defines the <see cref="Exception"/> class extension methods.
     /// </summary>
+    [ExcludeFromCoverage(@"Only used for debugging and testing purpose.")]
     public static class ExceptionExtensions
     {
         /// <summary>

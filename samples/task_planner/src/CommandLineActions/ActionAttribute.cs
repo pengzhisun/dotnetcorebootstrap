@@ -54,6 +54,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         /// Creates and returns a string representation of the current attribute.
         /// </summary>
         /// <returns>A string representation of the current attribute.</returns>
+        [ExcludeFromCoverage(@"Only used for debugging purpose.")]
         public override string ToString()
             => $"[{this.GetType().Name}] {nameof(this.Action)} = '{this.Action}'";
     }

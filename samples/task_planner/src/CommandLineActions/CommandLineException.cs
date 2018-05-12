@@ -19,7 +19,6 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         /// <summary>
         /// The internal command line exception message.
         /// </summary>
-        [NonSerialized]
         private readonly string message;
 
         /// <summary>
@@ -105,6 +104,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
                 (CommandLineErrorCode)info.GetValue(
                     nameof(this.ErrorCode),
                     typeof(CommandLineErrorCode));
+            this.message = info.GetString(nameof(this.message));
         }
 
         /// <summary>
@@ -147,13 +147,16 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             SerializationInfo info,
             StreamingContext context)
         {
+            base.GetObjectData(info, context);
             info.AddValue(nameof(this.ErrorCode), this.ErrorCode);
+            info.AddValue(nameof(this.message), this.message);
         }
 
         /// <summary>
         /// Creates and returns a string representation of the current exception.
         /// </summary>
         /// <returns>A string representation of the current exception.</returns>
+        [ExcludeFromCoverage(@"Only used for debugging purpose.")]
         public override string ToString()
             => $"[{this.GetType().Name}] {nameof(this.ErrorCode)}: {this.ErrorCode}({(int)this.ErrorCode}), {nameof(this.Message)}: {this.Message}";
     }
