@@ -22,11 +22,17 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
         /// </summary>
         /// <param name="exception">The <see cref="Exception"/> instance.</param>
         /// <returns>
-        /// A string representation the detail information for the given
+        /// If the exception is null then return an empty string, else return a
+        /// string representation the detail information for the given
         /// <see cref="Exception"/> instance.
         /// </returns>
         public static string GetDetail(this Exception exception)
         {
+            if (exception == null)
+            {
+                return string.Empty;
+            }
+
             StringBuilder builder = new StringBuilder();
 
             Exception current = exception;

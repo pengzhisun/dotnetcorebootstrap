@@ -113,7 +113,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public void ConstructorForMoreThanOneAliasesArgFailedTest()
         {
             CommandLineErrorCode expectedErrorCode =
-                CommandLineErrorCode.CommandLineArgInitFailed;
+                CommandLineErrorCode.ActionArgInitFailed;
             string expectedMessage =
                 ExceptionMessages.PropMatchedMoreThanOneActionParams
                     .FormatInvariant(nameof(MoreThanOneAliasesArg.DupDummyParam));
@@ -135,7 +135,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         public void ConstructorForNotFoundParamValueArgFailedTest()
         {
             CommandLineErrorCode expectedErrorCode =
-                CommandLineErrorCode.CommandLineArgInitFailed;
+                CommandLineErrorCode.ActionArgInitFailed;
             string expectedMessage =
                 ExceptionMessages.PropMatchedActionParamValueIsNull
                     .FormatInvariant(nameof(NotFoundParamValueArg.NotFoundParam));

@@ -9,12 +9,17 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
 {
     using System;
 
-    [ExcludeFromCoverage]
+    /// <summary>
+    /// Defines the exclude from coverage attribute, workaround for coverlet.
+    /// </summary>
+    /// <remarks>
+    /// Reference: https://github.com/tonerdo/coverlet
+    /// </remarks>
     [AttributeUsage(
         AttributeTargets.Class
+        | AttributeTargets.Constructor
         | AttributeTargets.Property
-        | AttributeTargets.Method
-        | AttributeTargets.Constructor)]
+        | AttributeTargets.Method)]
     internal sealed class ExcludeFromCoverageAttribute
         : Attribute
     {

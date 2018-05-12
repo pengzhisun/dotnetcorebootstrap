@@ -12,7 +12,7 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
     /// <summary>
     /// Defines the action definition attribute used on action method.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Method)]
     internal sealed class ActionAttribute : Attribute
     {
         /// <summary>

@@ -9,9 +9,26 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
 {
     using System;
 
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    /// <summary>
+    /// Defines the category definition attribute used on category definition
+    /// class.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class)]
     internal sealed class CategoryAttribute : Attribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CategoryAttribute"/>
+        /// class with a specified action enumeration value.
+        /// </summary>
+        /// <param name="category">The category.</param>
+        /// <param name="actionTypeType">The type of the action type.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if the given category or actionTypeType is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown if the given category or actionTypeType is empty or
+        /// whitespace.
+        /// </exception>
         public CategoryAttribute(string category, Type actionTypeType)
         {
             if (category == null)
@@ -46,8 +63,14 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             this.ActionTypeType = actionTypeType;
         }
 
+        /// <summary>
+        /// Gets the category.
+        /// </summary>
         public string Category { get; private set; }
 
+        /// <summary>
+        /// Gets the type of the action type.
+        /// </summary>
         public Type ActionTypeType { get; private set; }
     }
 }

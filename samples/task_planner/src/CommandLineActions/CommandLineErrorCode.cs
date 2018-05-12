@@ -26,9 +26,9 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
         CommandLineArgsParseFailed = 1001,
 
         /// <summary>
-        /// The command line argument initializing failed error.
+        /// The action argument initializing failed error.
         /// </summary>
-        CommandLineArgInitFailed = 1002,
+        ActionArgInitFailed = 1002,
 
         /// <summary>
         /// The invalid action method definition error.

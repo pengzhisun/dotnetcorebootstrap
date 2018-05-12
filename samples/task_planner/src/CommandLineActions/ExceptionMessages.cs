@@ -72,6 +72,13 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions
             @"The matched action parameter value for property '{0}' shouldn't be null.";
 
         /// <summary>
+        /// The action method should be static exception message format, expecte
+        /// one argument for the method signature.
+        /// </summary>
+        public const string ActionMethodNotStatic =
+            @"The action method '{0}' should be a static method.";
+
+        /// <summary>
         /// The action method not accept one parameter exception message format,
         /// expect one argument for the method signature.
         /// </summary>

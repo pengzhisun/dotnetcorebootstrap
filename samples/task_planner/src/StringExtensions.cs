@@ -25,20 +25,25 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner
         /// An object array that contains zero or more objects to format.
         /// </param>
         /// <returns>
-        /// A copy of format in which the format items have been replaced by the
-        /// string representation of the corresponding objects in args.
+        /// If the format is null then return null, else return a copy of format
+        /// in which the format items have been replaced by the string
+        /// representation of the corresponding objects in args.
         /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if the given format or args is null.
-        /// </exception>
         /// <exception cref="FormatException">
         /// Thrown if the given format is invalid,
         /// or the index of a format item is less than zero,
-        ///  or greater than or equal to the length of the args array.
+        /// or greater than or equal to the length of the args array.
         /// </exception>
         public static string FormatInvariant(
             this string format,
             params object[] args)
-            => string.Format(CultureInfo.InvariantCulture, format, args);
+        {
+            if (format == null)
+            {
+                return null;
+            }
+
+            return string.Format(CultureInfo.InvariantCulture, format, args);
+        }
     }
 }
