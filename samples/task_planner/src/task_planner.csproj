@@ -10,7 +10,7 @@
     <Version Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</Version>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- <GenerateDocumentationFile>true</GenerateDocumentationFile> -->
     <!-- reference: https://github.com/Microsoft/vstest/blob/master/scripts/stylecop.ruleset -->
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <Features>IOperation</Features>
@@ -18,7 +18,7 @@
     <!-- <TreatWarningsAsErrors>True</TreatWarningsAsErrors> -->
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <!--Workaround for NU1605 "Detected package downgrade", refer: https://github.com/dotnet/core/issues/907-->
-    <NoWarn>$(NoWarn);NU1605;NU1603</NoWarn>
+    <NoWarn>$(NoWarn);NU1605;NU1603;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <!-- reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md -->
@@ -32,11 +32,11 @@
     <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
     <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
   </PropertyGroup>
-  <!-- <Target Name="PrintRID" BeforeTargets="Build">
+  <Target Name="PrintRID" BeforeTargets="Build">
     <Message Text="IsWindows $(IsWindows)" Importance="high" />
     <Message Text="IsOSX $(IsOSX)" Importance="high" />
     <Message Text="IsLinux $(IsLinux)" Importance="high" />
-  </Target> -->
+  </Target>
   <ItemGroup Condition="'$(IsWindows)' == 'true'">
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" PrivateAssets="All" />
   </ItemGroup>

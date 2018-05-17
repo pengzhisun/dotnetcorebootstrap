@@ -2,11 +2,17 @@
 <RuleSet Name="Rules for task planner" Description="Code analysis rules for task planner sample." ToolsVersion="14.0">
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
         <!-- Copyright headers check is temporarily disabled -->
-        <!-- <Rule Id="SA1633" Action="None" /> -->
+        <Rule Id="SA1633" Action="None" />
         <!-- XML documentation checks are temporarily disabled -->
-        <!-- <Rule Id="CS1591" Action="None" /> -->
-        <!-- <Rule Id="SA1600" Action="None" /> -->
-        <!-- <Rule Id="SA1602" Action="None" /> -->
-        <!-- <Rule Id="SA1652" Action="None" /> -->
+        <Rule Id="CS1591" Action="None" />
+        <Rule Id="SA1600" Action="None" />
+        <Rule Id="SA1602" Action="None" />
+        <Rule Id="SA1652" Action="None" />
+        <!-- Version mismatch check is temporarily disabled -->
+        <Rule Id="CA9999" Action="None" />
+        <!-- Analyzer created failed check is temporarily disabled -->
+        <Rule Id="CS8032" Action="None" />
+        <!-- Unused field check is temporarily disabled -->
+        <Rule Id="CA1823" Action="None" />
     </Rules>
 </RuleSet>
