@@ -1,6 +1,7 @@
 namespace DotNetCoreBootstrap.Samples.TaskPlanner.Tasks
 {
     using DotNetCoreBootstrap.Samples.TaskPlanner.CommandLineActions;
+    using Newtonsoft.Json;
 
     internal class TaskActionArgument : ActionArgumentBase
     {
@@ -11,9 +12,17 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.Tasks
 
         public bool HelpSwtichEnabled => this.HelpSwitch ?? false;
 
+        public bool InMemorySwitchEnabled => this.InMemorySwitch ?? false;
+
         [ActionParameter(null, "-h", "--help")]
-        private bool? HelpSwitch { get; set; }
+        protected bool? HelpSwitch { get; set; }
+
+        [ActionParameter(null, "-im", "--in-memory")]
+        protected bool? InMemorySwitch { get; set; }
 
         public override bool IsValid() => this.HelpSwtichEnabled;
+
+        public override string ToString()
+            => JsonConvert.SerializeObject(this, Formatting.Indented);
     }
 }

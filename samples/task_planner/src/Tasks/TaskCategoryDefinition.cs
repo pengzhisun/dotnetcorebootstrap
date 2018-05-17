@@ -22,6 +22,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.Tasks
             }
 
             Console.WriteLine($"new task: name='{actionArg.Name}', desc='{actionArg.Description}'");
+            TaskDbEntity entity = TaskDbRepository.CreateTask(actionArg);
+            Console.WriteLine($"task entity created: '{entity}'");
         }
 
         private static void ShowHelpMessage(string message)
