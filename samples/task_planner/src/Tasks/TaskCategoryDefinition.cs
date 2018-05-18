@@ -21,8 +21,20 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.Tasks
                 return;
             }
 
-            Console.WriteLine($"new task: name='{actionArg.Name}', desc='{actionArg.Description}'");
             TaskDbEntity entity = TaskDbRepository.CreateTask(actionArg);
+            Console.WriteLine($"task entity created: '{entity}'");
+        }
+
+        [Action(TaskActionType.Set)]
+        public static void SetAction(TaskSetActionArgument actionArg)
+        {
+            if (!actionArg.IsValid() || actionArg.HelpSwtichEnabled)
+            {
+                ShowHelpMessage(TaskConstants.TaskNewCommandHelpMessage);
+                return;
+            }
+
+            TaskDbEntity entity = TaskDbRepository.UpdateTask(actionArg);
             Console.WriteLine($"task entity created: '{entity}'");
         }
 

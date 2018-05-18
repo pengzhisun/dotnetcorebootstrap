@@ -60,55 +60,92 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.Tasks
                     db.SaveChanges();
 
                     return entity;
-                },
-                isInMemory: arg.InMemorySwitchEnabled);
+                });
+        }
+
+        public static TaskDbEntity UpdateTask(TaskSetActionArgument arg)
+        {
+            return RunDbFunc(
+                func: db =>
+                {
+                    TaskDbEntity entity = null;
+
+                    if (arg.Id != null)
+                    {
+                        entity =
+                            db.TaskEntities.FirstOrDefault(
+                                e => e.TaskId.Equals(arg.Id.Value));
+
+                        if (entity == null)
+                        {
+                            throw new InvalidOperationException($"Task id '{arg.Id}' not found.");
+                        }
+                    }
+                    else if (!string.IsNullOrWhiteSpace(arg.Name))
+                    {
+                        entity =
+                            db.TaskEntities.FirstOrDefault(
+                                e => e.TaskName.Equals(arg.Name));
+
+                        if (entity == null)
+                        {
+                            throw new InvalidOperationException($"Task name '{arg.ParentName}' not found.");
+                        }
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(arg.Description))
+                    {
+                        entity.TaskDescription = arg.Description;
+                    }
+
+                    TaskDbEntity parentEntity = null;
+
+                    if (arg.ParentId != null)
+                    {
+                        parentEntity =
+                            db.TaskEntities.FirstOrDefault(
+                                e => e.TaskId.Equals(arg.ParentId.Value));
+
+                        if (parentEntity == null)
+                        {
+                            throw new InvalidOperationException($"Parent task id '{arg.ParentId}' not found.");
+                        }
+                    }
+                    else if (!string.IsNullOrWhiteSpace(arg.ParentName))
+                    {
+                        parentEntity =
+                            db.TaskEntities.FirstOrDefault(
+                                e => e.TaskName.Equals(arg.ParentName));
+
+                        if (parentEntity == null)
+                        {
+                            throw new InvalidOperationException($"Parent task name '{arg.ParentName}' not found.");
+                        }
+                    }
+
+                    if (parentEntity != null)
+                    {
+                        entity.ParentTask = parentEntity;
+                    }
+
+                    db.Update(entity);
+                    db.SaveChanges();
+
+                    return entity;
+                });
         }
 
         private static TResult RunDbFunc<TResult>(
-            Func<TaskDbContext, TResult> func,
-            bool isInMemory = false)
+            Func<TaskDbContext, TResult> func)
         {
-            SqliteConnection sqliteConnection = null;
-            DbContextOptions<TaskDbContext> options = null;
+            DbContextOptions<TaskDbContext> options =
+                new DbContextOptionsBuilder<TaskDbContext>()
+                    .UseSqlite($"DataSource={DatabaseFileName}")
+                    .Options;
 
-            if (isInMemory)
+            using (TaskDbContext db = new TaskDbContext(options))
             {
-                sqliteConnection =
-                    new SqliteConnection("DataSource=:memory:");
-                sqliteConnection.Open();
-
-                options =
-                    new DbContextOptionsBuilder<TaskDbContext>()
-                        .UseSqlite(sqliteConnection)
-                        .Options;
-            }
-            else
-            {
-                options =
-                    new DbContextOptionsBuilder<TaskDbContext>()
-                        .UseSqlite($"DataSource={DatabaseFileName}")
-                        .Options;
-            }
-
-            try
-            {
-                using (TaskDbContext db = new TaskDbContext(options))
-                {
-                    if (isInMemory)
-                    {
-                        db.Database.EnsureCreated();
-                    }
-
-                    return func.Invoke(db);
-                }
-            }
-            finally
-            {
-                if (sqliteConnection != null
-                    && sqliteConnection.State != ConnectionState.Closed)
-                {
-                    sqliteConnection.Close();
-                }
+                return func.Invoke(db);
             }
         }
     }

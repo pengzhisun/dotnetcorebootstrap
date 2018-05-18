@@ -12,13 +12,8 @@ namespace DotNetCoreBootstrap.Samples.TaskPlanner.Tasks
 
         public bool HelpSwtichEnabled => this.HelpSwitch ?? false;
 
-        public bool InMemorySwitchEnabled => this.InMemorySwitch ?? false;
-
         [ActionParameter(null, "-h", "--help")]
         protected bool? HelpSwitch { get; set; }
-
-        [ActionParameter(null, "-im", "--in-memory")]
-        protected bool? InMemorySwitch { get; set; }
 
         public override bool IsValid() => this.HelpSwtichEnabled;
 
